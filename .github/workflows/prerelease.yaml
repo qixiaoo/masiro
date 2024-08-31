@@ -1,0 +1,38 @@
+name: prerelease
+
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
+
+jobs:
+  build-linux-app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "COMMIT_SHORT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+      - run: echo "BUILD_ARTIFACT=masiro-${{ env.COMMIT_SHORT_HASH }}-linux.zip" >> $GITHUB_ENV
+      - run: sudo apt-get install curl unzip xz-utils zip libglu1-mesa clang cmake ninja-build pkg-config appindicator3-0.1 libappindicator3-dev libgtk-3-dev liblzma-dev libstdc++-12-dev -y
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - run: flutter --version
+      - run: flutter pub get
+      - run: flutter build linux
+      - run: zip -r ${{ env.BUILD_ARTIFACT }} build/linux/x64/release/bundle
+      - name: Release
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          artifacts: ${{ env.BUILD_ARTIFACT }}
+          tag: ${{ env.COMMIT_SHORT_HASH }}
+          prerelease: true
