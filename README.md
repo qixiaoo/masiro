@@ -1,16 +1,19 @@
 # masiro
 
-A new Flutter project.
+一款使用 Flutter 开发的第三方真白萌客户端。
 
-## Getting Started
+**注意**：这是一个用于学习 Flutter 的练手项目，限于作者知识水平，在使用过程中可能会出现一些问题，欢迎提出 issue。
 
-This project is a starting point for a Flutter application.
+## 介绍
 
-A few resources to get you started if this is your first Flutter project:
+该项目现在还处于开发的早期阶段，功能尚未完善，目前支持的平台如下：
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [x] Linux：支持
+- [ ] Windows：未测试
+- [ ] macOS：未测试
+- [ ] Android: 开发中
+- [ ] iOS: 暂无计划
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## License
+
+GPL-3.0 license.
