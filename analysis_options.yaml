@@ -1,0 +1,63 @@
+# This file configures the analyzer, which statically analyzes Dart code to
+# check for errors, warnings, and lints.
+#
+# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
+# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
+# invoked from the command line by running `flutter analyze`.
+
+# The following line activates a set of recommended lints for Flutter apps,
+# packages, and plugins designed to encourage good coding practices.
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  # The lint rules applied to this project can be customized in the
+  # section below to disable rules from the `package:flutter_lints/flutter.yaml`
+  # included above or to enable additional rules. A list of all available lints
+  # and their documentation is published at https://dart.dev/lints.
+  #
+  # Instead of disabling a lint rule for the entire project in the
+  # section below, it can also be suppressed for a single line of code
+  # or a specific dart file by using the `// ignore: name_of_lint` and
+  # `// ignore_for_file: name_of_lint` syntax on the line or in the file
+  # producing the lint.
+  rules:
+    always_declare_return_types: true
+    avoid_print: true
+    prefer_single_quotes: true
+    always_use_package_imports: true
+    avoid_empty_else: true
+    comment_references: true
+    constant_identifier_names: true
+    curly_braces_in_flow_control_structures: true
+    directives_ordering: true
+    flutter_style_todos: true
+    package_names: true
+    prefer_contains: true
+    prefer_if_null_operators: true
+    prefer_is_empty: true
+    prefer_is_not_operator: true
+    prefer_iterable_whereType: true
+    prefer_mixin: true
+    prefer_null_aware_method_calls: true
+    prefer_null_aware_operators: true
+    prefer_spread_collections: true
+    require_trailing_commas: true
+    sized_box_shrink_expand: true
+    unawaited_futures: true
+    unnecessary_await_in_return: true
+    unnecessary_breaks: true
+    unnecessary_const: true
+    prefer_final_locals: true
+    prefer_final_in_for_each: true
+    prefer_final_fields: true
+    unnecessary_late: true
+    unnecessary_new: true
+    unnecessary_parenthesis: true
+    unnecessary_statements: true
+    unnecessary_string_escapes: true
+    unnecessary_to_list_in_spreads: true
+    use_enums: true
+    use_if_null_to_convert_nulls_to_bools: true
+    use_named_constants: true
+    use_raw_strings: true
+    use_to_and_as_if_applicable: true

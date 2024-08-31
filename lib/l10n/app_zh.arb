@@ -1,0 +1,23 @@
+{
+  "home": "首页",
+  "favorites": "收藏",
+  "settings": "设置",
+  "showWindow": "显示窗口",
+  "hideWindow": "隐藏窗口",
+  "exit": "退出",
+  "login": "登录",
+  "desktopLoginTip": "点击下面按钮将打开本地安装的 Chrome 或 Chromium 浏览器，请手动输入帐号密码进行登录，本软件在检测到登录成功后会自动关闭浏览器",
+  "chromePath": "Chrome 或 Chromium 安装位置:" ,
+  "chromeNotFound": "未检测到 Chrome 或 Chromium 浏览器" ,
+  "author": "作者",
+  "translator": "翻译",
+  "status": "状态",
+  "originalBook": "原作",
+  "lastUpdated": "最近更新",
+  "brief": "简介",
+  "errorTip": "出错啦~",
+  "previousPage": "上一页",
+  "nextPage": "下一页",
+  "menu": "菜单",
+  "detail": "详情"
+}
