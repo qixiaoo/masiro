@@ -28,7 +28,11 @@ jobs:
       - run: flutter --version
       - run: flutter pub get
       - run: flutter build linux
-      - run: zip -r ${{ env.BUILD_ARTIFACT }} build/linux/x64/release/bundle
+      - run: |
+          (
+          cd build/linux/x64/release/bundle && zip -r ${{ env.BUILD_ARTIFACT }} .
+          )
+          mv build/linux/x64/release/bundle/${{ env.BUILD_ARTIFACT }} .
       - name: Release
         uses: ncipollo/release-action@v1
         with:
