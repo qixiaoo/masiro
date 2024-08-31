@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: echo "COMMIT_SHORT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       - run: echo "BUILD_ARTIFACT=masiro-${{ env.COMMIT_SHORT_HASH }}-linux.zip" >> $GITHUB_ENV
-      - run: sudo apt-get install curl unzip xz-utils zip libglu1-mesa clang cmake ninja-build pkg-config appindicator3-0.1 libappindicator3-dev libgtk-3-dev liblzma-dev libstdc++-12-dev -y
+      - run: sudo apt-get install curl unzip xz-utils zip libglu1-mesa clang cmake ninja-build pkg-config libayatana-appindicator3-dev libgtk-3-dev liblzma-dev libstdc++-12-dev -y
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
