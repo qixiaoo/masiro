@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:go_router/go_router.dart';
 import 'package:masiro/misc/cookie.dart';
+import 'package:masiro/misc/platform.dart';
 import 'package:masiro/ui/screens/error/error_screen.dart';
 import 'package:masiro/ui/screens/favorites/favorites_screen.dart';
 import 'package:masiro/ui/screens/home/home_screen.dart';
@@ -53,6 +54,14 @@ final routerConfig = GoRouter(
         );
       },
     ),
+    if (isMobilePhone)
+      GoRoute(
+        path: RoutePath.novel,
+        builder: (context, state) {
+          final novelId = (state.extra as Map)['novelId']!;
+          return NovelScreen(novelId: novelId);
+        },
+      ),
   ],
 );
 
@@ -82,12 +91,13 @@ final _applicationShellRoutes = ShellRoute(
       path: RoutePath.settings,
       builder: (context, state) => const SettingsScreen(),
     ),
-    GoRoute(
-      path: RoutePath.novel,
-      builder: (context, state) {
-        final novelId = (state.extra as Map)['novelId']!;
-        return NovelScreen(novelId: novelId);
-      },
-    ),
+    if (isDesktop)
+      GoRoute(
+        path: RoutePath.novel,
+        builder: (context, state) {
+          final novelId = (state.extra as Map)['novelId']!;
+          return NovelScreen(novelId: novelId);
+        },
+      ),
   ],
 );

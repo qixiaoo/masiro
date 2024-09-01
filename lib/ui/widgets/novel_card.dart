@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:masiro/misc/context.dart';
+import 'package:masiro/misc/platform.dart';
 import 'package:masiro/misc/url.dart';
 import 'package:masiro/ui/widgets/cover.dart';
 
@@ -39,6 +40,7 @@ class NovelCard extends StatelessWidget {
                 width: 99.8,
                 height: 142.0,
                 url: coverImg.toUrl(),
+                fit: BoxFit.cover,
               ),
               Expanded(
                 child: Padding(
@@ -70,7 +72,7 @@ class NovelCard extends StatelessWidget {
                             ),
                             Text(
                               '${localizations.brief}: $brief',
-                              maxLines: 3,
+                              maxLines: isDesktop ? 3 : 2,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ],

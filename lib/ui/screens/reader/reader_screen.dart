@@ -50,34 +50,48 @@ class _ReaderScreenState extends State<ReaderScreen> {
   Widget buildBody(BuildContext context, ReaderScreenLoadedState state) {
     final chapterDetail = state.chapterDetail;
     final isTopBarVisible = state.isTopBarVisible;
-    final readingMode = state.readingMode;
     return Stack(
       children: [
-        Listener(
-          onPointerDown: (event) {
-            if (isDesktop && readingMode.isScroll()) {
-              context.read<ReaderScreenBloc>().add(ReaderScreenTopBarToggled());
-            }
-          },
-          child: Stack(
-            children: [
-              ChapterContentScroll(
-                content: chapterDetail.content,
-                padding: isDesktop
-                    ? const EdgeInsets.symmetric(
-                        horizontal: 120,
-                        vertical: kToolbarHeight * 2,
-                      )
-                    : null,
-              ),
-            ],
-          ),
-        ),
+        buildReaderContent(context, state),
         TopBar(
           title: chapterDetail.title,
           isVisible: isTopBarVisible,
         ),
       ],
     );
+  }
+
+  Widget buildReaderContent(
+    BuildContext context,
+    ReaderScreenLoadedState state,
+  ) {
+    final chapterDetail = state.chapterDetail;
+
+    final scrollReader = ChapterContentScroll(
+      content: chapterDetail.content,
+      padding: isDesktop
+          ? const EdgeInsets.symmetric(
+              horizontal: 120,
+              vertical: kToolbarHeight * 2,
+            )
+          : const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: kToolbarHeight * 2,
+            ),
+    );
+
+    return isDesktop
+        ? Listener(
+            onPointerDown: (event) => toggleTopBar(context),
+            child: scrollReader,
+          )
+        : GestureDetector(
+            onTap: () => toggleTopBar(context),
+            child: scrollReader,
+          );
+  }
+
+  void toggleTopBar(BuildContext context) {
+    context.read<ReaderScreenBloc>().add(ReaderScreenTopBarToggled());
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:masiro/data/model/novel_detail.dart';
 import 'package:masiro/misc/context.dart';
+import 'package:masiro/misc/platform.dart';
 import 'package:masiro/misc/url.dart';
 import 'package:masiro/ui/widgets/cover.dart';
 
@@ -21,6 +22,7 @@ class NovelHeader extends StatelessWidget {
           url: header.coverImg.toUrl(),
           width: coverWidth,
           height: coverWidth / coverRatio,
+          fit: BoxFit.cover,
         ),
         const SizedBox(width: 20),
         Expanded(
@@ -47,10 +49,11 @@ class NovelHeader extends StatelessWidget {
                   '${localizations.status}: ${header.status}',
                   style: textTheme.bodyLarge,
                 ),
-                Text(
-                  '${localizations.originalBook}: ${header.originalBook}',
-                  style: textTheme.bodyLarge,
-                ),
+                if (isDesktop)
+                  Text(
+                    '${localizations.originalBook}: ${header.originalBook}',
+                    style: textTheme.bodyLarge,
+                  ),
               ],
             ),
           ),

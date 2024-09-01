@@ -16,10 +16,11 @@ class TopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
     return AnimatedPositioned(
       left: 0,
       right: 0,
-      top: isVisible ? 0.0 : -kToolbarHeight,
+      top: isVisible ? 0.0 : -(kToolbarHeight + statusBarHeight),
       duration: _duration,
       curve: _curve,
       child: AppBar(

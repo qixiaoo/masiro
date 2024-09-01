@@ -11,7 +11,7 @@
 - [x] Linux：支持
 - [ ] Windows：未测试
 - [ ] macOS：未测试
-- [ ] Android: 开发中
+- [x] Android: 支持
 - [ ] iOS: 暂无计划
 
 ## License

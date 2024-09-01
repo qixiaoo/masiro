@@ -39,40 +39,41 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   Widget buildBody(BuildContext context, FavoritesScreenLoadedState state) {
     final novels = state.novels;
-    return EasyRefresh(
-      onRefresh: () {
-        context.read<FavoritesScreenBloc>().add(FavoritesScreenRefreshed());
-      },
-      child: isDesktop
-          ? GridView.builder(
-              padding: const EdgeInsets.all(10),
-              itemCount: novels.length,
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 600,
-                mainAxisExtent: 150,
-              ),
-              itemBuilder: (context, index) {
-                final n = novels[index];
-                return NovelCard(
-                  title: n.title,
-                  coverImg: n.coverImg,
-                  author: n.author,
-                  lastUpdated: n.lastUpdated,
-                  brief: n.brief,
-                  onTap: () {
-                    context.push(
-                      RoutePath.novel,
-                      extra: {'novelId': n.id},
-                    );
-                  },
+    return SafeArea(
+      child: EasyRefresh(
+        onRefresh: () {
+          context.read<FavoritesScreenBloc>().add(FavoritesScreenRefreshed());
+        },
+        child: GridView.builder(
+          padding: const EdgeInsets.all(10),
+          itemCount: novels.length,
+          gridDelegate: isDesktop
+              ? const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 600,
+                  mainAxisExtent: 150,
+                )
+              : const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: double.infinity,
+                  mainAxisExtent: 120,
+                ),
+          itemBuilder: (context, index) {
+            final n = novels[index];
+            return NovelCard(
+              title: n.title,
+              coverImg: n.coverImg,
+              author: n.author,
+              lastUpdated: n.lastUpdated,
+              brief: n.brief,
+              onTap: () {
+                context.push(
+                  RoutePath.novel,
+                  extra: {'novelId': n.id},
                 );
               },
-            )
-          : ListView.builder(
-              itemBuilder: (context, index) {
-                return null;
-              },
-            ),
+            );
+          },
+        ),
+      ),
     );
   }
 }

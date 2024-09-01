@@ -50,7 +50,11 @@ class _VolumeListState extends State<VolumeList> {
               body: Column(
                 children: panel.volume.chapters.map((c) {
                   return ListTile(
-                    title: Text(c.title),
+                    title: Text(
+                      c.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                     onTap: () => widget.onTap(c, panel.volume),
                   );
                 }).toList(),
