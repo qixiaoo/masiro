@@ -33,22 +33,24 @@ class _DesktopLoginState extends State<DesktopLogin> {
   Widget build(BuildContext context) {
     final localizations = context.localizations();
     final loginTip = isDesktop ? localizations.desktopLoginTip : '';
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (chromePath == null)
-            Text(localizations.chromeNotFound)
-          else ...[
-            Text(loginTip),
-            Text('${localizations.chromePath} $chromePath'),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () => _desktopLogin(context),
-              child: Text(localizations.login),
-            ),
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (chromePath == null)
+              Text(localizations.chromeNotFound)
+            else ...[
+              Text(loginTip),
+              Text('${localizations.chromePath} $chromePath'),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () => _desktopLogin(context),
+                child: Text(localizations.login),
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }

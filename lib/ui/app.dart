@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:masiro/misc/router.dart';
 import 'package:masiro/misc/tray_icon.dart';
 import 'package:tray_manager/tray_manager.dart';
@@ -54,6 +55,7 @@ class _AppState extends State<App> with WindowListener, TrayListener {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       routerConfig: routerConfig,
+      builder: FlutterSmartDialog.init(),
     );
   }
 }

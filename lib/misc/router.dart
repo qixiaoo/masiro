@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:go_router/go_router.dart';
 import 'package:masiro/misc/cookie.dart';
 import 'package:masiro/ui/screens/error/error_screen.dart';
@@ -30,6 +31,7 @@ final routerConfig = GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: RoutePath.favorites,
   debugLogDiagnostics: true,
+  observers: [FlutterSmartDialog.observer],
   errorBuilder: (context, state) => ErrorScreen(message: state.error?.message),
   routes: [
     _applicationShellRoutes,

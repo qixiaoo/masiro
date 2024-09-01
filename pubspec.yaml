@@ -40,6 +40,8 @@ dependencies:
   dio_cache_interceptor_isar_store: ^1.0.1
   isar: *isar_version
   isar_flutter_libs: *isar_version
+  webview_flutter: ^4.9.0
+  webview_cookie_manager: ^2.0.6
 
 
 dev_dependencies:
