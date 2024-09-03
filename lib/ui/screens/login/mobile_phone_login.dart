@@ -86,7 +86,10 @@ class _MobilePhoneLoginState extends State<MobilePhoneLogin> {
       }
       _initialized = true;
       final localizations = context.localizations();
-      SmartDialog.showToast(localizations.mobilePhoneLoginTip);
+      SmartDialog.showToast(
+        localizations.mobilePhoneLoginTip,
+        displayTime: const Duration(seconds: 10),
+      );
     });
   }
 
