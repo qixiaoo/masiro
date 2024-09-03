@@ -4,9 +4,15 @@ import 'package:masiro/misc/context.dart';
 
 class VolumeList extends StatefulWidget {
   final List<Volume> volumes;
+  final int lastReadChapterId;
   final void Function(Chapter c, Volume v) onTap;
 
-  const VolumeList({super.key, required this.volumes, required this.onTap});
+  const VolumeList({
+    super.key,
+    required this.volumes,
+    required this.lastReadChapterId,
+    required this.onTap,
+  });
 
   @override
   State<VolumeList> createState() => _VolumeListState();
@@ -55,6 +61,7 @@ class _VolumeListState extends State<VolumeList> {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
+                    selected: c.id == widget.lastReadChapterId,
                     onTap: () => widget.onTap(c, panel.volume),
                   );
                 }).toList(),

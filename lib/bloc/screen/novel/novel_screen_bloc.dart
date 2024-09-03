@@ -11,6 +11,7 @@ class NovelScreenBloc extends Bloc<NovelScreenEvent, NovelScreenState> {
 
   NovelScreenBloc({required this.novelId}) : super(NovelScreenInitialState()) {
     on<NovelScreenRefreshed>(_onNovelScreenRefreshed);
+    on<NovelScreenChapterRead>(_onNovelScreenChapterRead);
   }
 
   Future<void> _onNovelScreenRefreshed(
@@ -23,5 +24,18 @@ class NovelScreenBloc extends Bloc<NovelScreenEvent, NovelScreenState> {
     } catch (e) {
       emit(NovelScreenErrorState(message: e.toString()));
     }
+  }
+
+  void _onNovelScreenChapterRead(
+    NovelScreenChapterRead event,
+    Emitter<NovelScreenState> emit,
+  ) {
+    if (state is! NovelScreenLoadedState) {
+      return;
+    }
+    final novelDetail = (state as NovelScreenLoadedState)
+        .novelDetail
+        .copyWith(lastReadChapterId: event.chapterId);
+    emit(NovelScreenLoadedState(novelDetail: novelDetail));
   }
 }

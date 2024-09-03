@@ -69,7 +69,11 @@ NovelDetail _novelDetailResponseToNovelDetail(NovelDetailResponse d) {
     coverImg: d.header.coverImg,
   );
   final volumes = _volumeResponseToVolumeList(d.volumes, d.chapters);
-  return NovelDetail(volumes: volumes, header: header);
+  return NovelDetail(
+    volumes: volumes,
+    header: header,
+    lastReadChapterId: d.lastReadChapterId,
+  );
 }
 
 List<Volume> _volumeResponseToVolumeList(

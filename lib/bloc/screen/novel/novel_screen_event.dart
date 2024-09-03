@@ -6,3 +6,12 @@ sealed class NovelScreenEvent extends Equatable {
 }
 
 final class NovelScreenRefreshed extends NovelScreenEvent {}
+
+final class NovelScreenChapterRead extends NovelScreenEvent {
+  final int chapterId;
+
+  NovelScreenChapterRead({required this.chapterId});
+
+  @override
+  List<Object> get props => [chapterId];
+}

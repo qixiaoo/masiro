@@ -6,11 +6,13 @@ class NovelDetailResponse {
   List<VolumeResponse> volumes;
   List<ChapterResponse> chapters;
   NovelDetailHeaderResponse header;
+  int lastReadChapterId;
 
   NovelDetailResponse({
     required this.volumes,
     required this.chapters,
     required this.header,
+    required this.lastReadChapterId,
   });
 
   factory NovelDetailResponse.fromHtml(String html) {
@@ -22,10 +24,13 @@ class NovelDetailResponse {
     final List<ChapterResponse> chapters =
         chaptersJson != null ? chapterResponseFromJson(chaptersJson) : [];
     final header = NovelDetailHeaderResponse.fromDocument(document);
+    final lastReadChapterId =
+        int.parse(document.getElementById('last_read_cid')?.text.trim() ?? '0');
     return NovelDetailResponse(
       volumes: volumes,
       chapters: chapters,
       header: header,
+      lastReadChapterId: lastReadChapterId,
     );
   }
 }

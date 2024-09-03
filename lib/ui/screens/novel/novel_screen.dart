@@ -44,11 +44,13 @@ class _NovelScreenState extends State<NovelScreen> {
   }
 
   Widget buildBody(BuildContext context, NovelScreenLoadedState state) {
+    final bloc = context.read<NovelScreenBloc>();
     final textTheme = context.textTheme();
     final localizations = context.localizations();
     final novelDetail = state.novelDetail;
     final header = novelDetail.header;
     final volumes = novelDetail.volumes;
+    final lastReadChapterId = novelDetail.lastReadChapterId;
 
     return Column(
       children: [
@@ -62,7 +64,7 @@ class _NovelScreenState extends State<NovelScreen> {
         Expanded(
           child: EasyRefresh(
             onRefresh: () async {
-              context.read<NovelScreenBloc>().add(NovelScreenRefreshed());
+              bloc.add(NovelScreenRefreshed());
             },
             child: ListView(
               padding: const EdgeInsets.all(20),
@@ -79,14 +81,16 @@ class _NovelScreenState extends State<NovelScreen> {
                 const SizedBox(height: 20),
                 VolumeList(
                   volumes: volumes,
-                  onTap: (chapter, volume) {
-                    context.push(
+                  lastReadChapterId: lastReadChapterId,
+                  onTap: (chapter, volume) async {
+                    await context.push(
                       RoutePath.reader,
                       extra: {
                         'novelId': chapter.novelId,
                         'chapterId': chapter.id,
                       },
                     );
+                    bloc.add(NovelScreenChapterRead(chapterId: chapter.id));
                   },
                 ),
               ],
