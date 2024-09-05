@@ -5,7 +5,10 @@ import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cache_interceptor_isar_store/dio_cache_interceptor_isar_store.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:get_it/get_it.dart';
+import 'package:isar/isar.dart';
 import 'package:logger/logger.dart';
+import 'package:masiro/data/database/entity/chapter_record_entity.dart';
+import 'package:masiro/data/database/entity/novel_record_entity.dart';
 import 'package:masiro/di/injectable.dart';
 import 'package:masiro/misc/cookie.dart';
 import 'package:masiro/misc/url.dart';
@@ -39,6 +42,14 @@ Future<void> setupGetIt() async {
     ..options.validateStatus =
         (status) => status != null && status >= 200 && status < 400;
   getIt.registerSingleton(dio);
+
+  // Register isar
+  final isar = await Isar.open(
+    [NovelRecordEntitySchema, ChapterRecordEntitySchema],
+    directory: supportDir.path,
+    inspector: true,
+  );
+  getIt.registerSingleton(isar);
 
   // Config injectable dependencies
   configureDependencies();

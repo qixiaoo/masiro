@@ -65,6 +65,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
     BuildContext context,
     ReaderScreenLoadedState state,
   ) {
+    final bloc = context.read<ReaderScreenBloc>();
     final chapterDetail = state.chapterDetail;
 
     final scrollReader = ChapterContentScroll(
@@ -78,6 +79,9 @@ class _ReaderScreenState extends State<ReaderScreen> {
               horizontal: 20,
               vertical: kToolbarHeight * 2,
             ),
+      position: state.progress.toDouble(),
+      onPositionChange: (position) =>
+          bloc.add(ReaderScreenProgressChanged(progress: position.toInt())),
     );
 
     return isDesktop

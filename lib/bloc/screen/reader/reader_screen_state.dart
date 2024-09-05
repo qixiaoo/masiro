@@ -22,25 +22,34 @@ class ReaderScreenLoadedState extends ReaderScreenState {
   final ChapterDetail chapterDetail;
   final bool isTopBarVisible;
   final ReadingMode readingMode;
+  final int progress;
 
   ReaderScreenLoadedState({
     required this.chapterDetail,
     this.isTopBarVisible = false,
     this.readingMode = ReadingMode.scroll,
+    required this.progress,
   });
 
   ReaderScreenLoadedState copyWith({
     ChapterDetail? chapterDetail,
     bool? isTopBarVisible,
     ReadingMode? readingMode,
+    int? progress,
   }) {
     return ReaderScreenLoadedState(
       chapterDetail: chapterDetail ?? this.chapterDetail,
       isTopBarVisible: isTopBarVisible ?? this.isTopBarVisible,
       readingMode: readingMode ?? this.readingMode,
+      progress: progress ?? this.progress,
     );
   }
 
   @override
-  List<Object?> get props => [chapterDetail, isTopBarVisible, readingMode];
+  List<Object?> get props => [
+        chapterDetail,
+        isTopBarVisible,
+        readingMode,
+        progress,
+      ];
 }
