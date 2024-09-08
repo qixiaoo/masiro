@@ -58,7 +58,8 @@ final routerConfig = GoRouter(
       GoRoute(
         path: RoutePath.novel,
         builder: (context, state) {
-          final novelId = (state.extra as Map)['novelId']!;
+          final extra = state.extra as Map;
+          final novelId = extra['novelId']!;
           return NovelScreen(novelId: novelId);
         },
       ),

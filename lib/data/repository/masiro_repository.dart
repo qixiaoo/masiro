@@ -37,4 +37,12 @@ class MasiroRepository {
     final response = await MasiroApi.getChapterDetail(novelId, chapterId);
     return chapterDetailResponseToChapterDetail(response);
   }
+
+  Future<void> addNovelToFavorites(int novelId, String csrfToken) async {
+    await MasiroApi.collectNovel(novelId, csrfToken);
+  }
+
+  Future<void> removeNovelFromFavorites(int novelId, String csrfToken) async {
+    await MasiroApi.uncollectNovel(novelId, csrfToken);
+  }
 }

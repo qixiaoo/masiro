@@ -43,4 +43,32 @@ class MasiroApi {
     );
     return ChapterDetailResponse.fromHtml(response.data);
   }
+
+  static Future<void> collectNovel(int novelId, String csrfToken) async {
+    await _dio.get(
+      MasiroUrl.collectNovel,
+      queryParameters: {'novel_id': novelId},
+      options: Options(
+        headers: {
+          'Referer': 'https://masiro.me/admin/novelView?novel_id=$novelId',
+          'X-CSRF-TOKEN': csrfToken,
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      ),
+    );
+  }
+
+  static Future<void> uncollectNovel(int novelId, String csrfToken) async {
+    await _dio.get(
+      MasiroUrl.uncollectNovel,
+      queryParameters: {'novel_id': novelId},
+      options: Options(
+        headers: {
+          'Referer': 'https://masiro.me/admin/novelView?novel_id=$novelId',
+          'X-CSRF-TOKEN': csrfToken,
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      ),
+    );
+  }
 }

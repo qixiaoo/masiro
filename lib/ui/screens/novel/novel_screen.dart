@@ -11,6 +11,8 @@ import 'package:masiro/ui/screens/novel/novel_header.dart';
 import 'package:masiro/ui/screens/novel/volume_list.dart';
 import 'package:masiro/ui/widgets/error_message.dart';
 
+bool _isFavoriteToggled = false;
+
 class NovelScreen extends StatefulWidget {
   final int novelId;
 
@@ -51,15 +53,31 @@ class _NovelScreenState extends State<NovelScreen> {
     final header = novelDetail.header;
     final volumes = novelDetail.volumes;
     final lastReadChapterId = novelDetail.lastReadChapterId;
+    final isFavorite = header.isFavorite;
 
     return Column(
       children: [
         AppBar(
           leading: IconButton(
-            onPressed: () => context.pop(),
+            onPressed: () => context.pop(_isFavoriteToggled),
             icon: const Icon(Icons.arrow_back_rounded),
           ),
           title: Text(localizations.detail),
+          actions: [
+            IconButton(
+              onPressed: () {
+                bloc.add(
+                  isFavorite
+                      ? NovelScreenNovelUnfavorited()
+                      : NovelScreenNovelFavorited(),
+                );
+                _isFavoriteToggled = true;
+              },
+              icon: Icon(
+                isFavorite ? Icons.favorite : Icons.favorite_outline_outlined,
+              ),
+            )
+          ],
         ),
         Expanded(
           child: EasyRefresh(

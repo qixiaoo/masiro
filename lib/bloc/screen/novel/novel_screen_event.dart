@@ -15,3 +15,7 @@ final class NovelScreenChapterRead extends NovelScreenEvent {
   @override
   List<Object> get props => [chapterId];
 }
+
+final class NovelScreenNovelFavorited extends NovelScreenEvent {}
+
+final class NovelScreenNovelUnfavorited extends NovelScreenEvent {}

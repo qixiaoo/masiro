@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:masiro/bloc/screen/favorites/favorites_screen_bloc.dart';
 import 'package:masiro/bloc/screen/favorites/favorites_screen_event.dart';
 import 'package:masiro/bloc/screen/favorites/favorites_screen_state.dart';
+import 'package:masiro/data/model/novel.dart';
 import 'package:masiro/misc/context.dart';
 import 'package:masiro/misc/platform.dart';
 import 'package:masiro/misc/router.dart';
@@ -20,6 +21,20 @@ class FavoritesScreen extends StatefulWidget {
 }
 
 class _FavoritesScreenState extends State<FavoritesScreen> {
+  late final EasyRefreshController _easyRefreshController;
+
+  @override
+  void initState() {
+    super.initState();
+    _easyRefreshController = EasyRefreshController();
+  }
+
+  @override
+  void dispose() {
+    _easyRefreshController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -44,6 +59,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     final novels = state.novels;
     return SafeArea(
       child: EasyRefresh(
+        controller: _easyRefreshController,
         onRefresh: () {
           context.read<FavoritesScreenBloc>().add(FavoritesScreenRefreshed());
         },
@@ -68,12 +84,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                     author: n.author,
                     lastUpdated: n.lastUpdated,
                     brief: n.brief,
-                    onTap: () {
-                      context.push(
-                        RoutePath.novel,
-                        extra: {'novelId': n.id},
-                      );
-                    },
+                    onTap: () => _navigateToNovelDetailScreen(context, n),
                   );
                 },
               )
@@ -92,5 +103,19 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               ),
       ),
     );
+  }
+
+  Future<void> _navigateToNovelDetailScreen(
+    BuildContext context,
+    Novel n,
+  ) async {
+    final bool? needRefresh = await context.push(
+      RoutePath.novel,
+      extra: {'novelId': n.id},
+    );
+    if (needRefresh == null || needRefresh == false) {
+      return;
+    }
+    await _easyRefreshController.callRefresh();
   }
 }
