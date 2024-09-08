@@ -20,5 +20,6 @@
   "previousPage": "上一页",
   "nextPage": "下一页",
   "menu": "菜单",
-  "detail": "详情"
+  "detail": "详情",
+  "noContentMessage": "- 空空如也 -"
 }
