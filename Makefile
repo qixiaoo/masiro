@@ -10,6 +10,6 @@ fix:
 format: fix
 	dart format .
 
-.PHONY : format
+.PHONY : gen-l10n
 gen-l10n:
 	flutter gen-l10n
