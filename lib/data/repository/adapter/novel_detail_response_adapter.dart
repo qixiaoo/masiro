@@ -1,6 +1,6 @@
-import 'package:masiro/data/model/novel_detail.dart';
 import 'package:masiro/data/network/response/novel_detail_response.dart';
 import 'package:masiro/data/repository/adapter/volume_response_adapter.dart';
+import 'package:masiro/data/repository/model/novel_detail.dart';
 
 NovelDetail novelDetailResponseToNovelDetail(NovelDetailResponse d) {
   final header = NovelDetailHeader(

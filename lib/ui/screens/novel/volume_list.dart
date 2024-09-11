@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:masiro/data/model/volume.dart';
+import 'package:masiro/data/repository/model/volume.dart';
 import 'package:masiro/misc/context.dart';
 
 class VolumeList extends StatefulWidget {

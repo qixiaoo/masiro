@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:masiro/data/model/novel_detail.dart';
+import 'package:masiro/data/repository/model/novel_detail.dart';
 
 sealed class NovelScreenState extends Equatable {
   @override

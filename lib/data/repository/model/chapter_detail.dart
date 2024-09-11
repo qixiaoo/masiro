@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:masiro/data/model/volume.dart';
+import 'package:masiro/data/repository/model/volume.dart';
 
 class ChapterDetail extends Equatable {
   final String title;

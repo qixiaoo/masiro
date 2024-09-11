@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:masiro/data/model/chapter_detail.dart';
+import 'package:masiro/data/repository/model/chapter_detail.dart';
 import 'package:masiro/ui/widgets/cover.dart';
 
 class ChapterContentScroll extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:masiro/data/model/novel.dart';
+import 'package:masiro/data/repository/model/novel.dart';
 
 sealed class FavoritesScreenState extends Equatable {
   @override

@@ -1,5 +1,5 @@
-import 'package:masiro/data/model/volume.dart';
 import 'package:masiro/data/network/response/volume_response.dart';
+import 'package:masiro/data/repository/model/volume.dart';
 
 List<Volume> volumeResponseToVolumeList(
   List<VolumeResponse> volumes,

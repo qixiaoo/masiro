@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:masiro/data/model/chapter_detail.dart';
-import 'package:masiro/data/model/reading_mode.dart';
+import 'package:masiro/data/repository/model/chapter_detail.dart';
+import 'package:masiro/data/repository/model/reading_mode.dart';
 
 sealed class ReaderScreenState extends Equatable {
   @override

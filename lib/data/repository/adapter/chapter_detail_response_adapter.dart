@@ -1,8 +1,8 @@
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
-import 'package:masiro/data/model/chapter_detail.dart';
 import 'package:masiro/data/network/response/chapter_detail_response.dart';
 import 'package:masiro/data/repository/adapter/volume_response_adapter.dart';
+import 'package:masiro/data/repository/model/chapter_detail.dart';
 
 ChapterDetail chapterDetailResponseToChapterDetail(ChapterDetailResponse d) {
   final volumes = volumeResponseToVolumeList(d.volumes, d.chapters);

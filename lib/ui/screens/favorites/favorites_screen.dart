@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:masiro/bloc/screen/favorites/favorites_screen_bloc.dart';
 import 'package:masiro/bloc/screen/favorites/favorites_screen_event.dart';
 import 'package:masiro/bloc/screen/favorites/favorites_screen_state.dart';
-import 'package:masiro/data/model/novel.dart';
+import 'package:masiro/data/repository/model/novel.dart';
 import 'package:masiro/misc/context.dart';
 import 'package:masiro/misc/platform.dart';
 import 'package:masiro/misc/router.dart';

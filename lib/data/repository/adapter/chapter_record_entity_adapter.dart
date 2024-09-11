@@ -1,6 +1,6 @@
 import 'package:masiro/data/database/entity/chapter_record_entity.dart';
-import 'package:masiro/data/model/chapter_record.dart';
-import 'package:masiro/data/model/reading_mode.dart';
+import 'package:masiro/data/repository/model/chapter_record.dart';
+import 'package:masiro/data/repository/model/reading_mode.dart';
 
 ChapterRecord chapterRecordToModel(ChapterRecordEntity record) {
   return ChapterRecord(

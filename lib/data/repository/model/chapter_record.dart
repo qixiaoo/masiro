@@ -1,5 +1,5 @@
 import 'package:isar/isar.dart';
-import 'package:masiro/data/model/reading_mode.dart';
+import 'package:masiro/data/repository/model/reading_mode.dart';
 
 class ChapterRecord {
   Id id;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:masiro/data/model/novel_detail.dart';
+import 'package:masiro/data/repository/model/novel_detail.dart';
 import 'package:masiro/misc/context.dart';
 import 'package:masiro/misc/platform.dart';
 import 'package:masiro/misc/url.dart';

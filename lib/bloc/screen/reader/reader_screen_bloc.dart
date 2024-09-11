@@ -3,9 +3,9 @@ import 'package:isar/isar.dart';
 import 'package:masiro/bloc/screen/reader/reader_screen_event.dart';
 import 'package:masiro/bloc/screen/reader/reader_screen_state.dart';
 import 'package:masiro/bloc/util/event_transformer.dart';
-import 'package:masiro/data/model/chapter_record.dart';
-import 'package:masiro/data/model/reading_mode.dart';
 import 'package:masiro/data/repository/masiro_repository.dart';
+import 'package:masiro/data/repository/model/chapter_record.dart';
+import 'package:masiro/data/repository/model/reading_mode.dart';
 import 'package:masiro/data/repository/novel_record_repository.dart';
 import 'package:masiro/di/get_it.dart';
 
