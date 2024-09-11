@@ -24,7 +24,11 @@ class _VolumeListState extends State<VolumeList> {
   @override
   void initState() {
     super.initState();
-    panels = widget.volumes.map((v) => _VolumePanel(volume: v)).toList();
+    panels = widget.volumes.map((v) {
+      final lastReadChapterId = widget.lastReadChapterId;
+      final index = v.chapters.indexWhere((c) => c.id == lastReadChapterId);
+      return _VolumePanel(volume: v, isExpanded: index != -1);
+    }).toList();
   }
 
   @override
@@ -82,8 +86,6 @@ class _VolumePanel {
 
   _VolumePanel({
     required this.volume,
-    // Avoid `dart fix --apply` from deleting unused parameters, see https://github.com/dart-lang/sdk/issues/54190
-    // ignore: unused_element
     this.isExpanded = false,
   });
 }
