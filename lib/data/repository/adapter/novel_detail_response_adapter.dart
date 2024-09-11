@@ -1,5 +1,5 @@
 import 'package:masiro/data/model/novel_detail.dart';
-import 'package:masiro/data/network/novel_detail_response.dart';
+import 'package:masiro/data/network/response/novel_detail_response.dart';
 import 'package:masiro/data/repository/adapter/volume_response_adapter.dart';
 
 NovelDetail novelDetailResponseToNovelDetail(NovelDetailResponse d) {

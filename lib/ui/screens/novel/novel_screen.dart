@@ -76,7 +76,7 @@ class _NovelScreenState extends State<NovelScreen> {
               icon: Icon(
                 isFavorite ? Icons.favorite : Icons.favorite_outline_outlined,
               ),
-            )
+            ),
           ],
         ),
         Expanded(

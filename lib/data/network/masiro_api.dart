@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:masiro/data/network/chapter_detail_response.dart';
-import 'package:masiro/data/network/novel_collection_response.dart';
-import 'package:masiro/data/network/novel_detail_response.dart';
+import 'package:masiro/data/network/response/chapter_detail_response.dart';
+import 'package:masiro/data/network/response/novel_collection_response.dart';
+import 'package:masiro/data/network/response/novel_detail_response.dart';
 import 'package:masiro/di/get_it.dart';
 import 'package:masiro/misc/url.dart';
 

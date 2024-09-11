@@ -1,5 +1,5 @@
 import 'package:html/parser.dart';
-import 'package:masiro/data/network/volume_response.dart';
+import 'package:masiro/data/network/response/volume_response.dart';
 
 class ChapterDetailResponse {
   String title;

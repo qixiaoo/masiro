@@ -1,6 +1,6 @@
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
-import 'package:masiro/data/network/volume_response.dart';
+import 'package:masiro/data/network/response/volume_response.dart';
 
 class NovelDetailResponse {
   List<VolumeResponse> volumes;

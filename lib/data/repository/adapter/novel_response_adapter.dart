@@ -1,5 +1,5 @@
 import 'package:masiro/data/model/novel.dart';
-import 'package:masiro/data/network/novel_collection_response.dart';
+import 'package:masiro/data/network/response/novel_collection_response.dart';
 
 Novel novelResponseToNovel(NovelResponse n) {
   return Novel(
