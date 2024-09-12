@@ -1,4 +1,4 @@
-class PagedNovelCollectionResponse {
+class PagedNovelResponse {
   int code;
   String msg;
   List<NovelResponse> novels;
@@ -6,7 +6,7 @@ class PagedNovelCollectionResponse {
   int pages;
   int total;
 
-  PagedNovelCollectionResponse({
+  PagedNovelResponse({
     required this.code,
     required this.msg,
     required this.novels,
@@ -15,8 +15,8 @@ class PagedNovelCollectionResponse {
     required this.total,
   });
 
-  factory PagedNovelCollectionResponse.fromJson(Map<String, dynamic> json) {
-    return PagedNovelCollectionResponse(
+  factory PagedNovelResponse.fromJson(Map<String, dynamic> json) {
+    return PagedNovelResponse(
       code: json['code'],
       msg: json['msg'],
       novels: (json['novels'] as List<dynamic>)

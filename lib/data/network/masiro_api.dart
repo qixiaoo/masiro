@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:masiro/data/network/response/chapter_detail_response.dart';
-import 'package:masiro/data/network/response/novel_collection_response.dart';
 import 'package:masiro/data/network/response/novel_detail_response.dart';
+import 'package:masiro/data/network/response/paged_novel_response.dart';
 import 'package:masiro/di/get_it.dart';
 import 'package:masiro/misc/url.dart';
 
 class MasiroApi {
   static final _dio = getIt<Dio>();
 
-  static Future<PagedNovelCollectionResponse> getPagedNovelCollection({
+  static Future<PagedNovelResponse> getPagedNovelCollection({
     required int page,
     int collection = 1,
   }) async {
@@ -17,7 +17,7 @@ class MasiroApi {
       queryParameters: {'page': page, 'collection': collection},
       options: Options(headers: {'Referer': MasiroUrl.collectionUrl}),
     );
-    return PagedNovelCollectionResponse.fromJson(response.data);
+    return PagedNovelResponse.fromJson(response.data);
   }
 
   static Future<NovelDetailResponse> getNovelDetail(int novelId) async {
