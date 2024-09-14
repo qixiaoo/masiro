@@ -46,6 +46,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: echo "COMMIT_SHORT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+      - run: echo "RELEASE_DIR=release" >> $GITHUB_ENV
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
@@ -59,14 +60,28 @@ jobs:
       - run: flutter pub get
       - run: flutter build apk --split-per-abi --no-tree-shake-icons
       - run: |
-          cp build/app/outputs/flutter-apk/app-arm64-v8a-release.apk .
-          cp build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk .
+          mkdir -p ${{ env.RELEASE_DIR }}
+          cp build/app/outputs/flutter-apk/app-arm64-v8a-release.apk ${{ env.RELEASE_DIR }}
+          cp build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk ${{ env.RELEASE_DIR }}
+          cd ${{ env.RELEASE_DIR }}
           mv app-arm64-v8a-release.apk masiro-${{ env.COMMIT_SHORT_HASH }}-arm64-v8a-release.apk
           mv app-armeabi-v7a-release.apk masiro-${{ env.COMMIT_SHORT_HASH }}-armeabi-v7a-release.apk
+          cd ..
+      - name: Sign app APK
+        uses: r0adkll/sign-android-release@v1
+        id: sign_app
+        with:
+          releaseDirectory: ${{ env.RELEASE_DIR }}
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+        env:
+          BUILD_TOOLS_VERSION: "34.0.0"
       - name: Release
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
-          artifacts: "masiro-${{ env.COMMIT_SHORT_HASH }}-*-release.apk"
+          artifacts: "${{ steps.sign_app.signedReleaseFile0 }},${{ steps.sign_app.signedReleaseFile1 }}"
           tag: ${{ env.COMMIT_SHORT_HASH }}
           prerelease: true
