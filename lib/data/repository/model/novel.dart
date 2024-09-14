@@ -6,9 +6,9 @@ final class Novel extends Equatable {
   final String brief;
   final int rank;
   final String coverImg;
-  final String author;
-  final String lastUpdated;
-  final String lastUpdatedTime;
+  final String? author;
+  final String? lastUpdated;
+  final String? lastUpdatedTime;
 
   const Novel({
     required this.id,

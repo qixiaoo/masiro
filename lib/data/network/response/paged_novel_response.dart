@@ -35,9 +35,9 @@ class NovelResponse {
   String brief;
   int rank;
   String coverImg;
-  String author;
-  String newUpTime;
-  String newUpContent;
+  String? author;
+  String? newUpTime;
+  String? newUpContent;
 
   NovelResponse({
     required this.id,

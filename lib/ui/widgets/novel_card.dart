@@ -7,8 +7,8 @@ import 'package:masiro/ui/widgets/cover.dart';
 class NovelCard extends StatelessWidget {
   final String title;
   final String coverImg;
-  final String author;
-  final String lastUpdated;
+  final String? author;
+  final String? lastUpdated;
   final String brief;
 
   final void Function()? onTap;
@@ -66,7 +66,7 @@ class NovelCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${localizations.author}: $author',
+                              '${localizations.author}: ${author ?? '-'}',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
