@@ -71,4 +71,32 @@ class MasiroApi {
       ),
     );
   }
+
+  static Future<PagedNovelResponse> searchNovels({
+    String? keyword,
+    int? page,
+    bool? isOriginal,
+  }) async {
+    final Map<String, dynamic> params = {};
+
+    if (keyword != null) {
+      params['keyword'] = keyword;
+    }
+
+    if (page != null) {
+      params['page'] = page;
+    }
+
+    if (isOriginal != null) {
+      params['ori'] = isOriginal ? 1 : 0;
+    }
+
+    final response = await _dio.get(
+      MasiroUrl.loadMoreNovels,
+      queryParameters: params,
+      options: Options(headers: {'Referer': MasiroUrl.novelsUrl}),
+    );
+
+    return PagedNovelResponse.fromJson(response.data);
+  }
 }

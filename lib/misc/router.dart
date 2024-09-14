@@ -5,10 +5,10 @@ import 'package:masiro/misc/cookie.dart';
 import 'package:masiro/misc/platform.dart';
 import 'package:masiro/ui/screens/error/error_screen.dart';
 import 'package:masiro/ui/screens/favorites/favorites_screen.dart';
-import 'package:masiro/ui/screens/home/home_screen.dart';
 import 'package:masiro/ui/screens/login/login_screen.dart';
 import 'package:masiro/ui/screens/novel/novel_screen.dart';
 import 'package:masiro/ui/screens/reader/reader_screen.dart';
+import 'package:masiro/ui/screens/search/search_screen.dart';
 import 'package:masiro/ui/screens/settings/settings_screen.dart';
 import 'package:masiro/ui/widgets/router_outlet_with_nav_bar.dart';
 
@@ -20,6 +20,7 @@ class RoutePath {
   static const String novel = '/novel';
   static const String reader = '/reader';
   static const String error = '/error';
+  static const String search = '/search';
 }
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
@@ -54,15 +55,10 @@ final routerConfig = GoRouter(
         );
       },
     ),
-    if (isMobilePhone)
-      GoRoute(
-        path: RoutePath.novel,
-        builder: (context, state) {
-          final extra = state.extra as Map;
-          final novelId = extra['novelId']!;
-          return NovelScreen(novelId: novelId);
-        },
-      ),
+    if (isMobilePhone) ...[
+      _novelScreenRoute,
+      _searchScreenRoute,
+    ],
   ],
 );
 
@@ -74,7 +70,7 @@ final _applicationShellRoutes = ShellRoute(
   routes: <RouteBase>[
     GoRoute(
       path: RoutePath.home,
-      builder: (context, state) => const HomeScreen(),
+      builder: (context, state) => const SearchScreen(),
     ),
     GoRoute(
       path: RoutePath.favorites,
@@ -92,13 +88,23 @@ final _applicationShellRoutes = ShellRoute(
       path: RoutePath.settings,
       builder: (context, state) => const SettingsScreen(),
     ),
-    if (isDesktop)
-      GoRoute(
-        path: RoutePath.novel,
-        builder: (context, state) {
-          final novelId = (state.extra as Map)['novelId']!;
-          return NovelScreen(novelId: novelId);
-        },
-      ),
+    if (isDesktop) ...[
+      _novelScreenRoute,
+      _searchScreenRoute,
+    ],
   ],
+);
+
+final _novelScreenRoute = GoRoute(
+  path: RoutePath.novel,
+  builder: (context, state) {
+    final extra = state.extra as Map;
+    final novelId = extra['novelId']!;
+    return NovelScreen(novelId: novelId);
+  },
+);
+
+final _searchScreenRoute = GoRoute(
+  path: RoutePath.search,
+  builder: (context, state) => const SearchScreen(),
 );

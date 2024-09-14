@@ -11,6 +11,9 @@ class MasiroUrl {
       'https://masiro.me/admin/novelView'; // Novel detail page
   static const novelReadingUrl =
       'https://masiro.me/admin/novelReading'; // Novel reading page
+  static const novelsUrl = 'https://masiro.me/admin/novels'; // All novels page
+  static const novelRankUrl =
+      'https://masiro.me/admin/novelRank'; // Novel rank page
 
   // APIs
   static const recentUpdates = 'admin/recentUpdates';

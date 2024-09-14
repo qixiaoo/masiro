@@ -21,5 +21,6 @@
   "nextPage": "下一页",
   "menu": "菜单",
   "detail": "详情",
-  "noContentMessage": "- 空空如也 -"
+  "noContentMessage": "- 空空如也 -",
+  "noMoreContentTip": "没有更多啦~"
 }
