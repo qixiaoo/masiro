@@ -82,6 +82,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
-          artifacts: "${{ steps.sign_app.signedReleaseFile0 }},${{ steps.sign_app.signedReleaseFile1 }}"
+          artifacts: "${{ env.RELEASE_DIR }}/masiro-${{ env.COMMIT_SHORT_HASH }}-*-release-signed.apk"
           tag: ${{ env.COMMIT_SHORT_HASH }}
           prerelease: true
