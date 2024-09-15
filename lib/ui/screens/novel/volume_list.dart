@@ -76,6 +76,7 @@ class _VolumeListState extends State<VolumeList> {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
+            trailing: buildListTileTrailing(context, c.limitLv, c.cost),
             selected: c.id == widget.lastReadChapterId,
             onTap: () => widget.onTap(c, panel.volume),
           );
@@ -83,6 +84,28 @@ class _VolumeListState extends State<VolumeList> {
       ),
       isExpanded: panel.isExpanded,
     );
+  }
+
+  Widget? buildListTileTrailing(BuildContext context, int limitLv, int cost) {
+    final localizations = context.localizations();
+    if (limitLv == 0 && cost > 0) {
+      return Text('${cost}G');
+    }
+    if (limitLv > 0 && cost == 0) {
+      return IconButton(
+        tooltip: localizations.levelLimitMessage(limitLv),
+        onPressed: () {},
+        icon: const Icon(Icons.info_outline_rounded),
+      );
+    }
+    if (limitLv > 0 && cost > 0) {
+      return IconButton(
+        tooltip: localizations.levelLimitAndCostMessage(cost, limitLv),
+        onPressed: () {},
+        icon: const Icon(Icons.info_outline_rounded),
+      );
+    }
+    return null;
   }
 }
 

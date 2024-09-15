@@ -22,5 +22,7 @@
   "menu": "菜单",
   "detail": "详情",
   "noContentMessage": "- 空空如也 -",
-  "noMoreContentTip": "没有更多啦~"
+  "noMoreContentTip": "没有更多啦~",
+  "levelLimitMessage": "等级 {level} 以上用户才能访问",
+  "levelLimitAndCostMessage": "等级 {level} 以上用户才能访问，将消耗 {cost}G"
 }
