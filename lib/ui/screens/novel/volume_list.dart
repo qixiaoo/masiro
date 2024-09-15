@@ -33,8 +33,6 @@ class _VolumeListState extends State<VolumeList> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = context.textTheme();
-
     return ExpansionPanelList(
       expansionCallback: (int index, bool isExpanded) {
         setState(() {
@@ -44,38 +42,46 @@ class _VolumeListState extends State<VolumeList> {
       children: panels
           .asMap()
           .map((index, panel) {
-            final chapters = ExpansionPanel(
-              headerBuilder: (BuildContext context, bool isExpanded) {
-                return ListTile(
-                  title: Text(
-                    panel.volume.title,
-                    style: textTheme.titleMedium
-                        ?.copyWith(fontWeight: FontWeight.w600),
-                  ),
-                  onTap: () => setState(() {
-                    panels[index].isExpanded = !panels[index].isExpanded;
-                  }),
-                );
-              },
-              body: Column(
-                children: panel.volume.chapters.map((c) {
-                  return ListTile(
-                    title: Text(
-                      c.title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    selected: c.id == widget.lastReadChapterId,
-                    onTap: () => widget.onTap(c, panel.volume),
-                  );
-                }).toList(),
-              ),
-              isExpanded: panel.isExpanded,
-            );
-            return MapEntry(index, chapters);
+            final expansionPanel = buildExpansionPanel(context, index, panel);
+            return MapEntry(index, expansionPanel);
           })
           .values
           .toList(),
+    );
+  }
+
+  ExpansionPanel buildExpansionPanel(
+    BuildContext context,
+    int index,
+    _VolumePanel panel,
+  ) {
+    final textTheme = context.textTheme();
+    return ExpansionPanel(
+      headerBuilder: (BuildContext context, bool isExpanded) {
+        return ListTile(
+          title: Text(
+            panel.volume.title,
+            style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+          ),
+          onTap: () => setState(() {
+            panels[index].isExpanded = !panels[index].isExpanded;
+          }),
+        );
+      },
+      body: Column(
+        children: panel.volume.chapters.map((c) {
+          return ListTile(
+            title: Text(
+              c.title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            selected: c.id == widget.lastReadChapterId,
+            onTap: () => widget.onTap(c, panel.volume),
+          );
+        }).toList(),
+      ),
+      isExpanded: panel.isExpanded,
     );
   }
 }
