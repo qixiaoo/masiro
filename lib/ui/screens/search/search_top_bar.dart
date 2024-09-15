@@ -13,16 +13,19 @@ class SearchTopBar extends StatefulWidget {
 }
 
 class _SearchTopBarState extends State<SearchTopBar> {
+  late final FocusNode _searchBarFocusNode;
   late final SearchController _searchController;
 
   @override
   void initState() {
     super.initState();
+    _searchBarFocusNode = FocusNode(debugLabel: 'Search Bar');
     _searchController = SearchController();
   }
 
   @override
   void dispose() {
+    _searchBarFocusNode.dispose();
     _searchController.dispose();
     super.dispose();
   }
@@ -37,12 +40,14 @@ class _SearchTopBarState extends State<SearchTopBar> {
         viewOnSubmitted: (keyword) {
           bloc.add(SearchScreenSearched(keyword: keyword));
           _searchController.closeView(keyword);
+          _searchBarFocusNode.unfocus();
         },
         builder: (BuildContext context, SearchController controller) {
           return SearchBar(
             padding: const WidgetStatePropertyAll<EdgeInsets>(
               EdgeInsets.symmetric(horizontal: 16.0),
             ),
+            focusNode: _searchBarFocusNode,
             controller: controller,
             leading: const Icon(Icons.search),
             trailing: const [
