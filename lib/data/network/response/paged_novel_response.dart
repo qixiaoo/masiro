@@ -38,6 +38,7 @@ class NovelResponse {
   String? author;
   String? newUpTime;
   String? newUpContent;
+  int lvLimit;
 
   NovelResponse({
     required this.id,
@@ -48,6 +49,7 @@ class NovelResponse {
     required this.author,
     required this.newUpTime,
     required this.newUpContent,
+    required this.lvLimit,
   });
 
   factory NovelResponse.fromJson(Map<String, dynamic> json) {
@@ -60,6 +62,7 @@ class NovelResponse {
       author: json['author'],
       newUpTime: json['new_up_time'],
       newUpContent: json['new_up_content'],
+      lvLimit: json['lv_limit'],
     );
   }
 }

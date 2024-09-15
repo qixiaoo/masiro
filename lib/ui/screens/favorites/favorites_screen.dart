@@ -84,6 +84,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                     author: n.author,
                     lastUpdated: n.lastUpdated,
                     brief: n.brief,
+                    lvLimit: n.lvLimit,
                     onTap: () => _navigateToNovelDetailScreen(context, n),
                   );
                 },

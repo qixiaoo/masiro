@@ -74,6 +74,7 @@ class _NovelListState extends State<NovelList> {
           author: n.author,
           lastUpdated: n.lastUpdated,
           brief: n.brief,
+          lvLimit: n.lvLimit,
           onTap: () => context.push(RoutePath.novel, extra: {'novelId': n.id}),
         );
       },
