@@ -74,7 +74,9 @@ void _traverseNodeToExtractContent(
   Node node,
   List<ChapterContentElement> contentElementList,
 ) {
-  if (node.nodeType == Node.TEXT_NODE) {
+  final nodeType = node.nodeType;
+
+  if (nodeType == Node.TEXT_NODE) {
     final text = node.text ?? '';
     if (contentElementList.isNotEmpty &&
         contentElementList.last is TextContent) {
@@ -86,8 +88,14 @@ void _traverseNodeToExtractContent(
     return;
   }
 
-  if (node.nodeType == Node.ELEMENT_NODE &&
-      (node as Element).localName == 'img') {
+  // If the current leaf node is <br>, then create an empty `TextContent` instance immediately,
+  // so that the following text content will be displayed in a new line.
+  if (nodeType == Node.ELEMENT_NODE && (node as Element).localName == 'br') {
+    contentElementList.add(TextContent(text: ''));
+    return;
+  }
+
+  if (nodeType == Node.ELEMENT_NODE && (node as Element).localName == 'img') {
     final src = node.attributes['src'] ?? '';
     contentElementList.add(ImageContent(src: src));
     return;
