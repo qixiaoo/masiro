@@ -7,8 +7,7 @@ import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:logger/logger.dart';
-import 'package:masiro/data/database/entity/chapter_record_entity.dart';
-import 'package:masiro/data/database/entity/novel_record_entity.dart';
+import 'package:masiro/data/database/core.dart';
 import 'package:masiro/di/injectable.dart';
 import 'package:masiro/misc/cookie.dart';
 import 'package:masiro/misc/url.dart';
@@ -45,7 +44,7 @@ Future<void> setupGetIt() async {
 
   // Register isar
   final isar = await Isar.open(
-    [NovelRecordEntitySchema, ChapterRecordEntitySchema],
+    dbSchemas,
     directory: supportDir.path,
     inspector: true,
   );

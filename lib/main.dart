@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:masiro/data/database/migration.dart';
 import 'package:masiro/di/get_it.dart';
 import 'package:masiro/misc/platform.dart';
 import 'package:masiro/ui/app.dart';
@@ -17,6 +18,8 @@ Future<void> main() async {
   }
 
   await setupGetIt();
+
+  await performMigrationIfNeeded();
 
   runApp(const App());
 }
