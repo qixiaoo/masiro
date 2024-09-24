@@ -8,8 +8,8 @@
   "login": "登录",
   "mobilePhoneLoginTip": "请在网页中登录，登录成功后点击右上角按钮关闭当前页面",
   "desktopLoginTip": "点击下面按钮将打开本地安装的 Chrome 或 Chromium 浏览器，请手动输入帐号密码进行登录，本软件在检测到登录成功后会自动关闭浏览器",
-  "chromePath": "Chrome 或 Chromium 安装位置:" ,
-  "chromeNotFound": "未检测到 Chrome 或 Chromium 浏览器" ,
+  "chromePath": "Chrome 或 Chromium 安装位置:",
+  "chromeNotFound": "未检测到 Chrome 或 Chromium 浏览器",
   "author": "作者",
   "translator": "翻译",
   "status": "状态",
@@ -32,5 +32,6 @@
   "easyRefreshProcessedText": "刷新成功",
   "easyRefreshNoMoreText": "没有更多了",
   "easyRefreshFailedText": "刷新失败",
-  "easyRefreshMessageText": "上次刷新时间: %T"
+  "easyRefreshMessageText": "上次刷新时间: %T",
+  "startReading": "开始阅读"
 }
