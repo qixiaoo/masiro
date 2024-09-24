@@ -24,5 +24,13 @@
   "noContentMessage": "- 空空如也 -",
   "noMoreContentTip": "没有更多啦~",
   "levelLimitMessage": "等级 {level} 以上用户才能访问",
-  "levelLimitAndCostMessage": "等级 {level} 以上用户才能访问，将消耗 {cost}G"
+  "levelLimitAndCostMessage": "等级 {level} 以上用户才能访问，将消耗 {cost}G",
+  "easyRefreshDragText": "下拉刷新",
+  "easyRefreshArmedText": "松开刷新",
+  "easyRefreshReadyText": "刷新中...",
+  "easyRefreshProcessingText": "刷新中...",
+  "easyRefreshProcessedText": "刷新成功",
+  "easyRefreshNoMoreText": "没有更多了",
+  "easyRefreshFailedText": "刷新失败",
+  "easyRefreshMessageText": "上次刷新时间: %T"
 }

@@ -6,6 +6,7 @@ import 'package:masiro/bloc/screen/novel/novel_screen_bloc.dart';
 import 'package:masiro/bloc/screen/novel/novel_screen_event.dart';
 import 'package:masiro/bloc/screen/novel/novel_screen_state.dart';
 import 'package:masiro/misc/context.dart';
+import 'package:masiro/misc/easy_refresh.dart';
 import 'package:masiro/misc/router.dart';
 import 'package:masiro/ui/screens/novel/novel_header.dart';
 import 'package:masiro/ui/screens/novel/volume_list.dart';
@@ -83,6 +84,7 @@ class _NovelScreenState extends State<NovelScreen> {
         ),
         Expanded(
           child: EasyRefresh(
+            header: classicHeader(context),
             onRefresh: () async {
               bloc.add(NovelScreenRefreshed());
             },

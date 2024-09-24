@@ -7,6 +7,7 @@ import 'package:masiro/bloc/screen/favorites/favorites_screen_event.dart';
 import 'package:masiro/bloc/screen/favorites/favorites_screen_state.dart';
 import 'package:masiro/data/repository/model/novel.dart';
 import 'package:masiro/misc/context.dart';
+import 'package:masiro/misc/easy_refresh.dart';
 import 'package:masiro/misc/platform.dart';
 import 'package:masiro/misc/router.dart';
 import 'package:masiro/ui/widgets/error_message.dart';
@@ -61,6 +62,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     final novels = state.novels;
     return EasyRefresh(
       controller: _easyRefreshController,
+      header: classicHeader(context),
       onRefresh: () {
         context.read<FavoritesScreenBloc>().add(FavoritesScreenRefreshed());
       },
