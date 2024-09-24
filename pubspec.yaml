@@ -43,6 +43,7 @@ dependencies:
   isar_flutter_libs: *isar_version
   webview_flutter: ^4.9.0
   webview_cookie_manager: ^2.0.6
+  flutter_launcher_icons: ^0.14.0
 
 
 dev_dependencies:
