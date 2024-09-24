@@ -26,22 +26,24 @@ class _ReaderScreenState extends State<ReaderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (_) => ReaderScreenBloc(
-          novelId: widget.novelId,
-          chapterId: widget.chapterId,
-        )..add(ReaderScreenChapterDetailRequested()),
-        child: BlocBuilder<ReaderScreenBloc, ReaderScreenState>(
-          builder: (context, state) {
-            switch (state) {
-              case ReaderScreenInitialState():
-                return const Column(children: [LinearProgressIndicator()]);
-              case ReaderScreenErrorState():
-                return ErrorMessage(message: state.message);
-              case ReaderScreenLoadedState():
-                return buildBody(context, state);
-            }
-          },
+      body: SafeArea(
+        child: BlocProvider(
+          create: (_) => ReaderScreenBloc(
+            novelId: widget.novelId,
+            chapterId: widget.chapterId,
+          )..add(ReaderScreenChapterDetailRequested()),
+          child: BlocBuilder<ReaderScreenBloc, ReaderScreenState>(
+            builder: (context, state) {
+              switch (state) {
+                case ReaderScreenInitialState():
+                  return const Column(children: [LinearProgressIndicator()]);
+                case ReaderScreenErrorState():
+                  return ErrorMessage(message: state.message);
+                case ReaderScreenLoadedState():
+                  return buildBody(context, state);
+              }
+            },
+          ),
         ),
       ),
     );

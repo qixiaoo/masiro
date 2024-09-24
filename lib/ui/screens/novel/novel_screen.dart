@@ -25,21 +25,23 @@ class NovelScreen extends StatefulWidget {
 class _NovelScreenState extends State<NovelScreen> {
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: BlocProvider(
-        create: (context) => NovelScreenBloc(novelId: widget.novelId)
-          ..add(NovelScreenRefreshed()),
-        child: BlocBuilder<NovelScreenBloc, NovelScreenState>(
-          builder: (context, state) {
-            switch (state) {
-              case NovelScreenInitialState():
-                return const Column(children: [LinearProgressIndicator()]);
-              case NovelScreenErrorState():
-                return ErrorMessage(message: state.message);
-              case NovelScreenLoadedState():
-                return buildBody(context, state);
-            }
-          },
+    return Scaffold(
+      body: SafeArea(
+        child: BlocProvider(
+          create: (context) => NovelScreenBloc(novelId: widget.novelId)
+            ..add(NovelScreenRefreshed()),
+          child: BlocBuilder<NovelScreenBloc, NovelScreenState>(
+            builder: (context, state) {
+              switch (state) {
+                case NovelScreenInitialState():
+                  return const Column(children: [LinearProgressIndicator()]);
+                case NovelScreenErrorState():
+                  return ErrorMessage(message: state.message);
+                case NovelScreenLoadedState():
+                  return buildBody(context, state);
+              }
+            },
+          ),
         ),
       ),
     );
