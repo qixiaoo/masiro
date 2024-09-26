@@ -15,8 +15,6 @@ import 'package:masiro/ui/screens/novel/novel_header.dart';
 import 'package:masiro/ui/screens/novel/volume_list.dart';
 import 'package:masiro/ui/widgets/error_message.dart';
 
-bool _isFavoriteToggled = false;
-
 class NovelScreen extends StatefulWidget {
   final int novelId;
 
@@ -27,6 +25,8 @@ class NovelScreen extends StatefulWidget {
 }
 
 class _NovelScreenState extends State<NovelScreen> {
+  bool _isFavoriteToggled = false;
+
   @override
   Widget build(BuildContext context) {
     return Material(
