@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:masiro/data/repository/model/volume.dart';
 
 class ChapterDetail extends Equatable {
+  final int chapterId;
   final String title;
   final ChapterContent content;
   final String textContent;
@@ -9,6 +10,7 @@ class ChapterDetail extends Equatable {
   final String csrfToken;
 
   const ChapterDetail({
+    required this.chapterId,
     required this.title,
     required this.content,
     required this.textContent,
@@ -17,7 +19,14 @@ class ChapterDetail extends Equatable {
   });
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [
+        chapterId,
+        title,
+        content,
+        textContent,
+        volumes,
+        csrfToken,
+      ];
 }
 
 class ChapterContent extends Equatable {

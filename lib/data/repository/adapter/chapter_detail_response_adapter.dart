@@ -8,6 +8,7 @@ ChapterDetail chapterDetailResponseToChapterDetail(ChapterDetailResponse d) {
   final volumes = volumeResponseToVolumeList(d.volumes, d.chapters);
   final chapterContent = _htmlToChapterContent(d.rawHtml);
   return ChapterDetail(
+    chapterId: d.chapterId,
     title: d.title,
     content: chapterContent,
     textContent: d.textContent,

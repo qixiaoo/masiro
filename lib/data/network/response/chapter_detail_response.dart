@@ -2,6 +2,7 @@ import 'package:html/parser.dart';
 import 'package:masiro/data/network/response/volume_response.dart';
 
 class ChapterDetailResponse {
+  int chapterId;
   String title;
   String textContent;
   String csrfToken;
@@ -10,6 +11,7 @@ class ChapterDetailResponse {
   String rawHtml;
 
   ChapterDetailResponse({
+    required this.chapterId,
     required this.title,
     required this.textContent,
     required this.csrfToken,
@@ -21,6 +23,7 @@ class ChapterDetailResponse {
   factory ChapterDetailResponse.fromHtml(String html) {
     final document = parse(html);
     final querySelector = document.querySelector;
+    final chapterId = querySelector('#chapter_id')?.attributes['value'] ?? '0';
     final title = querySelector('.novel-title')?.text.trim() ?? '';
     final textContent = querySelector('.nvl-content')?.text.trim() ?? '';
     final csrfToken = querySelector('input.csrf')?.attributes['value'] ?? '';
@@ -31,6 +34,7 @@ class ChapterDetailResponse {
     final List<ChapterResponse> chapters =
         chaptersJson != null ? chapterResponseFromJson(chaptersJson) : [];
     return ChapterDetailResponse(
+      chapterId: int.parse(chapterId),
       title: title,
       textContent: textContent,
       csrfToken: csrfToken,
