@@ -10,6 +10,10 @@ extension ContextUtils on BuildContext {
     return Theme.of(this);
   }
 
+  ColorScheme colorScheme() {
+    return Theme.of(this).colorScheme;
+  }
+
   TextTheme textTheme() {
     return Theme.of(this).textTheme;
   }

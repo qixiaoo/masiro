@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 const Duration _duration = Duration(milliseconds: 500);
 const Curve _curve = Curves.fastOutSlowIn;
@@ -8,10 +7,13 @@ class TopBar extends StatelessWidget {
   final String title;
   final bool isVisible;
 
+  final void Function() onNavigateBack;
+
   const TopBar({
     super.key,
     required this.title,
     required this.isVisible,
+    required this.onNavigateBack,
   });
 
   @override
@@ -25,7 +27,7 @@ class TopBar extends StatelessWidget {
       curve: _curve,
       child: AppBar(
         leading: IconButton(
-          onPressed: () => context.pop(),
+          onPressed: onNavigateBack,
           icon: const Icon(Icons.arrow_back_rounded),
         ),
         title: Text(title),

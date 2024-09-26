@@ -5,9 +5,16 @@ sealed class ReaderScreenEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class ReaderScreenChapterDetailRequested extends ReaderScreenEvent {}
+final class ReaderScreenChapterDetailRequested extends ReaderScreenEvent {
+  final int chapterId;
 
-final class ReaderScreenTopBarToggled extends ReaderScreenEvent {}
+  ReaderScreenChapterDetailRequested({required this.chapterId});
+
+  @override
+  List<Object> get props => [chapterId];
+}
+
+final class ReaderScreenHudToggled extends ReaderScreenEvent {}
 
 final class ReaderScreenProgressChanged extends ReaderScreenEvent {
   final int progress;
@@ -16,4 +23,13 @@ final class ReaderScreenProgressChanged extends ReaderScreenEvent {
 
   @override
   List<Object> get props => [progress];
+}
+
+final class ReaderScreenChapterNavigated extends ReaderScreenEvent {
+  final int chapterId;
+
+  ReaderScreenChapterNavigated({required this.chapterId});
+
+  @override
+  List<Object> get props => [chapterId];
 }

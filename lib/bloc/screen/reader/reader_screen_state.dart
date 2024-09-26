@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:masiro/data/repository/model/chapter_detail.dart';
+import 'package:masiro/data/repository/model/loading_status.dart';
 import 'package:masiro/data/repository/model/reading_mode.dart';
 
 sealed class ReaderScreenState extends Equatable {
@@ -20,36 +21,41 @@ class ReaderScreenErrorState extends ReaderScreenState {
 
 class ReaderScreenLoadedState extends ReaderScreenState {
   final ChapterDetail chapterDetail;
-  final bool isTopBarVisible;
+  final bool isHudVisible;
   final ReadingMode readingMode;
   final int progress;
+  final LoadingStatus loadingStatus;
 
   ReaderScreenLoadedState({
     required this.chapterDetail,
-    this.isTopBarVisible = false,
+    this.isHudVisible = false,
     this.readingMode = ReadingMode.scroll,
     required this.progress,
+    this.loadingStatus = LoadingStatus.success,
   });
 
   ReaderScreenLoadedState copyWith({
     ChapterDetail? chapterDetail,
-    bool? isTopBarVisible,
+    bool? isHudVisible,
     ReadingMode? readingMode,
     int? progress,
+    LoadingStatus? loadingStatus,
   }) {
     return ReaderScreenLoadedState(
       chapterDetail: chapterDetail ?? this.chapterDetail,
-      isTopBarVisible: isTopBarVisible ?? this.isTopBarVisible,
+      isHudVisible: isHudVisible ?? this.isHudVisible,
       readingMode: readingMode ?? this.readingMode,
       progress: progress ?? this.progress,
+      loadingStatus: loadingStatus ?? this.loadingStatus,
     );
   }
 
   @override
   List<Object?> get props => [
         chapterDetail,
-        isTopBarVisible,
+        isHudVisible,
         readingMode,
         progress,
+        loadingStatus,
       ];
 }

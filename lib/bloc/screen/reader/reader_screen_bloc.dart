@@ -5,6 +5,7 @@ import 'package:masiro/bloc/screen/reader/reader_screen_state.dart';
 import 'package:masiro/bloc/util/event_transformer.dart';
 import 'package:masiro/data/repository/masiro_repository.dart';
 import 'package:masiro/data/repository/model/chapter_record.dart';
+import 'package:masiro/data/repository/model/loading_status.dart';
 import 'package:masiro/data/repository/model/reading_mode.dart';
 import 'package:masiro/data/repository/novel_record_repository.dart';
 import 'package:masiro/di/get_it.dart';
@@ -14,18 +15,17 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
   final novelRecordRepository = getIt<NovelRecordRepository>();
 
   final int novelId;
-  final int chapterId;
 
   ReaderScreenBloc({
     required this.novelId,
-    required this.chapterId,
   }) : super(ReaderScreenInitialState()) {
     on<ReaderScreenChapterDetailRequested>(_onRequestReaderScreenChapterDetail);
-    on<ReaderScreenTopBarToggled>(_onToggleReaderScreenTopBar);
+    on<ReaderScreenHudToggled>(_onToggleReaderScreenHud);
     on<ReaderScreenProgressChanged>(
       _onChangeReaderScreenProgress,
       transformer: debounce(const Duration(milliseconds: 500)),
     );
+    on<ReaderScreenChapterNavigated>(_onReaderScreenChapterNavigated);
   }
 
   Future<void> _onRequestReaderScreenChapterDetail(
@@ -33,6 +33,7 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
     Emitter<ReaderScreenState> emit,
   ) async {
     try {
+      final chapterId = event.chapterId;
       final chapterDetail = await masiroRepository.getChapterDetail(
         novelId,
         chapterId,
@@ -52,16 +53,16 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
     }
   }
 
-  void _onToggleReaderScreenTopBar(
-    ReaderScreenTopBarToggled event,
+  void _onToggleReaderScreenHud(
+    ReaderScreenHudToggled event,
     Emitter<ReaderScreenState> emit,
   ) {
     if (state is! ReaderScreenLoadedState) {
       return;
     }
     final loadedState = state as ReaderScreenLoadedState;
-    final isTopBarVisible = loadedState.isTopBarVisible;
-    emit(loadedState.copyWith(isTopBarVisible: !isTopBarVisible));
+    final isHudVisible = loadedState.isHudVisible;
+    emit(loadedState.copyWith(isHudVisible: !isHudVisible));
   }
 
   Future<void> _onChangeReaderScreenProgress(
@@ -72,6 +73,7 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
       return;
     }
     final loadedState = state as ReaderScreenLoadedState;
+    final chapterId = loadedState.chapterDetail.chapterId;
     final readingMode = loadedState.readingMode;
     final chapterRecord = await novelRecordRepository.findChapterRecord(
       chapterId,
@@ -86,5 +88,17 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
         readingMode: readingMode,
       ),
     );
+  }
+
+  Future<void> _onReaderScreenChapterNavigated(
+    ReaderScreenChapterNavigated event,
+    Emitter<ReaderScreenState> emit,
+  ) async {
+    if (state is! ReaderScreenLoadedState) {
+      return;
+    }
+    final loadedState = state as ReaderScreenLoadedState;
+    emit(loadedState.copyWith(loadingStatus: LoadingStatus.loading));
+    add(ReaderScreenChapterDetailRequested(chapterId: event.chapterId));
   }
 }

@@ -174,14 +174,14 @@ class _NovelScreenState extends State<NovelScreen> {
     int chapterId,
   ) async {
     final bloc = context.read<NovelScreenBloc>();
-    await context.push(
+    final int? lastReadChapterId = await context.push(
       RoutePath.reader,
       extra: {
         'novelId': novelId,
         'chapterId': chapterId,
       },
     );
-    bloc.add(NovelScreenChapterRead(chapterId: chapterId));
+    bloc.add(NovelScreenChapterRead(chapterId: lastReadChapterId ?? chapterId));
   }
 
   void _backToPrevScreen(BuildContext context) {
