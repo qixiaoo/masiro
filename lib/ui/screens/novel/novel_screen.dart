@@ -60,7 +60,16 @@ class _NovelScreenState extends State<NovelScreen> {
 
     return Scaffold(
       appBar: buildAppBar(context, isFavorite),
-      body: buildBody(context, novelDetail),
+      body: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) {
+          if (didPop) {
+            return;
+          }
+          _backToPrevScreen(context);
+        },
+        child: buildBody(context, novelDetail),
+      ),
       floatingActionButton: buildFloatingActionButton(
         volumes,
         lastReadChapterId,
@@ -75,7 +84,7 @@ class _NovelScreenState extends State<NovelScreen> {
 
     return AppBar(
       leading: IconButton(
-        onPressed: () => context.pop(_isFavoriteToggled),
+        onPressed: () => _backToPrevScreen(context),
         icon: const Icon(Icons.arrow_back_rounded),
       ),
       title: Text(localizations.detail),
@@ -173,5 +182,9 @@ class _NovelScreenState extends State<NovelScreen> {
       },
     );
     bloc.add(NovelScreenChapterRead(chapterId: chapterId));
+  }
+
+  void _backToPrevScreen(BuildContext context) {
+    context.pop(_isFavoriteToggled);
   }
 }
