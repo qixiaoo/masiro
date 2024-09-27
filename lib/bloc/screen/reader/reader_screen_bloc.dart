@@ -4,6 +4,7 @@ import 'package:masiro/bloc/screen/reader/reader_screen_event.dart';
 import 'package:masiro/bloc/screen/reader/reader_screen_state.dart';
 import 'package:masiro/bloc/util/event_transformer.dart';
 import 'package:masiro/data/repository/masiro_repository.dart';
+import 'package:masiro/data/repository/model/chapter_detail.dart';
 import 'package:masiro/data/repository/model/chapter_record.dart';
 import 'package:masiro/data/repository/model/loading_status.dart';
 import 'package:masiro/data/repository/model/reading_mode.dart';
@@ -100,5 +101,23 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
     final loadedState = state as ReaderScreenLoadedState;
     emit(loadedState.copyWith(loadingStatus: LoadingStatus.loading));
     add(ReaderScreenChapterDetailRequested(chapterId: event.chapterId));
+  }
+
+  Future<String> purchasePaidChapter(PaymentInfo paymentInfo) async {
+    if (state is! ReaderScreenLoadedState) {
+      throw Exception(
+        '''Current state isn't an instance of the `ReaderScreenLoadedState`.''',
+      );
+    }
+    final loadedState = state as ReaderScreenLoadedState;
+    final csrfToken = loadedState.chapterDetail.csrfToken;
+    final msg = await masiroRepository.purchasePaidChapter(
+      chapterId: paymentInfo.chapterId,
+      cost: paymentInfo.cost,
+      type: paymentInfo.type,
+      csrfToken: csrfToken,
+    );
+    add(ReaderScreenChapterNavigated(chapterId: paymentInfo.chapterId));
+    return msg;
   }
 }

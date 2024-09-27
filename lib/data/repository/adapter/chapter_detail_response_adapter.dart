@@ -7,6 +7,9 @@ import 'package:masiro/data/repository/model/chapter_detail.dart';
 ChapterDetail chapterDetailResponseToChapterDetail(ChapterDetailResponse d) {
   final volumes = volumeResponseToVolumeList(d.volumes, d.chapters);
   final chapterContent = _htmlToChapterContent(d.rawHtml);
+  final paymentInfo = d.paymentInfo == null
+      ? null
+      : _paymentInfoResponseToPaymentInfo(d.paymentInfo!);
   return ChapterDetail(
     chapterId: d.chapterId,
     title: d.title,
@@ -14,6 +17,15 @@ ChapterDetail chapterDetailResponseToChapterDetail(ChapterDetailResponse d) {
     textContent: d.textContent,
     csrfToken: d.csrfToken,
     volumes: volumes,
+    paymentInfo: paymentInfo,
+  );
+}
+
+PaymentInfo _paymentInfoResponseToPaymentInfo(PaymentInfoResponse response) {
+  return PaymentInfo(
+    cost: response.cost,
+    type: response.type,
+    chapterId: response.chapterId,
   );
 }
 

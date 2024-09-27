@@ -22,6 +22,7 @@ class MasiroUrl {
       'admin/getChapterComments?page=1&perPage=10&chapter_id=48762&has_auth=0'; // Referer: https://masiro.me/admin/novelReading?cid=123（current page）, X-CSRF-TOKEN： xxxx
   static const collectNovel = 'admin/collectNovel';
   static const uncollectNovel = 'admin/uncollectNovel';
+  static const pay = 'admin/pay';
 }
 
 extension ImageUrl on String {

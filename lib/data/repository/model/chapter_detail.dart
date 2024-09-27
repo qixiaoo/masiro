@@ -9,6 +9,8 @@ class ChapterDetail extends Equatable {
   final List<Volume> volumes;
   final String csrfToken;
 
+  final PaymentInfo? paymentInfo;
+
   const ChapterDetail({
     required this.chapterId,
     required this.title,
@@ -16,6 +18,7 @@ class ChapterDetail extends Equatable {
     required this.textContent,
     required this.csrfToken,
     required this.volumes,
+    required this.paymentInfo,
   });
 
   @override
@@ -60,4 +63,23 @@ class ImageContent extends ChapterContentElement {
 
   @override
   List<Object?> get props => [src];
+}
+
+class PaymentInfo extends Equatable {
+  final int cost;
+  final int type;
+  final int chapterId;
+
+  const PaymentInfo({
+    required this.cost,
+    required this.type,
+    required this.chapterId,
+  });
+
+  @override
+  List<Object?> get props => [
+        cost,
+        type,
+        chapterId,
+      ];
 }

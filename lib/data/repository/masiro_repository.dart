@@ -65,4 +65,19 @@ class MasiroRepository {
       totalPages: response.pages,
     );
   }
+
+  Future<String> purchasePaidChapter({
+    required int chapterId,
+    required int cost,
+    required int type,
+    required String csrfToken,
+  }) async {
+    final response = await MasiroApi.pay(
+      chapterId: chapterId,
+      cost: cost,
+      type: type,
+      csrfToken: csrfToken,
+    );
+    return response.code == 1 ? response.msg : throw Exception(response.msg);
+  }
 }

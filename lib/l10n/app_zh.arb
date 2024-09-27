@@ -33,5 +33,8 @@
   "easyRefreshNoMoreText": "没有更多了",
   "easyRefreshFailedText": "刷新失败",
   "easyRefreshMessageText": "上次刷新时间: %T",
-  "startReading": "开始阅读"
+  "startReading": "开始阅读",
+  "costMessage": "购买当前章节将消耗 {cost}G",
+  "pay": "支付",
+  "isPaying": "支付中..."
 }

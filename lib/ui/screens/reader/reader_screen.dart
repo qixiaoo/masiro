@@ -8,6 +8,7 @@ import 'package:masiro/misc/chapter.dart';
 import 'package:masiro/misc/platform.dart';
 import 'package:masiro/ui/screens/reader/bottom_bar.dart';
 import 'package:masiro/ui/screens/reader/chapter_content_scroll.dart';
+import 'package:masiro/ui/screens/reader/payment_detail.dart';
 import 'package:masiro/ui/screens/reader/top_bar.dart';
 import 'package:masiro/ui/widgets/error_message.dart';
 
@@ -103,6 +104,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
   ) {
     final bloc = context.read<ReaderScreenBloc>();
     final chapterDetail = state.chapterDetail;
+    final paymentInfo = chapterDetail.paymentInfo;
     final loadingStatus = state.loadingStatus;
 
     if (loadingStatus.isLoading()) {
@@ -114,6 +116,9 @@ class _ReaderScreenState extends State<ReaderScreen> {
         ),
       );
     }
+
+    final paymentDetail =
+        paymentInfo != null ? PaymentDetail(paymentInfo: paymentInfo) : null;
 
     final scrollReader = ChapterContentScroll(
       content: chapterDetail.content,
@@ -131,14 +136,18 @@ class _ReaderScreenState extends State<ReaderScreen> {
           bloc.add(ReaderScreenProgressChanged(progress: position.toInt())),
     );
 
+    final readerContent = paymentDetail ?? scrollReader;
+
     return isDesktop
         ? Listener(
+            behavior: HitTestBehavior.opaque,
             onPointerDown: (event) => _toggleHud(context),
-            child: scrollReader,
+            child: readerContent,
           )
         : GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: () => _toggleHud(context),
-            child: scrollReader,
+            child: readerContent,
           );
   }
 

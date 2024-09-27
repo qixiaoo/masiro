@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:masiro/data/network/response/chapter_detail_response.dart';
+import 'package:masiro/data/network/response/common_response.dart';
 import 'package:masiro/data/network/response/novel_detail_response.dart';
 import 'package:masiro/data/network/response/paged_novel_response.dart';
 import 'package:masiro/di/get_it.dart';
@@ -98,5 +99,25 @@ class MasiroApi {
     );
 
     return PagedNovelResponse.fromJson(response.data);
+  }
+
+  static Future<CommonResponse> pay({
+    required int chapterId,
+    required int cost,
+    required int type,
+    required String csrfToken,
+  }) async {
+    final response = await _dio.post(
+      MasiroUrl.pay,
+      data: {'type': '$type', 'object_id': '$chapterId', 'cost': '$cost'},
+      options: Options(
+        headers: {
+          'Referer': 'https://masiro.me/admin/novelReading?cid=$chapterId',
+          'X-CSRF-TOKEN': csrfToken,
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      ),
+    );
+    return CommonResponse.fromJson(response.data);
   }
 }
