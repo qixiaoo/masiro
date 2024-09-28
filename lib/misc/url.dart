@@ -2,6 +2,8 @@ class MasiroUrl {
   static const baseUrl = 'https://masiro.me/';
   static const baseUrlWithoutSlash = 'https://masiro.me';
 
+  static const defaultAvatar = '/masiroImg/header-default.jpg';
+
   // Pages
   static const adminUrl = 'https://masiro.me/admin'; // Home page
   static const loginUrl = 'https://masiro.me/admin/auth/login'; // Login page

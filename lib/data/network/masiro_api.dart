@@ -3,6 +3,7 @@ import 'package:masiro/data/network/response/chapter_detail_response.dart';
 import 'package:masiro/data/network/response/common_response.dart';
 import 'package:masiro/data/network/response/novel_detail_response.dart';
 import 'package:masiro/data/network/response/paged_novel_response.dart';
+import 'package:masiro/data/network/response/profile_response.dart';
 import 'package:masiro/di/get_it.dart';
 import 'package:masiro/misc/url.dart';
 
@@ -119,5 +120,10 @@ class MasiroApi {
       ),
     );
     return CommonResponse.fromJson(response.data);
+  }
+
+  static Future<ProfileResponse> getProfile() async {
+    final response = await _dio.get(MasiroUrl.adminUrl);
+    return ProfileResponse.fromHtml(response.data);
   }
 }

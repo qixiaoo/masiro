@@ -3,10 +3,12 @@ import 'package:masiro/data/network/masiro_api.dart';
 import 'package:masiro/data/repository/adapter/chapter_detail_response_adapter.dart';
 import 'package:masiro/data/repository/adapter/novel_detail_response_adapter.dart';
 import 'package:masiro/data/repository/adapter/novel_response_adapter.dart';
+import 'package:masiro/data/repository/adapter/profile_response_adapter.dart';
 import 'package:masiro/data/repository/model/chapter_detail.dart';
 import 'package:masiro/data/repository/model/novel.dart';
 import 'package:masiro/data/repository/model/novel_detail.dart';
 import 'package:masiro/data/repository/model/paged_data.dart';
+import 'package:masiro/data/repository/model/profile.dart';
 
 // TODO(qixiao): Create error handlers or interceptors to globally handle errors.
 
@@ -79,5 +81,10 @@ class MasiroRepository {
       csrfToken: csrfToken,
     );
     return response.code == 1 ? response.msg : throw Exception(response.msg);
+  }
+
+  Future<Profile> getProfile() async {
+    final response = await MasiroApi.getProfile();
+    return profileResponseToProfile(response);
   }
 }

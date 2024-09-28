@@ -36,5 +36,8 @@
   "startReading": "开始阅读",
   "costMessage": "购买当前章节将消耗 {cost}G",
   "pay": "支付",
-  "isPaying": "支付中..."
+  "isPaying": "支付中...",
+  "coin": "金币",
+  "fan": "粉丝",
+  "id": "ID"
 }
