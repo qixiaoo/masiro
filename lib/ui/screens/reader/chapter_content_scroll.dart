@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:masiro/data/repository/model/chapter_detail.dart';
-import 'package:masiro/ui/widgets/cover.dart';
+import 'package:masiro/ui/widgets/cached_image.dart';
 
 class ChapterContentScroll extends StatefulWidget {
   final ChapterContent content;
@@ -53,7 +53,7 @@ class _ChapterContentScrollState extends State<ChapterContentScroll> {
           case TextContent():
             return Text(e.text);
           case ImageContent():
-            return Cover(
+            return CachedImage(
               url: e.src,
               width: windowSize.width,
               height: windowSize.height,

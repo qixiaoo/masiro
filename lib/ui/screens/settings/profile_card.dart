@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:masiro/data/repository/model/profile.dart';
 import 'package:masiro/misc/context.dart';
 import 'package:masiro/misc/url.dart';
-import 'package:masiro/ui/widgets/cover.dart';
+import 'package:masiro/ui/widgets/cached_image.dart';
 
 const _placeholder = '-';
 
@@ -32,7 +32,7 @@ class ProfileCard extends StatelessWidget {
         child: Column(
           children: [
             ClipOval(
-              child: Cover(
+              child: CachedImage(
                 width: avatarSize,
                 height: avatarSize,
                 url: avatar.toUrl(),

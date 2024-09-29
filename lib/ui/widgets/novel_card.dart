@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:masiro/misc/context.dart';
 import 'package:masiro/misc/platform.dart';
 import 'package:masiro/misc/url.dart';
-import 'package:masiro/ui/widgets/cover.dart';
+import 'package:masiro/ui/widgets/cached_image.dart';
 
 class NovelCard extends StatelessWidget {
   final String title;
@@ -65,7 +65,7 @@ class NovelCard extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Cover(
+              CachedImage(
                 width: 99.8,
                 height: 142.0,
                 url: coverImg.toUrl(),

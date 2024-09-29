@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:masiro/data/repository/model/novel_detail.dart';
+import 'package:masiro/misc/constant.dart';
 import 'package:masiro/misc/context.dart';
 import 'package:masiro/misc/platform.dart';
 import 'package:masiro/misc/url.dart';
-import 'package:masiro/ui/widgets/cover.dart';
+import 'package:masiro/ui/widgets/cached_image.dart';
 
 class NovelHeader extends StatelessWidget {
   final NovelDetailHeader header;
@@ -18,7 +19,7 @@ class NovelHeader extends StatelessWidget {
 
     return Row(
       children: [
-        Cover(
+        CachedImage(
           url: header.coverImg.toUrl(),
           width: coverWidth,
           height: coverWidth / coverRatio,

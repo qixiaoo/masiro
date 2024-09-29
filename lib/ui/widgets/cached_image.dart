@@ -1,15 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-const coverRatio = 7 / 10;
-
-class Cover extends StatelessWidget {
+class CachedImage extends StatelessWidget {
   final String url;
   final double? width;
   final double? height;
   final BoxFit? fit;
 
-  const Cover({
+  const CachedImage({
     super.key,
     required this.url,
     required this.width,
