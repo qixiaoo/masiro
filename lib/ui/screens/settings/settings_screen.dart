@@ -23,8 +23,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: BlocProvider(
-        create: (context) =>
-            SettingsScreenBloc()..add(SettingsScreenInitialized()),
+        create: (context) => SettingsScreenBloc()
+          ..add(SettingsScreenInitialized())
+          ..add(SettingsScreenProfileRequested()),
         child: BlocBuilder<SettingsScreenBloc, SettingsScreenState>(
           builder: (context, state) {
             return buildScreen(context, state);

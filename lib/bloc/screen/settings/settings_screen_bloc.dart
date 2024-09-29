@@ -20,14 +20,8 @@ class SettingsScreenBloc
     SettingsScreenInitialized event,
     Emitter<SettingsScreenState> emit,
   ) async {
-    final profile = await masiroRepository.getProfile();
     final config = await appConfigurationRepository.getAppConfiguration();
-    emit(
-      SettingsScreenState(
-        profile: profile,
-        config: config,
-      ),
-    );
+    emit(state.copyWith(config: config));
   }
 
   Future<void> _onSettingsScreenProfileRequested(
