@@ -2,7 +2,7 @@ name: masiro
 description: "A masiro client."
 publish_to: 'none'
 
-version: 0.1.0+3
+version: 0.1.0+4
 
 environment:
   sdk: '>=3.4.4 <4.0.0'
