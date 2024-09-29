@@ -22,6 +22,11 @@ const AppConfigurationEntitySchema = CollectionSchema(
       id: 0,
       name: r'dbVersion',
       type: IsarType.long,
+    ),
+    r'lastSignInTime': PropertySchema(
+      id: 1,
+      name: r'lastSignInTime',
+      type: IsarType.long,
     )
   },
   estimateSize: _appConfigurationEntityEstimateSize,
@@ -54,6 +59,7 @@ void _appConfigurationEntitySerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeLong(offsets[0], object.dbVersion);
+  writer.writeLong(offsets[1], object.lastSignInTime);
 }
 
 AppConfigurationEntity _appConfigurationEntityDeserialize(
@@ -65,6 +71,7 @@ AppConfigurationEntity _appConfigurationEntityDeserialize(
   final object = AppConfigurationEntity(
     dbVersion: reader.readLong(offsets[0]),
     id: id,
+    lastSignInTime: reader.readLongOrNull(offsets[1]) ?? 0,
   );
   return object;
 }
@@ -78,6 +85,8 @@ P _appConfigurationEntityDeserializeProp<P>(
   switch (propertyId) {
     case 0:
       return (reader.readLong(offset)) as P;
+    case 1:
+      return (reader.readLongOrNull(offset) ?? 0) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -291,6 +300,62 @@ extension AppConfigurationEntityQueryFilter on QueryBuilder<
       ));
     });
   }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+      QAfterFilterCondition> lastSignInTimeEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'lastSignInTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+      QAfterFilterCondition> lastSignInTimeGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'lastSignInTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+      QAfterFilterCondition> lastSignInTimeLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'lastSignInTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+      QAfterFilterCondition> lastSignInTimeBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'lastSignInTime',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
 }
 
 extension AppConfigurationEntityQueryObject on QueryBuilder<
@@ -312,6 +377,20 @@ extension AppConfigurationEntityQuerySortBy
       sortByDbVersionDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'dbVersion', Sort.desc);
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QAfterSortBy>
+      sortByLastSignInTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastSignInTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QAfterSortBy>
+      sortByLastSignInTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastSignInTime', Sort.desc);
     });
   }
 }
@@ -345,6 +424,20 @@ extension AppConfigurationEntityQuerySortThenBy on QueryBuilder<
       return query.addSortBy(r'id', Sort.desc);
     });
   }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QAfterSortBy>
+      thenByLastSignInTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastSignInTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QAfterSortBy>
+      thenByLastSignInTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastSignInTime', Sort.desc);
+    });
+  }
 }
 
 extension AppConfigurationEntityQueryWhereDistinct
@@ -353,6 +446,13 @@ extension AppConfigurationEntityQueryWhereDistinct
       distinctByDbVersion() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'dbVersion');
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QDistinct>
+      distinctByLastSignInTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'lastSignInTime');
     });
   }
 }
@@ -369,6 +469,13 @@ extension AppConfigurationEntityQueryProperty on QueryBuilder<
       dbVersionProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'dbVersion');
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, int, QQueryOperations>
+      lastSignInTimeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'lastSignInTime');
     });
   }
 }

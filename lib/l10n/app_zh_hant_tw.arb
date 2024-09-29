@@ -39,5 +39,7 @@
   "isPaying": "支付中...",
   "coin": "金币",
   "fan": "粉丝",
-  "id": "ID"
+  "id": "ID",
+  "signIn": "签到",
+  "hasSignedIn": "已签到"
 }

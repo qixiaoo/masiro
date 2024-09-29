@@ -12,15 +12,14 @@ class AppConfigurationDao {
     return _isar.appConfigurationEntitys.where().limit(1).findFirst();
   }
 
-  Future<Id?> putAppConfiguration(
+  Future<Id> putAppConfiguration(
     AppConfigurationEntity appConfiguration,
   ) async {
     final configuration = await getAppConfiguration();
     return _isar.writeTxn(() async {
       return _isar.appConfigurationEntitys.put(
-        AppConfigurationEntity(
+        appConfiguration.copyWith(
           id: configuration?.id ?? appConfiguration.id,
-          dbVersion: appConfiguration.dbVersion,
         ),
       );
     });

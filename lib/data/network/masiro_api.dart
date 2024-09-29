@@ -126,4 +126,17 @@ class MasiroApi {
     final response = await _dio.get(MasiroUrl.adminUrl);
     return ProfileResponse.fromHtml(response.data);
   }
+
+  static Future<CommonResponse> dailySignIn() async {
+    final response = await _dio.get(
+      MasiroUrl.dailySignIn,
+      options: Options(
+        headers: {
+          'Referer': MasiroUrl.adminUrl,
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      ),
+    );
+    return CommonResponse.fromJson(response.data);
+  }
 }

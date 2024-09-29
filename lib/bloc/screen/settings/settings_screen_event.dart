@@ -5,4 +5,8 @@ sealed class SettingsScreenEvent extends Equatable {
   List<Object> get props => [];
 }
 
+final class SettingsScreenInitialized extends SettingsScreenEvent {}
+
 final class SettingsScreenProfileRequested extends SettingsScreenEvent {}
+
+final class SettingsScreenSignedIn extends SettingsScreenEvent {}

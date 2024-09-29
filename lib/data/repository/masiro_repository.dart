@@ -87,4 +87,9 @@ class MasiroRepository {
     final response = await MasiroApi.getProfile();
     return profileResponseToProfile(response);
   }
+
+  Future<String> signIn() async {
+    final response = await MasiroApi.dailySignIn();
+    return response.msg;
+  }
 }
