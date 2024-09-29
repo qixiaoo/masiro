@@ -1,15 +1,12 @@
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:masiro/bloc/screen/settings/settings_screen_bloc.dart';
 import 'package:masiro/bloc/screen/settings/settings_screen_event.dart';
 import 'package:masiro/bloc/screen/settings/settings_screen_state.dart';
-import 'package:masiro/misc/context.dart';
 import 'package:masiro/misc/easy_refresh.dart';
-import 'package:masiro/misc/time.dart';
-import 'package:masiro/misc/toast.dart';
 import 'package:masiro/ui/screens/settings/profile_card.dart';
+import 'package:masiro/ui/screens/settings/sign_in_card.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -36,10 +33,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget buildScreen(BuildContext context, SettingsScreenState state) {
-    final localizations = context.localizations();
     final bloc = context.read<SettingsScreenBloc>();
     final lastSignInTime = state.config?.lastSignInTime ?? 0;
-    final hasSignedIn = isTimestampToday(lastSignInTime);
 
     return EasyRefresh(
       header: classicHeader(context),
@@ -51,38 +46,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: [
           ProfileCard(profile: state.profile),
           const SizedBox(height: 20),
-          buildSignInCard(hasSignedIn, bloc, localizations),
+          SignInCard(lastSignInTime: lastSignInTime),
         ],
       ),
     );
-  }
-
-  Card buildSignInCard(
-    bool hasSignedIn,
-    SettingsScreenBloc bloc,
-    AppLocalizations localizations,
-  ) {
-    return Card(
-      clipBehavior: Clip.hardEdge,
-      child: ListTile(
-        onTap: hasSignedIn ? null : () => _signIn(bloc),
-        leading: hasSignedIn
-            ? const Icon(Icons.lightbulb_rounded)
-            : const Icon(Icons.lightbulb_outline_rounded),
-        title: Text(
-          hasSignedIn ? localizations.hasSignedIn : localizations.signIn,
-        ),
-      ),
-    );
-  }
-
-  Future<void> _signIn(SettingsScreenBloc bloc) async {
-    String msg;
-    try {
-      msg = await bloc.signIn();
-    } catch (e) {
-      msg = e.toString();
-    }
-    msg.toast();
   }
 }
