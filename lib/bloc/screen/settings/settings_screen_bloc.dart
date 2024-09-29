@@ -57,6 +57,7 @@ class SettingsScreenBloc
   Future<String> signIn() async {
     final msg = await masiroRepository.signIn();
     add(SettingsScreenSignedIn());
+    add(SettingsScreenProfileRequested());
     return msg;
   }
 }
