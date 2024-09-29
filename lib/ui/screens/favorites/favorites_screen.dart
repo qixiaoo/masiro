@@ -38,20 +38,22 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: BlocProvider(
-        create: (_) => FavoritesScreenBloc()..add(FavoritesScreenRefreshed()),
-        child: BlocBuilder<FavoritesScreenBloc, FavoritesScreenState>(
-          builder: (context, state) {
-            switch (state) {
-              case FavoritesScreenInitialState():
-                return const Column(children: [LinearProgressIndicator()]);
-              case FavoritesScreenErrorState():
-                return ErrorMessage(message: state.message);
-              case FavoritesScreenLoadedState():
-                return buildBody(context, state);
-            }
-          },
+    return Material(
+      child: SafeArea(
+        child: BlocProvider(
+          create: (_) => FavoritesScreenBloc()..add(FavoritesScreenRefreshed()),
+          child: BlocBuilder<FavoritesScreenBloc, FavoritesScreenState>(
+            builder: (context, state) {
+              switch (state) {
+                case FavoritesScreenInitialState():
+                  return const Column(children: [LinearProgressIndicator()]);
+                case FavoritesScreenErrorState():
+                  return ErrorMessage(message: state.message);
+                case FavoritesScreenLoadedState():
+                  return buildBody(context, state);
+              }
+            },
+          ),
         ),
       ),
     );

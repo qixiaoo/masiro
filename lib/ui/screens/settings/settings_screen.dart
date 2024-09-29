@@ -18,15 +18,17 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: BlocProvider(
-        create: (context) => SettingsScreenBloc()
-          ..add(SettingsScreenInitialized())
-          ..add(SettingsScreenProfileRequested()),
-        child: BlocBuilder<SettingsScreenBloc, SettingsScreenState>(
-          builder: (context, state) {
-            return buildScreen(context, state);
-          },
+    return Material(
+      child: SafeArea(
+        child: BlocProvider(
+          create: (context) => SettingsScreenBloc()
+            ..add(SettingsScreenInitialized())
+            ..add(SettingsScreenProfileRequested()),
+          child: BlocBuilder<SettingsScreenBloc, SettingsScreenState>(
+            builder: (context, state) {
+              return buildScreen(context, state);
+            },
+          ),
         ),
       ),
     );

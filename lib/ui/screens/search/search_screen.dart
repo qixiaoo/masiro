@@ -16,14 +16,16 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: BlocProvider(
-        create: (_) => SearchScreenBloc(),
-        child: Column(
-          children: [
-            const SearchTopBar(),
-            Expanded(child: buildBody(context)),
-          ],
+    return Material(
+      child: SafeArea(
+        child: BlocProvider(
+          create: (_) => SearchScreenBloc(),
+          child: Column(
+            children: [
+              const SearchTopBar(),
+              Expanded(child: buildBody(context)),
+            ],
+          ),
         ),
       ),
     );
