@@ -1,4 +1,7 @@
-# masiro
+<div align="center">
+  <img src="https://raw.githubusercontent.com/qixiaoo/masiro/main/assets/icon/icon.png"  alt="icon"/>
+  <h1>Masiro</h1>
+</div>
 
 一款使用 Flutter 开发的第三方真白萌客户端。
 
