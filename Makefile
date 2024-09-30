@@ -17,3 +17,7 @@ gen-l10n:
 .PHONY: launcher-icons
 launcher-icons:
 	dart run flutter_launcher_icons
+
+.PHONY: licenses
+licenses:
+	flutter pub run flutter_oss_licenses:generate.dart -o lib/misc/oss_licenses.dart

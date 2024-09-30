@@ -41,5 +41,7 @@
   "fan": "粉丝",
   "id": "ID",
   "signIn": "签到",
-  "hasSignedIn": "已签到"
+  "hasSignedIn": "已签到",
+  "license": "开源协议",
+  "close": "关闭"
 }

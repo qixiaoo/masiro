@@ -54,6 +54,7 @@ dev_dependencies:
   injectable_generator: ^2.4.2
   isar_generator: *isar_version
   flutter_launcher_icons: ^0.14.0
+  flutter_oss_licenses: ^3.0.2
 
 
 flutter:

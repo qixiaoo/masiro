@@ -233,6 +233,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  dart_pubspec_licenses:
+    dependency: transitive
+    description:
+      name: dart_pubspec_licenses
+      sha256: a488baa010044452b208bc35c6dd62ac072a1ea918f796e4381d5aa1b21cfa41
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
   dart_style:
     dependency: transitive
     description:
@@ -379,6 +387,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_oss_licenses:
+    dependency: "direct dev"
+    description:
+      name: flutter_oss_licenses
+      sha256: "1219e0e03faac80e68a554b79447d4936c79081d698abca912cc123fb77094aa"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.2"
   flutter_smart_dialog:
     dependency: "direct main"
     description:

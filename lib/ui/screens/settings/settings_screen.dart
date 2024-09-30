@@ -5,6 +5,7 @@ import 'package:masiro/bloc/screen/settings/settings_screen_bloc.dart';
 import 'package:masiro/bloc/screen/settings/settings_screen_event.dart';
 import 'package:masiro/bloc/screen/settings/settings_screen_state.dart';
 import 'package:masiro/misc/easy_refresh.dart';
+import 'package:masiro/ui/screens/settings/license_card.dart';
 import 'package:masiro/ui/screens/settings/profile_card.dart';
 import 'package:masiro/ui/screens/settings/sign_in_card.dart';
 
@@ -49,6 +50,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ProfileCard(profile: state.profile),
           const SizedBox(height: 20),
           SignInCard(lastSignInTime: lastSignInTime),
+          const LicenseCard(),
         ],
       ),
     );

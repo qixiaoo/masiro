@@ -5,6 +5,8 @@ import 'package:masiro/misc/cookie.dart';
 import 'package:masiro/misc/platform.dart';
 import 'package:masiro/ui/screens/error/error_screen.dart';
 import 'package:masiro/ui/screens/favorites/favorites_screen.dart';
+import 'package:masiro/ui/screens/license/license_screen.dart';
+import 'package:masiro/ui/screens/licenses/licenses_screen.dart';
 import 'package:masiro/ui/screens/login/login_screen.dart';
 import 'package:masiro/ui/screens/novel/novel_screen.dart';
 import 'package:masiro/ui/screens/reader/reader_screen.dart';
@@ -21,6 +23,8 @@ class RoutePath {
   static const String reader = '/reader';
   static const String error = '/error';
   static const String search = '/search';
+  static const String licenses = '/licenses';
+  static const String license = '/license';
 }
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
@@ -52,6 +56,24 @@ final routerConfig = GoRouter(
         return ReaderScreen(
           novelId: novelId,
           chapterId: chapterId,
+        );
+      },
+    ),
+    GoRoute(
+      path: RoutePath.licenses,
+      builder: (context, state) {
+        return const LicensesScreen();
+      },
+    ),
+    GoRoute(
+      path: RoutePath.license,
+      builder: (context, state) {
+        final params = state.extra as Map;
+        final name = params['name'];
+        final license = params['license'];
+        return LicenseScreen(
+          name: name,
+          license: license,
         );
       },
     ),
