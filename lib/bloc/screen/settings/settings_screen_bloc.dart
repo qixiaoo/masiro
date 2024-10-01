@@ -14,6 +14,7 @@ class SettingsScreenBloc
     on<SettingsScreenInitialized>(_onSettingsScreenInitialized);
     on<SettingsScreenProfileRequested>(_onSettingsScreenProfileRequested);
     on<SettingsScreenSignedIn>(_onSettingsScreenSignedIn);
+    on<SettingsScreenThemeModeChanged>(_onSettingsScreenThemeModeChanged);
   }
 
   Future<void> _onSettingsScreenInitialized(
@@ -43,6 +44,20 @@ class SettingsScreenBloc
     final nextConfig = config.copyWith(
       lastSignInTime: DateTime.now().millisecondsSinceEpoch,
     );
+    final nextState = state.copyWith(config: nextConfig);
+    await appConfigurationRepository.putAppConfiguration(nextConfig);
+    emit(nextState);
+  }
+
+  Future<void> _onSettingsScreenThemeModeChanged(
+    SettingsScreenThemeModeChanged event,
+    Emitter<SettingsScreenState> emit,
+  ) async {
+    final config = state.config;
+    if (config == null) {
+      return;
+    }
+    final nextConfig = config.copyWith(themeMode: event.themeMode);
     final nextState = state.copyWith(config: nextConfig);
     await appConfigurationRepository.putAppConfiguration(nextConfig);
     emit(nextState);

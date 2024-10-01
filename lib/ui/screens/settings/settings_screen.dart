@@ -8,6 +8,7 @@ import 'package:masiro/misc/easy_refresh.dart';
 import 'package:masiro/ui/screens/settings/license_card.dart';
 import 'package:masiro/ui/screens/settings/profile_card.dart';
 import 'package:masiro/ui/screens/settings/sign_in_card.dart';
+import 'package:masiro/ui/screens/settings/theme_mode_card.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -21,15 +22,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Material(
       child: SafeArea(
-        child: BlocProvider(
-          create: (context) => SettingsScreenBloc()
-            ..add(SettingsScreenInitialized())
-            ..add(SettingsScreenProfileRequested()),
-          child: BlocBuilder<SettingsScreenBloc, SettingsScreenState>(
-            builder: (context, state) {
-              return buildScreen(context, state);
-            },
-          ),
+        child: BlocBuilder<SettingsScreenBloc, SettingsScreenState>(
+          builder: (context, state) {
+            return buildScreen(context, state);
+          },
         ),
       ),
     );
@@ -37,7 +33,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget buildScreen(BuildContext context, SettingsScreenState state) {
     final bloc = context.read<SettingsScreenBloc>();
-    final lastSignInTime = state.config?.lastSignInTime ?? 0;
+    final config = state.config;
+    final lastSignInTime = config?.lastSignInTime ?? 0;
+    final themeMode = config?.themeMode ?? ThemeMode.system;
 
     return EasyRefresh(
       header: classicHeader(context),
@@ -50,6 +48,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ProfileCard(profile: state.profile),
           const SizedBox(height: 20),
           SignInCard(lastSignInTime: lastSignInTime),
+          ThemeModeCard(themeMode: themeMode),
           const LicenseCard(),
         ],
       ),

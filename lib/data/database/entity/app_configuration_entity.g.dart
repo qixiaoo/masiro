@@ -27,6 +27,12 @@ const AppConfigurationEntitySchema = CollectionSchema(
       id: 1,
       name: r'lastSignInTime',
       type: IsarType.long,
+    ),
+    r'themeMode': PropertySchema(
+      id: 2,
+      name: r'themeMode',
+      type: IsarType.string,
+      enumMap: _AppConfigurationEntitythemeModeEnumValueMap,
     )
   },
   estimateSize: _appConfigurationEntityEstimateSize,
@@ -49,6 +55,7 @@ int _appConfigurationEntityEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.themeMode.name.length * 3;
   return bytesCount;
 }
 
@@ -60,6 +67,7 @@ void _appConfigurationEntitySerialize(
 ) {
   writer.writeLong(offsets[0], object.dbVersion);
   writer.writeLong(offsets[1], object.lastSignInTime);
+  writer.writeString(offsets[2], object.themeMode.name);
 }
 
 AppConfigurationEntity _appConfigurationEntityDeserialize(
@@ -72,6 +80,9 @@ AppConfigurationEntity _appConfigurationEntityDeserialize(
     dbVersion: reader.readLong(offsets[0]),
     id: id,
     lastSignInTime: reader.readLongOrNull(offsets[1]) ?? 0,
+    themeMode: _AppConfigurationEntitythemeModeValueEnumMap[
+            reader.readStringOrNull(offsets[2])] ??
+        ThemeMode.system,
   );
   return object;
 }
@@ -87,10 +98,25 @@ P _appConfigurationEntityDeserializeProp<P>(
       return (reader.readLong(offset)) as P;
     case 1:
       return (reader.readLongOrNull(offset) ?? 0) as P;
+    case 2:
+      return (_AppConfigurationEntitythemeModeValueEnumMap[
+              reader.readStringOrNull(offset)] ??
+          ThemeMode.system) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
+
+const _AppConfigurationEntitythemeModeEnumValueMap = {
+  r'system': r'system',
+  r'light': r'light',
+  r'dark': r'dark',
+};
+const _AppConfigurationEntitythemeModeValueEnumMap = {
+  r'system': ThemeMode.system,
+  r'light': ThemeMode.light,
+  r'dark': ThemeMode.dark,
+};
 
 Id _appConfigurationEntityGetId(AppConfigurationEntity object) {
   return object.id;
@@ -356,6 +382,144 @@ extension AppConfigurationEntityQueryFilter on QueryBuilder<
       ));
     });
   }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+      QAfterFilterCondition> themeModeEqualTo(
+    ThemeMode value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'themeMode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+      QAfterFilterCondition> themeModeGreaterThan(
+    ThemeMode value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'themeMode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+      QAfterFilterCondition> themeModeLessThan(
+    ThemeMode value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'themeMode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+      QAfterFilterCondition> themeModeBetween(
+    ThemeMode lower,
+    ThemeMode upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'themeMode',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+      QAfterFilterCondition> themeModeStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'themeMode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+      QAfterFilterCondition> themeModeEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'themeMode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+          QAfterFilterCondition>
+      themeModeContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'themeMode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+          QAfterFilterCondition>
+      themeModeMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'themeMode',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+      QAfterFilterCondition> themeModeIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'themeMode',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+      QAfterFilterCondition> themeModeIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'themeMode',
+        value: '',
+      ));
+    });
+  }
 }
 
 extension AppConfigurationEntityQueryObject on QueryBuilder<
@@ -391,6 +555,20 @@ extension AppConfigurationEntityQuerySortBy
       sortByLastSignInTimeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'lastSignInTime', Sort.desc);
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QAfterSortBy>
+      sortByThemeMode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'themeMode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QAfterSortBy>
+      sortByThemeModeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'themeMode', Sort.desc);
     });
   }
 }
@@ -438,6 +616,20 @@ extension AppConfigurationEntityQuerySortThenBy on QueryBuilder<
       return query.addSortBy(r'lastSignInTime', Sort.desc);
     });
   }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QAfterSortBy>
+      thenByThemeMode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'themeMode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QAfterSortBy>
+      thenByThemeModeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'themeMode', Sort.desc);
+    });
+  }
 }
 
 extension AppConfigurationEntityQueryWhereDistinct
@@ -453,6 +645,13 @@ extension AppConfigurationEntityQueryWhereDistinct
       distinctByLastSignInTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'lastSignInTime');
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QDistinct>
+      distinctByThemeMode({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'themeMode', caseSensitive: caseSensitive);
     });
   }
 }
@@ -476,6 +675,13 @@ extension AppConfigurationEntityQueryProperty on QueryBuilder<
       lastSignInTimeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'lastSignInTime');
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, ThemeMode, QQueryOperations>
+      themeModeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'themeMode');
     });
   }
 }

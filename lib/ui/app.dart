@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:masiro/bloc/screen/settings/settings_screen_bloc.dart';
+import 'package:masiro/bloc/screen/settings/settings_screen_event.dart';
+import 'package:masiro/bloc/screen/settings/settings_screen_state.dart';
 import 'package:masiro/misc/router.dart';
 import 'package:masiro/misc/tray_icon.dart';
 import 'package:tray_manager/tray_manager.dart';
@@ -46,16 +50,34 @@ class _AppState extends State<App> with WindowListener, TrayListener {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<SettingsScreenBloc>(
+          create: (context) => SettingsScreenBloc()
+            ..add(SettingsScreenInitialized())
+            ..add(SettingsScreenProfileRequested()),
+        ),
       ],
-      supportedLocales: AppLocalizations.supportedLocales,
-      routerConfig: routerConfig,
-      builder: FlutterSmartDialog.init(),
+      child: BlocBuilder<SettingsScreenBloc, SettingsScreenState>(
+        buildWhen: (prev, curr) {
+          return prev.config?.themeMode != curr.config?.themeMode;
+        },
+        builder: (context, state) {
+          return MaterialApp.router(
+            darkTheme: ThemeData.dark(useMaterial3: true),
+            themeMode: state.config?.themeMode ?? ThemeMode.system,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            routerConfig: routerConfig,
+            builder: FlutterSmartDialog.init(),
+          );
+        },
+      ),
     );
   }
 }

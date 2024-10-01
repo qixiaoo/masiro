@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 
 part 'app_configuration_entity.g.dart';
@@ -10,21 +11,27 @@ class AppConfigurationEntity {
 
   int lastSignInTime;
 
+  @Enumerated(EnumType.name)
+  ThemeMode themeMode;
+
   AppConfigurationEntity({
     this.id = Isar.autoIncrement,
     required this.dbVersion,
     this.lastSignInTime = 0,
+    this.themeMode = ThemeMode.system,
   });
 
   AppConfigurationEntity copyWith({
     Id? id,
     int? dbVersion,
     int? lastSignInTime,
+    ThemeMode? themeMode,
   }) {
     return AppConfigurationEntity(
       id: id ?? this.id,
       dbVersion: dbVersion ?? this.dbVersion,
       lastSignInTime: lastSignInTime ?? this.lastSignInTime,
+      themeMode: themeMode ?? this.themeMode,
     );
   }
 }

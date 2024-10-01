@@ -43,5 +43,9 @@
   "signIn": "签到",
   "hasSignedIn": "已签到",
   "license": "开源协议",
-  "close": "关闭"
+  "close": "关闭",
+  "themeMode": "主题模式",
+  "lightMode": "日间模式",
+  "dartMode": "夜间模式",
+  "systemMode": "跟随系统"
 }
