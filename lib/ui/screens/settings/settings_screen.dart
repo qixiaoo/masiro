@@ -21,6 +21,12 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
+  void initState() {
+    _initProfile();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Material(
       child: SafeArea(
@@ -57,5 +63,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ],
       ),
     );
+  }
+
+  void _initProfile() {
+    final bloc = context.read<SettingsScreenBloc>();
+    if (bloc.state.profile != null) {
+      return;
+    }
+    bloc.add(SettingsScreenProfileRequested());
   }
 }

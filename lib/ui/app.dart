@@ -54,9 +54,8 @@ class _AppState extends State<App> with WindowListener, TrayListener {
     return MultiBlocProvider(
       providers: [
         BlocProvider<SettingsScreenBloc>(
-          create: (context) => SettingsScreenBloc()
-            ..add(SettingsScreenInitialized())
-            ..add(SettingsScreenProfileRequested()),
+          create: (context) =>
+              SettingsScreenBloc()..add(SettingsScreenInitialized()),
         ),
       ],
       child: BlocBuilder<SettingsScreenBloc, SettingsScreenState>(
