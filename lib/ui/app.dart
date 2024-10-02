@@ -70,6 +70,7 @@ class _AppState extends State<App> with WindowListener, TrayListener {
           final themeColor = config?.themeColor ?? defaultThemeColor;
 
           return MaterialApp.router(
+            title: 'masiro',
             themeMode: themeMode,
             theme: ThemeData(
               useMaterial3: true,
