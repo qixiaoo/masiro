@@ -53,6 +53,8 @@ class NovelResponse {
   });
 
   factory NovelResponse.fromJson(Map<String, dynamic> json) {
+    final rawLvLimit = json['lv_limit'];
+    final lvLimit = rawLvLimit is String ? int.parse(rawLvLimit) : rawLvLimit;
     return NovelResponse(
       id: json['id'],
       title: json['title'],
@@ -62,7 +64,7 @@ class NovelResponse {
       author: json['author'],
       newUpTime: json['new_up_time'],
       newUpContent: json['new_up_content'],
-      lvLimit: json['lv_limit'],
+      lvLimit: lvLimit,
     );
   }
 }
