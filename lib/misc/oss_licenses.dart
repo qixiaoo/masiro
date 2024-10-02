@@ -51,6 +51,8 @@ const allDependencies = <Package>[
   _ffi,
   _file,
   _fixnum,
+  _flex_color_picker,
+  _flex_seed_scheme,
   _flutter,
   _flutter_bloc,
   _flutter_cache_manager,
@@ -168,6 +170,7 @@ const dependencies = <Package>[
   _dio_cookie_manager,
   _easy_refresh,
   _equatable,
+  _flex_color_picker,
   _flutter,
   _flutter_bloc,
   _flutter_smart_dialog,
@@ -2948,6 +2951,97 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
   isMarkdown: false,
   isSdk: false,
   dependencies: [],
+);
+
+/// flex_color_picker 3.6.0
+const _flex_color_picker = Package(
+  name: 'flex_color_picker',
+  description:
+      'A customizable Flutter primary, accent and custom color picker. Includes an optional HSV wheel color picker.',
+  homepage: 'https://github.com/rydmike/flex_color_picker',
+  repository: 'https://github.com/rydmike/flex_color_picker',
+  authors: [],
+  version: '3.6.0',
+  license: '''BSD 3-Clause License
+
+Copyright (c) 2020-2024 Mike Rydstrom (Rydmike)
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
+  isMarkdown: false,
+  isSdk: false,
+  dependencies: [PackageRef('flex_seed_scheme'), PackageRef('flutter')],
+);
+
+/// flex_seed_scheme 3.4.1
+const _flex_seed_scheme = Package(
+  name: 'flex_seed_scheme',
+  description:
+      "A more flexible and powerful version of Flutter's ColorScheme.fromSeed. Use multiple seed colors, custom chroma and tone mapping.",
+  homepage: 'https://github.com/rydmike/flex_seed_scheme',
+  repository: 'https://github.com/rydmike/flex_seed_scheme',
+  authors: [],
+  version: '3.4.1',
+  license: '''BSD 3-Clause License
+
+FlexSeedScheme Copyright (c) 2022-2024
+Mike Rydstrom (Twitter @RydMike GitHub rydmike)
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
+  isMarkdown: false,
+  isSdk: false,
+  dependencies: [
+    PackageRef('collection'),
+    PackageRef('flutter'),
+    PackageRef('meta'),
+  ],
 );
 
 /// flutter 3.24.1

@@ -28,8 +28,13 @@ const AppConfigurationEntitySchema = CollectionSchema(
       name: r'lastSignInTime',
       type: IsarType.long,
     ),
-    r'themeMode': PropertySchema(
+    r'themeColor': PropertySchema(
       id: 2,
+      name: r'themeColor',
+      type: IsarType.long,
+    ),
+    r'themeMode': PropertySchema(
+      id: 3,
       name: r'themeMode',
       type: IsarType.string,
       enumMap: _AppConfigurationEntitythemeModeEnumValueMap,
@@ -67,7 +72,8 @@ void _appConfigurationEntitySerialize(
 ) {
   writer.writeLong(offsets[0], object.dbVersion);
   writer.writeLong(offsets[1], object.lastSignInTime);
-  writer.writeString(offsets[2], object.themeMode.name);
+  writer.writeLong(offsets[2], object.themeColor);
+  writer.writeString(offsets[3], object.themeMode.name);
 }
 
 AppConfigurationEntity _appConfigurationEntityDeserialize(
@@ -80,8 +86,9 @@ AppConfigurationEntity _appConfigurationEntityDeserialize(
     dbVersion: reader.readLong(offsets[0]),
     id: id,
     lastSignInTime: reader.readLongOrNull(offsets[1]) ?? 0,
+    themeColor: reader.readLongOrNull(offsets[2]) ?? defaultThemeColor,
     themeMode: _AppConfigurationEntitythemeModeValueEnumMap[
-            reader.readStringOrNull(offsets[2])] ??
+            reader.readStringOrNull(offsets[3])] ??
         ThemeMode.system,
   );
   return object;
@@ -99,6 +106,8 @@ P _appConfigurationEntityDeserializeProp<P>(
     case 1:
       return (reader.readLongOrNull(offset) ?? 0) as P;
     case 2:
+      return (reader.readLongOrNull(offset) ?? defaultThemeColor) as P;
+    case 3:
       return (_AppConfigurationEntitythemeModeValueEnumMap[
               reader.readStringOrNull(offset)] ??
           ThemeMode.system) as P;
@@ -384,6 +393,62 @@ extension AppConfigurationEntityQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+      QAfterFilterCondition> themeColorEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'themeColor',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+      QAfterFilterCondition> themeColorGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'themeColor',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+      QAfterFilterCondition> themeColorLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'themeColor',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+      QAfterFilterCondition> themeColorBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'themeColor',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
       QAfterFilterCondition> themeModeEqualTo(
     ThemeMode value, {
     bool caseSensitive = true,
@@ -559,6 +624,20 @@ extension AppConfigurationEntityQuerySortBy
   }
 
   QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QAfterSortBy>
+      sortByThemeColor() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'themeColor', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QAfterSortBy>
+      sortByThemeColorDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'themeColor', Sort.desc);
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QAfterSortBy>
       sortByThemeMode() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'themeMode', Sort.asc);
@@ -618,6 +697,20 @@ extension AppConfigurationEntityQuerySortThenBy on QueryBuilder<
   }
 
   QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QAfterSortBy>
+      thenByThemeColor() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'themeColor', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QAfterSortBy>
+      thenByThemeColorDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'themeColor', Sort.desc);
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QAfterSortBy>
       thenByThemeMode() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'themeMode', Sort.asc);
@@ -649,6 +742,13 @@ extension AppConfigurationEntityQueryWhereDistinct
   }
 
   QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QDistinct>
+      distinctByThemeColor() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'themeColor');
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QDistinct>
       distinctByThemeMode({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'themeMode', caseSensitive: caseSensitive);
@@ -675,6 +775,13 @@ extension AppConfigurationEntityQueryProperty on QueryBuilder<
       lastSignInTimeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'lastSignInTime');
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, int, QQueryOperations>
+      themeColorProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'themeColor');
     });
   }
 

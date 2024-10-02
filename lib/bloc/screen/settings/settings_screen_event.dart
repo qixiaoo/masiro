@@ -20,3 +20,12 @@ final class SettingsScreenThemeModeChanged extends SettingsScreenEvent {
   @override
   List<Object> get props => [themeMode];
 }
+
+final class SettingsScreenThemeColorChanged extends SettingsScreenEvent {
+  final int themeColor;
+
+  SettingsScreenThemeColorChanged({required this.themeColor});
+
+  @override
+  List<Object> get props => [themeColor];
+}

@@ -44,8 +44,14 @@
   "hasSignedIn": "已签到",
   "license": "开源协议",
   "close": "关闭",
+  "cancel": "取消",
+  "confirm": "确认",
   "themeMode": "主题模式",
   "lightMode": "日间模式",
   "dartMode": "夜间模式",
-  "systemMode": "跟随系统"
+  "systemMode": "跟随系统",
+  "themeColor": "主题颜色",
+  "primaryColor": "主色调",
+  "wheelColor": "自定义",
+  "reset": "重置"
 }

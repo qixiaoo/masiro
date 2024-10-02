@@ -7,6 +7,7 @@ AppConfiguration appConfigurationEntityToModel(AppConfigurationEntity entity) {
     dbVersion: entity.dbVersion,
     lastSignInTime: entity.lastSignInTime,
     themeMode: entity.themeMode,
+    themeColor: entity.themeColor,
   );
 }
 
@@ -16,5 +17,6 @@ AppConfigurationEntity appConfigurationToEntity(AppConfiguration config) {
     dbVersion: config.dbVersion,
     lastSignInTime: config.lastSignInTime,
     themeMode: config.themeMode,
+    themeColor: config.themeColor,
   );
 }

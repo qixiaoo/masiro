@@ -15,6 +15,7 @@ class SettingsScreenBloc
     on<SettingsScreenProfileRequested>(_onSettingsScreenProfileRequested);
     on<SettingsScreenSignedIn>(_onSettingsScreenSignedIn);
     on<SettingsScreenThemeModeChanged>(_onSettingsScreenThemeModeChanged);
+    on<SettingsScreenThemeColorChanged>(_onSettingsScreenThemeColorChanged);
   }
 
   Future<void> _onSettingsScreenInitialized(
@@ -58,6 +59,20 @@ class SettingsScreenBloc
       return;
     }
     final nextConfig = config.copyWith(themeMode: event.themeMode);
+    final nextState = state.copyWith(config: nextConfig);
+    await appConfigurationRepository.putAppConfiguration(nextConfig);
+    emit(nextState);
+  }
+
+  Future<void> _onSettingsScreenThemeColorChanged(
+    SettingsScreenThemeColorChanged event,
+    Emitter<SettingsScreenState> emit,
+  ) async {
+    final config = state.config;
+    if (config == null) {
+      return;
+    }
+    final nextConfig = config.copyWith(themeColor: event.themeColor);
     final nextState = state.copyWith(config: nextConfig);
     await appConfigurationRepository.putAppConfiguration(nextConfig);
     emit(nextState);

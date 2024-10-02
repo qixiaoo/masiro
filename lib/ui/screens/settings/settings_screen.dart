@@ -4,10 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masiro/bloc/screen/settings/settings_screen_bloc.dart';
 import 'package:masiro/bloc/screen/settings/settings_screen_event.dart';
 import 'package:masiro/bloc/screen/settings/settings_screen_state.dart';
+import 'package:masiro/misc/constant.dart';
 import 'package:masiro/misc/easy_refresh.dart';
 import 'package:masiro/ui/screens/settings/license_card.dart';
 import 'package:masiro/ui/screens/settings/profile_card.dart';
 import 'package:masiro/ui/screens/settings/sign_in_card.dart';
+import 'package:masiro/ui/screens/settings/theme_color_card.dart';
 import 'package:masiro/ui/screens/settings/theme_mode_card.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -36,6 +38,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final config = state.config;
     final lastSignInTime = config?.lastSignInTime ?? 0;
     final themeMode = config?.themeMode ?? ThemeMode.system;
+    final themeColor = config?.themeColor ?? defaultThemeColor;
 
     return EasyRefresh(
       header: classicHeader(context),
@@ -49,6 +52,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const SizedBox(height: 20),
           SignInCard(lastSignInTime: lastSignInTime),
           ThemeModeCard(themeMode: themeMode),
+          ThemeColorCard(themeColor: themeColor),
           const LicenseCard(),
         ],
       ),

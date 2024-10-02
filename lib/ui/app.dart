@@ -6,6 +6,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:masiro/bloc/screen/settings/settings_screen_bloc.dart';
 import 'package:masiro/bloc/screen/settings/settings_screen_event.dart';
 import 'package:masiro/bloc/screen/settings/settings_screen_state.dart';
+import 'package:masiro/misc/constant.dart';
 import 'package:masiro/misc/router.dart';
 import 'package:masiro/misc/tray_icon.dart';
 import 'package:tray_manager/tray_manager.dart';
@@ -60,12 +61,30 @@ class _AppState extends State<App> with WindowListener, TrayListener {
       ],
       child: BlocBuilder<SettingsScreenBloc, SettingsScreenState>(
         buildWhen: (prev, curr) {
-          return prev.config?.themeMode != curr.config?.themeMode;
+          return prev.config?.themeMode != curr.config?.themeMode ||
+              prev.config?.themeColor != curr.config?.themeColor;
         },
         builder: (context, state) {
+          final config = state.config;
+          final themeMode = config?.themeMode ?? ThemeMode.system;
+          final themeColor = config?.themeColor ?? defaultThemeColor;
+
           return MaterialApp.router(
-            darkTheme: ThemeData.dark(useMaterial3: true),
-            themeMode: state.config?.themeMode ?? ThemeMode.system,
+            themeMode: themeMode,
+            theme: ThemeData(
+              useMaterial3: true,
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: Color(themeColor),
+                brightness: Brightness.light,
+              ),
+            ),
+            darkTheme: ThemeData(
+              useMaterial3: true,
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: Color(themeColor),
+                brightness: Brightness.dark,
+              ),
+            ),
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
