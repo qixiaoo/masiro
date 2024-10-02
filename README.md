@@ -20,6 +20,10 @@
 - [x] Android: 支持
 - [ ] iOS: 暂无计划
 
+## 致谢
+
+特别感谢 [Qing-Novel](https://github.com/Qing-Novel) 大佬提供的图标。
+
 ## License
 
 GPL-3.0 license.
