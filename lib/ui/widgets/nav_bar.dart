@@ -59,9 +59,9 @@ class _NavBarState extends State<NavBar> {
           label: Text(localizations.favorites),
         ),
         NavigationRailDestination(
-          icon: const Icon(Icons.settings_outlined),
-          selectedIcon: const Icon(Icons.settings),
-          label: Text(localizations.settings),
+          icon: const Icon(Icons.more_horiz_rounded),
+          selectedIcon: const Icon(Icons.more_horiz_rounded),
+          label: Text(localizations.more),
         ),
       ],
       labelType: NavigationRailLabelType.all,
@@ -87,9 +87,9 @@ class _NavBarState extends State<NavBar> {
           label: localizations.favorites,
         ),
         NavigationDestination(
-          icon: const Icon(Icons.settings_outlined),
-          selectedIcon: const Icon(Icons.settings),
-          label: localizations.settings,
+          icon: const Icon(Icons.more_horiz_rounded),
+          selectedIcon: const Icon(Icons.more_horiz_rounded),
+          label: localizations.more,
         ),
       ],
     );
