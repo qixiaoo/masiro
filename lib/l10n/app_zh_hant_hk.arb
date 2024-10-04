@@ -54,5 +54,7 @@
   "themeColor": "主题颜色",
   "primaryColor": "主色调",
   "wheelColor": "自定义",
-  "reset": "重置"
+  "reset": "重置",
+  "collapse": "折叠",
+  "expand": "展开"
 }

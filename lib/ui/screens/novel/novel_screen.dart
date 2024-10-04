@@ -11,6 +11,7 @@ import 'package:masiro/misc/chapter.dart';
 import 'package:masiro/misc/context.dart';
 import 'package:masiro/misc/easy_refresh.dart';
 import 'package:masiro/misc/router.dart';
+import 'package:masiro/ui/screens/novel/expandable_brief.dart';
 import 'package:masiro/ui/screens/novel/novel_header.dart';
 import 'package:masiro/ui/screens/novel/volume_list.dart';
 import 'package:masiro/ui/widgets/error_message.dart';
@@ -123,13 +124,7 @@ class _NovelScreenState extends State<NovelScreen> {
         children: [
           NovelHeader(header: header),
           const SizedBox(height: 20),
-          SelectionArea(
-            child: Text(
-              header.brief,
-              softWrap: true,
-              style: textTheme.bodyLarge,
-            ),
-          ),
+          ExpandableBrief(brief: header.brief),
           const SizedBox(height: 20),
           VolumeList(
             volumes: volumes,
