@@ -11,8 +11,14 @@ class ErrorMessage extends StatelessWidget {
     final localizations = context.localizations();
     return Material(
       child: Center(
-        child: SelectionArea(
-          child: Text(message ?? localizations.errorTip),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: SelectionArea(
+            child: Text(
+              message ?? localizations.errorTip,
+              textAlign: TextAlign.center,
+            ),
+          ),
         ),
       ),
     );
