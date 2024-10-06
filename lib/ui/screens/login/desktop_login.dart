@@ -88,8 +88,8 @@ class _DesktopLoginState extends State<DesktopLogin> {
 
     // Save cookies to cookieJar
     final result = await page.devTools.client.send('Storage.getCookies', {});
-    final cookieObjets = result['cookies'] as List<Map<String, dynamic>>;
-    final cookies = cookieObjets.map(fromCookieObject).toList();
+    final cookieObjets = result['cookies'] as List<dynamic>;
+    final cookies = cookieObjets.map((o) => fromCookieObject(o)).toList();
     final cookieJar = await getCookieJar();
     await cookieJar.saveFromResponse(Uri.parse(MasiroUrl.baseUrl), cookies);
 
