@@ -30,4 +30,8 @@ class NovelRecordRepository {
     );
     return recordEntity != null ? chapterRecordToModel(recordEntity) : null;
   }
+
+  Future<void> clearChapterRecords() async {
+    return _chapterRecordDao.clearChapterRecords();
+  }
 }

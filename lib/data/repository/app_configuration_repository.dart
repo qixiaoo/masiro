@@ -24,4 +24,10 @@ class AppConfigurationRepository {
     final entity = appConfigurationToEntity(appConfiguration);
     return _appConfigurationDao.putAppConfiguration(entity);
   }
+
+  Future<Id> clearUserData() async {
+    final config = await getAppConfiguration();
+    final nextConfig = config.copyWith(lastSignInTime: 0);
+    return putAppConfiguration(nextConfig);
+  }
 }

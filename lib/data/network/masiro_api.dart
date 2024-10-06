@@ -139,4 +139,15 @@ class MasiroApi {
     );
     return CommonResponse.fromJson(response.data);
   }
+
+  /// Invalidates all authorizations from all logged-in devices.
+  /// Returns `true` when the operation succeeds.
+  static Future<bool> logout() async {
+    final response = await _dio.get(
+      MasiroUrl.logout,
+      options: Options(headers: {'Referer': MasiroUrl.adminUrl}),
+    );
+    final isFound = response.statusCode == 302;
+    return isFound && response.headers.value('location') == MasiroUrl.adminUrl;
+  }
 }

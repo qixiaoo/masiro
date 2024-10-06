@@ -28,4 +28,10 @@ class ChapterRecordDao {
         .readingModeEqualTo(readingMode)
         .findFirst();
   }
+
+  Future<void> clearChapterRecords() async {
+    return _isar.writeTxn(() async {
+      return _isar.chapterRecordEntitys.clear();
+    });
+  }
 }

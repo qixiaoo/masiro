@@ -40,14 +40,23 @@ Cookie fromCookieObject(Map<String, dynamic> cookieObject) {
   return cookie;
 }
 
+Future<PersistCookieJar> _cookieJar = getApplicationSupportDirectory().then(
+  (supportDir) => PersistCookieJar(storage: FileStorage(supportDir.path)),
+);
+
 /// Returns the default cooke jar
 Future<PersistCookieJar> getCookieJar() async {
-  final supportDir = await getApplicationSupportDirectory();
-  return PersistCookieJar(storage: FileStorage(supportDir.path));
+  return _cookieJar;
 }
 
 /// Returns local persisted cookies
 Future<List<Cookie>> getCookies() async {
   final cookieJar = await getCookieJar();
   return cookieJar.loadForRequest(Uri.parse(MasiroUrl.baseUrl));
+}
+
+/// Deletes all local persisted cookies
+Future<void> deleteAllCookies() async {
+  final cookieJar = await getCookieJar();
+  return cookieJar.deleteAll();
 }

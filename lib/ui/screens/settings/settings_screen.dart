@@ -7,6 +7,7 @@ import 'package:masiro/bloc/screen/settings/settings_screen_state.dart';
 import 'package:masiro/misc/constant.dart';
 import 'package:masiro/misc/easy_refresh.dart';
 import 'package:masiro/ui/screens/settings/license_card.dart';
+import 'package:masiro/ui/screens/settings/logout_card.dart';
 import 'package:masiro/ui/screens/settings/profile_card.dart';
 import 'package:masiro/ui/screens/settings/sign_in_card.dart';
 import 'package:masiro/ui/screens/settings/theme_color_card.dart';
@@ -45,6 +46,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final lastSignInTime = config?.lastSignInTime ?? 0;
     final themeMode = config?.themeMode ?? ThemeMode.system;
     final themeColor = config?.themeColor ?? defaultThemeColor;
+    const spacing = 20.0;
 
     return EasyRefresh(
       header: classicHeader(context),
@@ -55,11 +57,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
         padding: const EdgeInsets.all(20),
         children: [
           ProfileCard(profile: state.profile),
-          const SizedBox(height: 20),
+          const SizedBox(height: spacing),
           SignInCard(lastSignInTime: lastSignInTime),
           ThemeModeCard(themeMode: themeMode),
           ThemeColorCard(themeColor: themeColor),
           const LicenseCard(),
+          const SizedBox(height: 20),
+          const LogoutCard(),
         ],
       ),
     );

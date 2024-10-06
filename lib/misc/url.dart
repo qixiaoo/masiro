@@ -26,6 +26,7 @@ class MasiroUrl {
   static const uncollectNovel = 'admin/uncollectNovel';
   static const pay = 'admin/pay';
   static const dailySignIn = 'admin/dailySignIn';
+  static const logout = 'admin/auth/logout';
 }
 
 extension ImageUrl on String {

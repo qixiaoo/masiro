@@ -12,6 +12,8 @@ final class SettingsScreenProfileRequested extends SettingsScreenEvent {}
 
 final class SettingsScreenSignedIn extends SettingsScreenEvent {}
 
+final class SettingsScreenLoggedOut extends SettingsScreenEvent {}
+
 final class SettingsScreenThemeModeChanged extends SettingsScreenEvent {
   final ThemeMode themeMode;
 
