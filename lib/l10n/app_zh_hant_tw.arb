@@ -58,5 +58,10 @@
   "collapse": "折叠",
   "expand": "展开",
   "logout": "登出",
-  "logoutPrompt": "将清除本地存储的数据，包括但不限于登录信息和历史记录，确定要退出登录吗?"
+  "logoutPrompt": "将清除本地存储的数据，包括但不限于登录信息和历史记录，确定要退出登录吗?",
+  "about": "关于",
+  "currentVersion": "当前版本",
+  "projectHomepage": "项目主页",
+  "websiteHomepage": "网站主页",
+  "copied": "已复制"
 }

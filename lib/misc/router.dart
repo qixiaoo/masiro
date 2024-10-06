@@ -3,6 +3,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:go_router/go_router.dart';
 import 'package:masiro/misc/cookie.dart';
 import 'package:masiro/misc/platform.dart';
+import 'package:masiro/ui/screens/about/about_screen.dart';
 import 'package:masiro/ui/screens/error/error_screen.dart';
 import 'package:masiro/ui/screens/favorites/favorites_screen.dart';
 import 'package:masiro/ui/screens/license/license_screen.dart';
@@ -25,6 +26,7 @@ class RoutePath {
   static const String search = '/search';
   static const String licenses = '/licenses';
   static const String license = '/license';
+  static const String about = '/about';
 }
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
@@ -75,6 +77,12 @@ final routerConfig = GoRouter(
           name: name,
           license: license,
         );
+      },
+    ),
+    GoRoute(
+      path: RoutePath.about,
+      builder: (context, state) {
+        return const AboutScreen();
       },
     ),
     if (isMobilePhone) ...[
