@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:masiro/misc/url.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 
 /// Creates a `Cookie` from the [cookieObject]
 Cookie fromCookieObject(Map<String, dynamic> cookieObject) {
@@ -59,4 +60,10 @@ Future<List<Cookie>> getCookies() async {
 Future<void> deleteAllCookies() async {
   final cookieJar = await getCookieJar();
   return cookieJar.deleteAll();
+}
+
+/// Deletes all webview cookies
+Future<void> clearWebviewCookies() async {
+  final cookieManager = WebviewCookieManager();
+  return cookieManager.clearCookies();
 }

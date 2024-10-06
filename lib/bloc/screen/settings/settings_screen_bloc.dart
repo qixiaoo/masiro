@@ -6,6 +6,7 @@ import 'package:masiro/data/repository/masiro_repository.dart';
 import 'package:masiro/data/repository/novel_record_repository.dart';
 import 'package:masiro/di/get_it.dart';
 import 'package:masiro/misc/cookie.dart';
+import 'package:masiro/misc/platform.dart';
 
 class SettingsScreenBloc
     extends Bloc<SettingsScreenEvent, SettingsScreenState> {
@@ -99,6 +100,9 @@ class SettingsScreenBloc
 
   Future<void> logout() async {
     await deleteAllCookies();
+    if (isMobilePhone) {
+      await clearWebviewCookies();
+    }
     await novelRecordRepository.clearChapterRecords();
     await appConfigurationRepository.clearUserData();
     add(SettingsScreenLoggedOut());
