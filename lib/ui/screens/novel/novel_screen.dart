@@ -109,7 +109,6 @@ class _NovelScreenState extends State<NovelScreen> {
 
   EasyRefresh buildBody(BuildContext context, NovelDetail novelDetail) {
     final bloc = context.read<NovelScreenBloc>();
-    final textTheme = context.textTheme();
     final header = novelDetail.header;
     final volumes = novelDetail.volumes;
     final lastReadChapterId = novelDetail.lastReadChapterId;
