@@ -61,6 +61,8 @@ class _VolumeListState extends State<VolumeList> {
         return ListTile(
           title: Text(
             panel.volume.title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
           ),
           onTap: () => setState(() {
