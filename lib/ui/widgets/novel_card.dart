@@ -3,6 +3,7 @@ import 'package:masiro/misc/context.dart';
 import 'package:masiro/misc/platform.dart';
 import 'package:masiro/misc/url.dart';
 import 'package:masiro/ui/widgets/cached_image.dart';
+import 'package:masiro/ui/widgets/manual_tooltip.dart';
 
 class NovelCard extends StatelessWidget {
   final String title;
@@ -37,10 +38,9 @@ class NovelCard extends StatelessWidget {
           Positioned(
             top: cardMargin,
             right: cardMargin,
-            child: IconButton(
-              tooltip: localizations.levelLimitMessage(lvLimit),
-              onPressed: () {},
+            child: ManualTooltip(
               icon: const Icon(Icons.info_outline_rounded),
+              tooltip: localizations.levelLimitMessage(lvLimit),
             ),
           ),
       ],

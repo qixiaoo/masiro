@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:masiro/data/repository/model/volume.dart';
 import 'package:masiro/misc/context.dart';
+import 'package:masiro/ui/widgets/manual_tooltip.dart';
 
 class VolumeList extends StatefulWidget {
   final List<Volume> volumes;
@@ -93,18 +94,17 @@ class _VolumeListState extends State<VolumeList> {
     if (limitLv == 0 && cost > 0) {
       return Text('${cost}G');
     }
+    const icon = Icon(Icons.info_outline_rounded);
     if (limitLv > 0 && cost == 0) {
-      return IconButton(
+      return ManualTooltip(
+        icon: icon,
         tooltip: localizations.levelLimitMessage(limitLv),
-        onPressed: () {},
-        icon: const Icon(Icons.info_outline_rounded),
       );
     }
     if (limitLv > 0 && cost > 0) {
-      return IconButton(
+      return ManualTooltip(
+        icon: icon,
         tooltip: localizations.levelLimitAndCostMessage(cost, limitLv),
-        onPressed: () {},
-        icon: const Icon(Icons.info_outline_rounded),
       );
     }
     return null;
