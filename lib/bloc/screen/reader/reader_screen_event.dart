@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:masiro/data/repository/model/read_position.dart';
 
 sealed class ReaderScreenEvent extends Equatable {
   @override
@@ -16,13 +17,13 @@ final class ReaderScreenChapterDetailRequested extends ReaderScreenEvent {
 
 final class ReaderScreenHudToggled extends ReaderScreenEvent {}
 
-final class ReaderScreenProgressChanged extends ReaderScreenEvent {
-  final int progress;
+final class ReaderScreenPositionChanged extends ReaderScreenEvent {
+  final ReadPosition position;
 
-  ReaderScreenProgressChanged({required this.progress});
+  ReaderScreenPositionChanged({required this.position});
 
   @override
-  List<Object> get props => [progress];
+  List<Object> get props => [position];
 }
 
 final class ReaderScreenChapterNavigated extends ReaderScreenEvent {

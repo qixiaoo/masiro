@@ -28,13 +28,18 @@ const ChapterRecordEntitySchema = CollectionSchema(
       name: r'novelId',
       type: IsarType.long,
     ),
-    r'progress': PropertySchema(
+    r'positionJson': PropertySchema(
       id: 2,
+      name: r'positionJson',
+      type: IsarType.string,
+    ),
+    r'progress': PropertySchema(
+      id: 3,
       name: r'progress',
       type: IsarType.long,
     ),
     r'readingMode': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'readingMode',
       type: IsarType.string,
       enumMap: _ChapterRecordEntityreadingModeEnumValueMap,
@@ -87,6 +92,12 @@ int _chapterRecordEntityEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  {
+    final value = object.positionJson;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.readingMode.name.length * 3;
   return bytesCount;
 }
@@ -99,8 +110,9 @@ void _chapterRecordEntitySerialize(
 ) {
   writer.writeLong(offsets[0], object.chapterId);
   writer.writeLong(offsets[1], object.novelId);
-  writer.writeLong(offsets[2], object.progress);
-  writer.writeString(offsets[3], object.readingMode.name);
+  writer.writeString(offsets[2], object.positionJson);
+  writer.writeLong(offsets[3], object.progress);
+  writer.writeString(offsets[4], object.readingMode.name);
 }
 
 ChapterRecordEntity _chapterRecordEntityDeserialize(
@@ -113,9 +125,10 @@ ChapterRecordEntity _chapterRecordEntityDeserialize(
     chapterId: reader.readLong(offsets[0]),
     id: id,
     novelId: reader.readLong(offsets[1]),
-    progress: reader.readLong(offsets[2]),
+    positionJson: reader.readStringOrNull(offsets[2]),
+    progress: reader.readLong(offsets[3]),
     readingMode: _ChapterRecordEntityreadingModeValueEnumMap[
-            reader.readStringOrNull(offsets[3])] ??
+            reader.readStringOrNull(offsets[4])] ??
         ChapterReadingMode.page,
   );
   return object;
@@ -133,8 +146,10 @@ P _chapterRecordEntityDeserializeProp<P>(
     case 1:
       return (reader.readLong(offset)) as P;
     case 2:
-      return (reader.readLong(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 3:
+      return (reader.readLong(offset)) as P;
+    case 4:
       return (_ChapterRecordEntityreadingModeValueEnumMap[
               reader.readStringOrNull(offset)] ??
           ChapterReadingMode.page) as P;
@@ -621,6 +636,160 @@ extension ChapterRecordEntityQueryFilter on QueryBuilder<ChapterRecordEntity,
   }
 
   QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterFilterCondition>
+      positionJsonIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'positionJson',
+      ));
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterFilterCondition>
+      positionJsonIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'positionJson',
+      ));
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterFilterCondition>
+      positionJsonEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'positionJson',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterFilterCondition>
+      positionJsonGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'positionJson',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterFilterCondition>
+      positionJsonLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'positionJson',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterFilterCondition>
+      positionJsonBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'positionJson',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterFilterCondition>
+      positionJsonStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'positionJson',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterFilterCondition>
+      positionJsonEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'positionJson',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterFilterCondition>
+      positionJsonContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'positionJson',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterFilterCondition>
+      positionJsonMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'positionJson',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterFilterCondition>
+      positionJsonIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'positionJson',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterFilterCondition>
+      positionJsonIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'positionJson',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterFilterCondition>
       progressEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -850,6 +1019,20 @@ extension ChapterRecordEntityQuerySortBy
   }
 
   QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterSortBy>
+      sortByPositionJson() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'positionJson', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterSortBy>
+      sortByPositionJsonDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'positionJson', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterSortBy>
       sortByProgress() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'progress', Sort.asc);
@@ -923,6 +1106,20 @@ extension ChapterRecordEntityQuerySortThenBy
   }
 
   QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterSortBy>
+      thenByPositionJson() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'positionJson', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterSortBy>
+      thenByPositionJsonDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'positionJson', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterSortBy>
       thenByProgress() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'progress', Sort.asc);
@@ -968,6 +1165,13 @@ extension ChapterRecordEntityQueryWhereDistinct
   }
 
   QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QDistinct>
+      distinctByPositionJson({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'positionJson', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QDistinct>
       distinctByProgress() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'progress');
@@ -999,6 +1203,13 @@ extension ChapterRecordEntityQueryProperty
   QueryBuilder<ChapterRecordEntity, int, QQueryOperations> novelIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'novelId');
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, String?, QQueryOperations>
+      positionJsonProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'positionJson');
     });
   }
 

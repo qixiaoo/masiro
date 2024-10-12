@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:masiro/data/repository/model/chapter_detail.dart';
 import 'package:masiro/data/repository/model/loading_status.dart';
+import 'package:masiro/data/repository/model/read_position.dart';
 import 'package:masiro/data/repository/model/reading_mode.dart';
 
 sealed class ReaderScreenState extends Equatable {
@@ -23,14 +24,14 @@ class ReaderScreenLoadedState extends ReaderScreenState {
   final ChapterDetail chapterDetail;
   final bool isHudVisible;
   final ReadingMode readingMode;
-  final int progress;
+  final ReadPosition position;
   final LoadingStatus loadingStatus;
 
   ReaderScreenLoadedState({
     required this.chapterDetail,
     this.isHudVisible = false,
     this.readingMode = ReadingMode.scroll,
-    required this.progress,
+    required this.position,
     this.loadingStatus = LoadingStatus.success,
   });
 
@@ -38,14 +39,14 @@ class ReaderScreenLoadedState extends ReaderScreenState {
     ChapterDetail? chapterDetail,
     bool? isHudVisible,
     ReadingMode? readingMode,
-    int? progress,
+    ReadPosition? position,
     LoadingStatus? loadingStatus,
   }) {
     return ReaderScreenLoadedState(
       chapterDetail: chapterDetail ?? this.chapterDetail,
       isHudVisible: isHudVisible ?? this.isHudVisible,
       readingMode: readingMode ?? this.readingMode,
-      progress: progress ?? this.progress,
+      position: position ?? this.position,
       loadingStatus: loadingStatus ?? this.loadingStatus,
     );
   }
@@ -55,7 +56,7 @@ class ReaderScreenLoadedState extends ReaderScreenState {
         chapterDetail,
         isHudVisible,
         readingMode,
-        progress,
+        position,
         loadingStatus,
       ];
 }

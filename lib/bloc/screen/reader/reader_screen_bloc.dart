@@ -7,6 +7,7 @@ import 'package:masiro/data/repository/masiro_repository.dart';
 import 'package:masiro/data/repository/model/chapter_detail.dart';
 import 'package:masiro/data/repository/model/chapter_record.dart';
 import 'package:masiro/data/repository/model/loading_status.dart';
+import 'package:masiro/data/repository/model/read_position.dart';
 import 'package:masiro/data/repository/model/reading_mode.dart';
 import 'package:masiro/data/repository/novel_record_repository.dart';
 import 'package:masiro/di/get_it.dart';
@@ -22,8 +23,8 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
   }) : super(ReaderScreenInitialState()) {
     on<ReaderScreenChapterDetailRequested>(_onRequestReaderScreenChapterDetail);
     on<ReaderScreenHudToggled>(_onToggleReaderScreenHud);
-    on<ReaderScreenProgressChanged>(
-      _onChangeReaderScreenProgress,
+    on<ReaderScreenPositionChanged>(
+      _onChangeReaderScreenPosition,
       transformer: debounce(const Duration(milliseconds: 500)),
     );
     on<ReaderScreenChapterNavigated>(_onReaderScreenChapterNavigated);
@@ -46,7 +47,7 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
       emit(
         ReaderScreenLoadedState(
           chapterDetail: chapterDetail,
-          progress: chapterRecord?.progress ?? 0,
+          position: chapterRecord?.position ?? startPosition,
         ),
       );
     } catch (e) {
@@ -66,8 +67,8 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
     emit(loadedState.copyWith(isHudVisible: !isHudVisible));
   }
 
-  Future<void> _onChangeReaderScreenProgress(
-    ReaderScreenProgressChanged event,
+  Future<void> _onChangeReaderScreenPosition(
+    ReaderScreenPositionChanged event,
     Emitter<ReaderScreenState> emit,
   ) async {
     if (state is! ReaderScreenLoadedState) {
@@ -85,7 +86,7 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
         id: chapterRecord?.id ?? Isar.autoIncrement,
         chapterId: chapterId,
         novelId: novelId,
-        progress: event.progress,
+        position: event.position,
         readingMode: readingMode,
       ),
     );

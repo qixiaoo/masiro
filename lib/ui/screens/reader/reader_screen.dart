@@ -131,9 +131,9 @@ class _ReaderScreenState extends State<ReaderScreen> {
               horizontal: 20,
               vertical: kToolbarHeight * 2,
             ),
-      position: state.progress.toDouble(),
+      position: state.position,
       onPositionChange: (position) =>
-          bloc.add(ReaderScreenProgressChanged(progress: position.toInt())),
+          bloc.add(ReaderScreenPositionChanged(position: position)),
     );
 
     final readerContent = paymentDetail ?? scrollReader;
