@@ -8,6 +8,7 @@ class AppConfiguration extends Equatable {
   final int lastSignInTime;
   final ThemeMode themeMode;
   final int themeColor;
+  final int fontSize;
 
   const AppConfiguration({
     required this.id,
@@ -15,6 +16,7 @@ class AppConfiguration extends Equatable {
     required this.lastSignInTime,
     required this.themeMode,
     required this.themeColor,
+    required this.fontSize,
   });
 
   AppConfiguration copyWith({
@@ -23,6 +25,7 @@ class AppConfiguration extends Equatable {
     int? lastSignInTime,
     ThemeMode? themeMode,
     int? themeColor,
+    int? fontSize,
   }) {
     return AppConfiguration(
       id: id ?? this.id,
@@ -30,6 +33,7 @@ class AppConfiguration extends Equatable {
       lastSignInTime: lastSignInTime ?? this.lastSignInTime,
       themeMode: themeMode ?? this.themeMode,
       themeColor: themeColor ?? this.themeColor,
+      fontSize: fontSize ?? this.fontSize,
     );
   }
 
@@ -40,5 +44,6 @@ class AppConfiguration extends Equatable {
         lastSignInTime,
         themeMode,
         themeColor,
+        fontSize,
       ];
 }

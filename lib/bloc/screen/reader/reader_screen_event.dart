@@ -34,3 +34,12 @@ final class ReaderScreenChapterNavigated extends ReaderScreenEvent {
   @override
   List<Object> get props => [chapterId];
 }
+
+final class ReaderScreenFontSizeChanged extends ReaderScreenEvent {
+  final int fontSize;
+
+  ReaderScreenFontSizeChanged({required this.fontSize});
+
+  @override
+  List<Object> get props => [fontSize];
+}

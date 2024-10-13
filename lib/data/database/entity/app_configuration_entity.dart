@@ -17,12 +17,15 @@ class AppConfigurationEntity {
 
   int themeColor;
 
+  int fontSize;
+
   AppConfigurationEntity({
     this.id = Isar.autoIncrement,
     required this.dbVersion,
     this.lastSignInTime = 0,
     this.themeMode = ThemeMode.system,
     this.themeColor = defaultThemeColor,
+    this.fontSize = defaultFontSize,
   });
 
   AppConfigurationEntity copyWith({
@@ -31,6 +34,7 @@ class AppConfigurationEntity {
     int? lastSignInTime,
     ThemeMode? themeMode,
     int? themeColor,
+    int? fontSize,
   }) {
     return AppConfigurationEntity(
       id: id ?? this.id,
@@ -38,6 +42,7 @@ class AppConfigurationEntity {
       lastSignInTime: lastSignInTime ?? this.lastSignInTime,
       themeMode: themeMode ?? this.themeMode,
       themeColor: themeColor ?? this.themeColor,
+      fontSize: fontSize ?? this.fontSize,
     );
   }
 }

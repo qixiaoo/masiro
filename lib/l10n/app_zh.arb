@@ -63,5 +63,6 @@
   "currentVersion": "当前版本",
   "projectHomepage": "项目主页",
   "websiteHomepage": "网站主页",
-  "copied": "已复制"
+  "copied": "已复制",
+  "fontSize": "字体大小"
 }

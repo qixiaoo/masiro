@@ -12,6 +12,7 @@ class BottomBar extends StatelessWidget {
   final int? nextChapterId;
 
   final void Function(int chapterId) onNavigateTo;
+  final void Function() onSettingsClicked;
 
   const BottomBar({
     super.key,
@@ -19,6 +20,7 @@ class BottomBar extends StatelessWidget {
     this.prevChapterId,
     this.nextChapterId,
     required this.onNavigateTo,
+    required this.onSettingsClicked,
   });
 
   @override
@@ -52,6 +54,10 @@ class BottomBar extends StatelessWidget {
                   ? null
                   : () => onNavigateTo(prevChapterId!),
               icon: const Icon(Icons.skip_previous_rounded),
+            ),
+            IconButton(
+              onPressed: onSettingsClicked,
+              icon: const Icon(Icons.settings_rounded),
             ),
             IconButton(
               onPressed: nextChapterId == null

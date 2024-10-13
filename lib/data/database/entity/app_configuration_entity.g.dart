@@ -23,18 +23,23 @@ const AppConfigurationEntitySchema = CollectionSchema(
       name: r'dbVersion',
       type: IsarType.long,
     ),
-    r'lastSignInTime': PropertySchema(
+    r'fontSize': PropertySchema(
       id: 1,
+      name: r'fontSize',
+      type: IsarType.long,
+    ),
+    r'lastSignInTime': PropertySchema(
+      id: 2,
       name: r'lastSignInTime',
       type: IsarType.long,
     ),
     r'themeColor': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'themeColor',
       type: IsarType.long,
     ),
     r'themeMode': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'themeMode',
       type: IsarType.string,
       enumMap: _AppConfigurationEntitythemeModeEnumValueMap,
@@ -71,9 +76,10 @@ void _appConfigurationEntitySerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeLong(offsets[0], object.dbVersion);
-  writer.writeLong(offsets[1], object.lastSignInTime);
-  writer.writeLong(offsets[2], object.themeColor);
-  writer.writeString(offsets[3], object.themeMode.name);
+  writer.writeLong(offsets[1], object.fontSize);
+  writer.writeLong(offsets[2], object.lastSignInTime);
+  writer.writeLong(offsets[3], object.themeColor);
+  writer.writeString(offsets[4], object.themeMode.name);
 }
 
 AppConfigurationEntity _appConfigurationEntityDeserialize(
@@ -84,11 +90,12 @@ AppConfigurationEntity _appConfigurationEntityDeserialize(
 ) {
   final object = AppConfigurationEntity(
     dbVersion: reader.readLong(offsets[0]),
+    fontSize: reader.readLongOrNull(offsets[1]) ?? defaultFontSize,
     id: id,
-    lastSignInTime: reader.readLongOrNull(offsets[1]) ?? 0,
-    themeColor: reader.readLongOrNull(offsets[2]) ?? defaultThemeColor,
+    lastSignInTime: reader.readLongOrNull(offsets[2]) ?? 0,
+    themeColor: reader.readLongOrNull(offsets[3]) ?? defaultThemeColor,
     themeMode: _AppConfigurationEntitythemeModeValueEnumMap[
-            reader.readStringOrNull(offsets[3])] ??
+            reader.readStringOrNull(offsets[4])] ??
         ThemeMode.system,
   );
   return object;
@@ -104,10 +111,12 @@ P _appConfigurationEntityDeserializeProp<P>(
     case 0:
       return (reader.readLong(offset)) as P;
     case 1:
-      return (reader.readLongOrNull(offset) ?? 0) as P;
+      return (reader.readLongOrNull(offset) ?? defaultFontSize) as P;
     case 2:
-      return (reader.readLongOrNull(offset) ?? defaultThemeColor) as P;
+      return (reader.readLongOrNull(offset) ?? 0) as P;
     case 3:
+      return (reader.readLongOrNull(offset) ?? defaultThemeColor) as P;
+    case 4:
       return (_AppConfigurationEntitythemeModeValueEnumMap[
               reader.readStringOrNull(offset)] ??
           ThemeMode.system) as P;
@@ -272,6 +281,62 @@ extension AppConfigurationEntityQueryFilter on QueryBuilder<
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'dbVersion',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+      QAfterFilterCondition> fontSizeEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'fontSize',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+      QAfterFilterCondition> fontSizeGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'fontSize',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+      QAfterFilterCondition> fontSizeLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'fontSize',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity,
+      QAfterFilterCondition> fontSizeBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'fontSize',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -610,6 +675,20 @@ extension AppConfigurationEntityQuerySortBy
   }
 
   QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QAfterSortBy>
+      sortByFontSize() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'fontSize', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QAfterSortBy>
+      sortByFontSizeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'fontSize', Sort.desc);
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QAfterSortBy>
       sortByLastSignInTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'lastSignInTime', Sort.asc);
@@ -665,6 +744,20 @@ extension AppConfigurationEntityQuerySortThenBy on QueryBuilder<
       thenByDbVersionDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'dbVersion', Sort.desc);
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QAfterSortBy>
+      thenByFontSize() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'fontSize', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QAfterSortBy>
+      thenByFontSizeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'fontSize', Sort.desc);
     });
   }
 
@@ -735,6 +828,13 @@ extension AppConfigurationEntityQueryWhereDistinct
   }
 
   QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QDistinct>
+      distinctByFontSize() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'fontSize');
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, AppConfigurationEntity, QDistinct>
       distinctByLastSignInTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'lastSignInTime');
@@ -768,6 +868,13 @@ extension AppConfigurationEntityQueryProperty on QueryBuilder<
       dbVersionProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'dbVersion');
+    });
+  }
+
+  QueryBuilder<AppConfigurationEntity, int, QQueryOperations>
+      fontSizeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'fontSize');
     });
   }
 

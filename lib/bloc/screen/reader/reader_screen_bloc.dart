@@ -3,6 +3,7 @@ import 'package:isar/isar.dart';
 import 'package:masiro/bloc/screen/reader/reader_screen_event.dart';
 import 'package:masiro/bloc/screen/reader/reader_screen_state.dart';
 import 'package:masiro/bloc/util/event_transformer.dart';
+import 'package:masiro/data/repository/app_configuration_repository.dart';
 import 'package:masiro/data/repository/masiro_repository.dart';
 import 'package:masiro/data/repository/model/chapter_detail.dart';
 import 'package:masiro/data/repository/model/chapter_record.dart';
@@ -15,6 +16,7 @@ import 'package:masiro/di/get_it.dart';
 class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
   final masiroRepository = getIt<MasiroRepository>();
   final novelRecordRepository = getIt<NovelRecordRepository>();
+  final appConfigurationRepository = getIt<AppConfigurationRepository>();
 
   final int novelId;
 
@@ -28,6 +30,7 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
       transformer: debounce(const Duration(milliseconds: 500)),
     );
     on<ReaderScreenChapterNavigated>(_onReaderScreenChapterNavigated);
+    on<ReaderScreenFontSizeChanged>(_onReaderScreenFontSizeChanged);
   }
 
   Future<void> _onRequestReaderScreenChapterDetail(
@@ -44,10 +47,12 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
         chapterId,
         ReadingMode.scroll,
       );
+      final appConfig = await appConfigurationRepository.getAppConfiguration();
       emit(
         ReaderScreenLoadedState(
           chapterDetail: chapterDetail,
           position: chapterRecord?.position ?? startPosition,
+          fontSize: appConfig.fontSize,
         ),
       );
     } catch (e) {
@@ -102,6 +107,20 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
     final loadedState = state as ReaderScreenLoadedState;
     emit(loadedState.copyWith(loadingStatus: LoadingStatus.loading));
     add(ReaderScreenChapterDetailRequested(chapterId: event.chapterId));
+  }
+
+  Future<void> _onReaderScreenFontSizeChanged(
+    ReaderScreenFontSizeChanged event,
+    Emitter<ReaderScreenState> emit,
+  ) async {
+    if (state is! ReaderScreenLoadedState) {
+      return;
+    }
+    final appConfig = await appConfigurationRepository.getAppConfiguration();
+    final nextAppConfig = appConfig.copyWith(fontSize: event.fontSize);
+    await appConfigurationRepository.putAppConfiguration(nextAppConfig);
+    final loadedState = state as ReaderScreenLoadedState;
+    emit(loadedState.copyWith(fontSize: event.fontSize));
   }
 
   Future<String> purchasePaidChapter(PaymentInfo paymentInfo) async {

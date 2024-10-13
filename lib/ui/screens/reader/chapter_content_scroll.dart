@@ -11,6 +11,7 @@ class ChapterContentScroll extends StatefulWidget {
   final EdgeInsets? padding;
   final ReadPosition position;
   final void Function(ReadPosition position)? onPositionChange;
+  final int fontSize;
 
   const ChapterContentScroll({
     super.key,
@@ -18,6 +19,7 @@ class ChapterContentScroll extends StatefulWidget {
     this.padding,
     this.position = startPosition,
     this.onPositionChange,
+    required this.fontSize,
   });
 
   @override
@@ -27,6 +29,8 @@ class ChapterContentScroll extends StatefulWidget {
 class _ChapterContentScrollState extends State<ChapterContentScroll> {
   late final ItemScrollController itemScrollController;
   late final ItemPositionsListener itemPositionsListener;
+
+  late TextStyle style;
 
   late (int, double) Function() getScrollListInitialPosition;
 
@@ -42,6 +46,24 @@ class _ChapterContentScrollState extends State<ChapterContentScroll> {
     getScrollListInitialPosition = onceFn<(int, double)>(
       () => _positionToScrollItemIndexAndAlignment(widget.position),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final defaultTextStyle = DefaultTextStyle.of(context).style;
+    style = defaultTextStyle.copyWith(fontSize: widget.fontSize.toDouble());
+  }
+
+  @override
+  void didUpdateWidget(covariant ChapterContentScroll oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.fontSize != widget.fontSize) {
+      final defaultTextStyle = DefaultTextStyle.of(context).style;
+      style = defaultTextStyle.copyWith(fontSize: widget.fontSize.toDouble());
+    }
   }
 
   @override
@@ -69,7 +91,7 @@ class _ChapterContentScrollState extends State<ChapterContentScroll> {
       itemBuilder: (BuildContext context, int index) {
         final e = elements[index];
         return switch (e) {
-          TextContent() => Text(e.text),
+          TextContent() => Text(e.text, style: style),
           ImageContent() => CachedImage(
               url: e.src,
               width: windowSize.width,
@@ -93,8 +115,6 @@ class _ChapterContentScrollState extends State<ChapterContentScroll> {
       case ImageContent():
         return (index, position.elementTopOffset / height);
       case TextContent():
-        // TODO(qixiaoo): Make text style configurable
-        final style = DefaultTextStyle.of(context).style;
         final topOffset = getTextElementTopOffset(
           element.text,
           style,
@@ -149,8 +169,6 @@ class _ChapterContentScrollState extends State<ChapterContentScroll> {
     }
 
     if (firstVisibleItemContent is TextContent) {
-      // TODO(qixiaoo): Make text style configurable
-      final style = DefaultTextStyle.of(context).style;
       final elementCharacterIndex = getFirstVisibleCharacterIndex(
         firstVisibleItemContent.text,
         style,

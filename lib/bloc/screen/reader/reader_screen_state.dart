@@ -26,6 +26,7 @@ class ReaderScreenLoadedState extends ReaderScreenState {
   final ReadingMode readingMode;
   final ReadPosition position;
   final LoadingStatus loadingStatus;
+  final int fontSize;
 
   ReaderScreenLoadedState({
     required this.chapterDetail,
@@ -33,6 +34,7 @@ class ReaderScreenLoadedState extends ReaderScreenState {
     this.readingMode = ReadingMode.scroll,
     required this.position,
     this.loadingStatus = LoadingStatus.success,
+    required this.fontSize,
   });
 
   ReaderScreenLoadedState copyWith({
@@ -41,6 +43,7 @@ class ReaderScreenLoadedState extends ReaderScreenState {
     ReadingMode? readingMode,
     ReadPosition? position,
     LoadingStatus? loadingStatus,
+    int? fontSize,
   }) {
     return ReaderScreenLoadedState(
       chapterDetail: chapterDetail ?? this.chapterDetail,
@@ -48,6 +51,7 @@ class ReaderScreenLoadedState extends ReaderScreenState {
       readingMode: readingMode ?? this.readingMode,
       position: position ?? this.position,
       loadingStatus: loadingStatus ?? this.loadingStatus,
+      fontSize: fontSize ?? this.fontSize,
     );
   }
 
@@ -58,5 +62,6 @@ class ReaderScreenLoadedState extends ReaderScreenState {
         readingMode,
         position,
         loadingStatus,
+        fontSize,
       ];
 }

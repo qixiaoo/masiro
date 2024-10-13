@@ -9,6 +9,7 @@ import 'package:masiro/misc/platform.dart';
 import 'package:masiro/ui/screens/reader/bottom_bar.dart';
 import 'package:masiro/ui/screens/reader/chapter_content_scroll.dart';
 import 'package:masiro/ui/screens/reader/payment_detail.dart';
+import 'package:masiro/ui/screens/reader/settings_sheet.dart';
 import 'package:masiro/ui/screens/reader/top_bar.dart';
 import 'package:masiro/ui/widgets/error_message.dart';
 
@@ -71,6 +72,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
     final bloc = context.read<ReaderScreenBloc>();
     final chapterDetail = state.chapterDetail;
     final isHudVisible = state.isHudVisible;
+    final fontSize = state.fontSize;
 
     final volumes = chapterDetail.volumes;
     final chapterId = chapterDetail.chapterId;
@@ -93,6 +95,20 @@ class _ReaderScreenState extends State<ReaderScreen> {
             _lastReadChapterIdForPopResult = chapterId;
             bloc.add(ReaderScreenChapterNavigated(chapterId: chapterId));
           },
+          onSettingsClicked: () {
+            showModalBottomSheet<void>(
+              showDragHandle: true,
+              context: context,
+              builder: (BuildContext context) {
+                return SettingsSheet(
+                  fontSize: fontSize,
+                  onFontSizeChanged: (v) {
+                    bloc.add(ReaderScreenFontSizeChanged(fontSize: v));
+                  },
+                );
+              },
+            );
+          },
         ),
       ],
     );
@@ -106,6 +122,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
     final chapterDetail = state.chapterDetail;
     final paymentInfo = chapterDetail.paymentInfo;
     final loadingStatus = state.loadingStatus;
+    final fontSize = state.fontSize;
 
     if (loadingStatus.isLoading()) {
       return const Center(
@@ -121,6 +138,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
         paymentInfo != null ? PaymentDetail(paymentInfo: paymentInfo) : null;
 
     final scrollReader = ChapterContentScroll(
+      fontSize: fontSize,
       content: chapterDetail.content,
       padding: isDesktop
           ? const EdgeInsets.symmetric(

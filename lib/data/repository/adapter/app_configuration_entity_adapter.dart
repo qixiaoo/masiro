@@ -8,6 +8,7 @@ AppConfiguration appConfigurationEntityToModel(AppConfigurationEntity entity) {
     lastSignInTime: entity.lastSignInTime,
     themeMode: entity.themeMode,
     themeColor: entity.themeColor,
+    fontSize: entity.fontSize,
   );
 }
 
@@ -18,5 +19,6 @@ AppConfigurationEntity appConfigurationToEntity(AppConfiguration config) {
     lastSignInTime: config.lastSignInTime,
     themeMode: config.themeMode,
     themeColor: config.themeColor,
+    fontSize: config.fontSize,
   );
 }
