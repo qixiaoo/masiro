@@ -1,44 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:masiro/bloc/screen/settings/settings_screen_bloc.dart';
-import 'package:masiro/bloc/screen/settings/settings_screen_event.dart';
+import 'package:masiro/bloc/global/app_theme_cubit.dart';
 import 'package:masiro/misc/context.dart';
 
 class ThemeModeCard extends StatelessWidget {
-  final ThemeMode themeMode;
-
-  const ThemeModeCard({super.key, required this.themeMode});
+  const ThemeModeCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     final localizations = context.localizations();
 
-    final leadingIcon = switch (themeMode) {
-      ThemeMode.light => Icons.sunny,
-      ThemeMode.dark => Icons.mode_night_rounded,
-      ThemeMode.system => Icons.auto_awesome_rounded,
-    };
+    return BlocBuilder<AppThemeCubit, AppThemeData>(
+      buildWhen: (prev, curr) => prev.themeMode != curr.themeMode,
+      builder: (context, state) {
+        final themeMode = state.themeMode;
 
-    return Card(
-      clipBehavior: Clip.hardEdge,
-      child: ListTile(
-        leading: Icon(leadingIcon),
-        title: Text(localizations.themeMode),
-        onTap: () => _selectThemeMode(context),
-      ),
+        final leadingIcon = switch (themeMode) {
+          ThemeMode.light => Icons.sunny,
+          ThemeMode.dark => Icons.mode_night_rounded,
+          ThemeMode.system => Icons.auto_awesome_rounded,
+        };
+
+        return Card(
+          clipBehavior: Clip.hardEdge,
+          child: ListTile(
+            leading: Icon(leadingIcon),
+            title: Text(localizations.themeMode),
+            onTap: () => _selectThemeMode(context, themeMode),
+          ),
+        );
+      },
     );
   }
 
-  void _selectThemeMode(BuildContext context) {
-    final bloc = context.read<SettingsScreenBloc>();
+  void _selectThemeMode(BuildContext context, ThemeMode themeMode) {
+    final cubit = context.read<AppThemeCubit>();
     showDialog(
       context: context,
       builder: (context) {
         return _ThemeModeDialog(
           themeMode: themeMode,
-          onThemeModeChanged: (value) =>
-              bloc.add(SettingsScreenThemeModeChanged(themeMode: value)),
+          onThemeModeChanged: (value) => cubit.setThemeMode(value),
         );
       },
     );

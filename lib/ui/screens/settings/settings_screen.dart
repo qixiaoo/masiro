@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masiro/bloc/screen/settings/settings_screen_bloc.dart';
 import 'package:masiro/bloc/screen/settings/settings_screen_event.dart';
 import 'package:masiro/bloc/screen/settings/settings_screen_state.dart';
-import 'package:masiro/misc/constant.dart';
 import 'package:masiro/misc/easy_refresh.dart';
 import 'package:masiro/ui/screens/settings/about_card.dart';
 import 'package:masiro/ui/screens/settings/logout_card.dart';
@@ -22,19 +21,18 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
-  void initState() {
-    _initProfile();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Material(
       child: SafeArea(
-        child: BlocBuilder<SettingsScreenBloc, SettingsScreenState>(
-          builder: (context, state) {
-            return buildScreen(context, state);
-          },
+        child: BlocProvider<SettingsScreenBloc>(
+          create: (_) => SettingsScreenBloc()
+            ..add(SettingsScreenInitialized())
+            ..add(SettingsScreenProfileRequested()),
+          child: BlocBuilder<SettingsScreenBloc, SettingsScreenState>(
+            builder: (context, state) {
+              return buildScreen(context, state);
+            },
+          ),
         ),
       ),
     );
@@ -44,8 +42,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final bloc = context.read<SettingsScreenBloc>();
     final config = state.config;
     final lastSignInTime = config?.lastSignInTime ?? 0;
-    final themeMode = config?.themeMode ?? ThemeMode.system;
-    final themeColor = config?.themeColor ?? defaultThemeColor;
     const spacing = 20.0;
 
     return EasyRefresh(
@@ -59,21 +55,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ProfileCard(profile: state.profile),
           const SizedBox(height: spacing),
           SignInCard(lastSignInTime: lastSignInTime),
-          ThemeModeCard(themeMode: themeMode),
-          ThemeColorCard(themeColor: themeColor),
+          const ThemeModeCard(),
+          const ThemeColorCard(),
           const AboutCard(),
           const SizedBox(height: 20),
           const LogoutCard(),
         ],
       ),
     );
-  }
-
-  void _initProfile() {
-    final bloc = context.read<SettingsScreenBloc>();
-    if (bloc.state.profile != null) {
-      return;
-    }
-    bloc.add(SettingsScreenProfileRequested());
   }
 }

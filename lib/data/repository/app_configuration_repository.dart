@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:isar/isar.dart';
 import 'package:masiro/data/database/dao/app_configuration_dao.dart';
@@ -23,6 +24,18 @@ class AppConfigurationRepository {
   ) async {
     final entity = appConfigurationToEntity(appConfiguration);
     return _appConfigurationDao.putAppConfiguration(entity);
+  }
+
+  Future<Id> setThemeColor(int themeColor) async {
+    final config = await getAppConfiguration();
+    final nextConfig = config.copyWith(themeColor: themeColor);
+    return putAppConfiguration(nextConfig);
+  }
+
+  Future<Id> setThemeMode(ThemeMode themeMode) async {
+    final config = await getAppConfiguration();
+    final nextConfig = config.copyWith(themeMode: themeMode);
+    return putAppConfiguration(nextConfig);
   }
 
   Future<Id> clearUserData() async {

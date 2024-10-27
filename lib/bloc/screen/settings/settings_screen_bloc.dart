@@ -8,8 +8,9 @@ import 'package:masiro/di/get_it.dart';
 import 'package:masiro/misc/cookie.dart';
 import 'package:masiro/misc/platform.dart';
 
-class SettingsScreenBloc
-    extends Bloc<SettingsScreenEvent, SettingsScreenState> {
+typedef _SettingsScreenBloc = Bloc<SettingsScreenEvent, SettingsScreenState>;
+
+class SettingsScreenBloc extends _SettingsScreenBloc {
   final masiroRepository = getIt<MasiroRepository>();
   final appConfigurationRepository = getIt<AppConfigurationRepository>();
   final novelRecordRepository = getIt<NovelRecordRepository>();
@@ -19,8 +20,6 @@ class SettingsScreenBloc
     on<SettingsScreenProfileRequested>(_onSettingsScreenProfileRequested);
     on<SettingsScreenSignedIn>(_onSettingsScreenSignedIn);
     on<SettingsScreenLoggedOut>(_onSettingsScreenLoggedOut);
-    on<SettingsScreenThemeModeChanged>(_onSettingsScreenThemeModeChanged);
-    on<SettingsScreenThemeColorChanged>(_onSettingsScreenThemeColorChanged);
   }
 
   Future<void> _onSettingsScreenInitialized(
@@ -61,34 +60,6 @@ class SettingsScreenBloc
   ) async {
     final config = await appConfigurationRepository.getAppConfiguration();
     emit(SettingsScreenState(config: config, profile: null));
-  }
-
-  Future<void> _onSettingsScreenThemeModeChanged(
-    SettingsScreenThemeModeChanged event,
-    Emitter<SettingsScreenState> emit,
-  ) async {
-    final config = state.config;
-    if (config == null) {
-      return;
-    }
-    final nextConfig = config.copyWith(themeMode: event.themeMode);
-    final nextState = state.copyWith(config: nextConfig);
-    await appConfigurationRepository.putAppConfiguration(nextConfig);
-    emit(nextState);
-  }
-
-  Future<void> _onSettingsScreenThemeColorChanged(
-    SettingsScreenThemeColorChanged event,
-    Emitter<SettingsScreenState> emit,
-  ) async {
-    final config = state.config;
-    if (config == null) {
-      return;
-    }
-    final nextConfig = config.copyWith(themeColor: event.themeColor);
-    final nextState = state.copyWith(config: nextConfig);
-    await appConfigurationRepository.putAppConfiguration(nextConfig);
-    emit(nextState);
   }
 
   Future<String> signIn() async {

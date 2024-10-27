@@ -3,10 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:masiro/bloc/screen/settings/settings_screen_bloc.dart';
-import 'package:masiro/bloc/screen/settings/settings_screen_event.dart';
-import 'package:masiro/bloc/screen/settings/settings_screen_state.dart';
-import 'package:masiro/misc/constant.dart';
+import 'package:masiro/bloc/global/app_theme_cubit.dart';
 import 'package:masiro/misc/router.dart';
 import 'package:masiro/misc/tray_icon.dart';
 import 'package:tray_manager/tray_manager.dart';
@@ -53,20 +50,14 @@ class _AppState extends State<App> with WindowListener, TrayListener {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<SettingsScreenBloc>(
-          create: (context) =>
-              SettingsScreenBloc()..add(SettingsScreenInitialized()),
+        BlocProvider<AppThemeCubit>(
+          create: (context) => AppThemeCubit(),
         ),
       ],
-      child: BlocBuilder<SettingsScreenBloc, SettingsScreenState>(
-        buildWhen: (prev, curr) {
-          return prev.config?.themeMode != curr.config?.themeMode ||
-              prev.config?.themeColor != curr.config?.themeColor;
-        },
-        builder: (context, state) {
-          final config = state.config;
-          final themeMode = config?.themeMode ?? ThemeMode.system;
-          final themeColor = config?.themeColor ?? defaultThemeColor;
+      child: BlocBuilder<AppThemeCubit, AppThemeData>(
+        builder: (context, appThemeData) {
+          final themeMode = appThemeData.themeMode;
+          final themeColor = appThemeData.themeColor;
 
           return MaterialApp.router(
             title: 'masiro',

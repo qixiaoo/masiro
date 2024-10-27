@@ -2,39 +2,41 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:masiro/bloc/screen/settings/settings_screen_bloc.dart';
-import 'package:masiro/bloc/screen/settings/settings_screen_event.dart';
+import 'package:masiro/bloc/global/app_theme_cubit.dart';
 import 'package:masiro/misc/constant.dart';
 import 'package:masiro/misc/context.dart';
 
 class ThemeColorCard extends StatelessWidget {
-  final int themeColor;
-
-  const ThemeColorCard({super.key, required this.themeColor});
+  const ThemeColorCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     final localizations = context.localizations();
 
-    return Card(
-      clipBehavior: Clip.hardEdge,
-      child: ListTile(
-        leading: const Icon(Icons.palette_rounded),
-        title: Text(localizations.themeColor),
-        onTap: () => _selectThemeColor(context),
-      ),
+    return BlocBuilder<AppThemeCubit, AppThemeData>(
+      buildWhen: (prev, curr) => prev.themeColor != curr.themeColor,
+      builder: (context, state) {
+        final themeColor = state.themeColor;
+        return Card(
+          clipBehavior: Clip.hardEdge,
+          child: ListTile(
+            leading: const Icon(Icons.palette_rounded),
+            title: Text(localizations.themeColor),
+            onTap: () => _selectThemeColor(context, themeColor),
+          ),
+        );
+      },
     );
   }
 
-  void _selectThemeColor(BuildContext context) {
-    final bloc = context.read<SettingsScreenBloc>();
+  void _selectThemeColor(BuildContext context, int themeColor) {
+    final cubit = context.read<AppThemeCubit>();
     showDialog(
       context: context,
       builder: (context) {
         return _ThemeColorDialog(
           themeColor: themeColor,
-          onThemeColorChanged: (color) =>
-              bloc.add(SettingsScreenThemeColorChanged(themeColor: color)),
+          onThemeColorChanged: (color) => cubit.setThemeColor(color),
         );
       },
     );
