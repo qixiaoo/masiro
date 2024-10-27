@@ -12,7 +12,7 @@ Future<void> initSystemTray(BuildContext context) async {
   final localizations = context.localizations();
 
   await trayManager.setIcon(
-    'images/tray_icon.png',
+    'assets/icon/icon.png',
   );
 
   final Menu menu = Menu(
