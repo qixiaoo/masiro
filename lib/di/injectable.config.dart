@@ -18,6 +18,7 @@ import '../data/repository/app_configuration_repository.dart' as _i5;
 import '../data/repository/favorites_repository.dart' as _i7;
 import '../data/repository/masiro_repository.dart' as _i8;
 import '../data/repository/novel_record_repository.dart' as _i9;
+import '../data/repository/profile_repository.dart' as _i10;
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -39,6 +40,7 @@ extension GetItInjectableX on _i1.GetIt {
     gh.lazySingleton<_i7.FavoritesRepository>(() => _i7.FavoritesRepository());
     gh.lazySingleton<_i8.MasiroRepository>(() => _i8.MasiroRepository());
     gh.factory<_i9.NovelRecordRepository>(() => _i9.NovelRecordRepository());
+    gh.lazySingleton<_i10.ProfileRepository>(() => _i10.ProfileRepository());
     return this;
   }
 }

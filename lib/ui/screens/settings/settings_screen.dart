@@ -47,7 +47,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return EasyRefresh(
       header: classicHeader(context),
       onRefresh: () async {
-        bloc.add(SettingsScreenProfileRequested());
+        bloc.add(SettingsScreenProfileRefreshed());
       },
       child: ListView(
         padding: const EdgeInsets.all(20),
