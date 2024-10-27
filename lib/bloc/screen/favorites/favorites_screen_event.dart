@@ -5,4 +5,6 @@ sealed class FavoritesScreenEvent extends Equatable {
   List<Object> get props => [];
 }
 
+final class FavoritesScreenRequested extends FavoritesScreenEvent {}
+
 final class FavoritesScreenRefreshed extends FavoritesScreenEvent {}

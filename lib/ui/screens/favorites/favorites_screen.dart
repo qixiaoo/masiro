@@ -41,7 +41,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     return Material(
       child: SafeArea(
         child: BlocProvider(
-          create: (_) => FavoritesScreenBloc()..add(FavoritesScreenRefreshed()),
+          create: (_) => FavoritesScreenBloc()..add(FavoritesScreenRequested()),
           child: BlocBuilder<FavoritesScreenBloc, FavoritesScreenState>(
             builder: (context, state) {
               switch (state) {
