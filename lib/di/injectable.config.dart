@@ -14,11 +14,13 @@ import 'package:isar/isar.dart' as _i4;
 
 import '../data/database/dao/app_configuration_dao.dart' as _i3;
 import '../data/database/dao/chapter_record_dao.dart' as _i6;
+import '../data/database/dao/user_dao.dart' as _i11;
 import '../data/repository/app_configuration_repository.dart' as _i5;
 import '../data/repository/favorites_repository.dart' as _i7;
 import '../data/repository/masiro_repository.dart' as _i8;
 import '../data/repository/novel_record_repository.dart' as _i9;
 import '../data/repository/profile_repository.dart' as _i10;
+import '../data/repository/user_repository.dart' as _i12;
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -41,6 +43,8 @@ extension GetItInjectableX on _i1.GetIt {
     gh.lazySingleton<_i8.MasiroRepository>(() => _i8.MasiroRepository());
     gh.factory<_i9.NovelRecordRepository>(() => _i9.NovelRecordRepository());
     gh.lazySingleton<_i10.ProfileRepository>(() => _i10.ProfileRepository());
+    gh.singleton<_i11.UserDao>(() => _i11.UserDao());
+    gh.lazySingleton<_i12.UserRepository>(() => _i12.UserRepository());
     return this;
   }
 }

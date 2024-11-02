@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
+import 'package:masiro/bloc/global/user/user_bloc.dart';
 import 'package:masiro/di/get_it.dart';
 import 'package:masiro/misc/chrome.dart';
 import 'package:masiro/misc/context.dart';
@@ -90,8 +92,10 @@ class _DesktopLoginState extends State<DesktopLogin> {
     final result = await page.devTools.client.send('Storage.getCookies', {});
     final cookieObjets = result['cookies'] as List<dynamic>;
     final cookies = cookieObjets.map((o) => fromCookieObject(o)).toList();
-    final cookieJar = await getCookieJar();
-    await cookieJar.saveFromResponse(Uri.parse(MasiroUrl.baseUrl), cookies);
+    if (context.mounted) {
+      final bloc = context.read<UserBloc>();
+      await bloc.saveCurrentCookieAndUser(cookies);
+    }
 
     _logger.d('Closing browser...');
     await browser.close();

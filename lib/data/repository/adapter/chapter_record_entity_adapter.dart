@@ -12,6 +12,7 @@ ChapterRecord chapterRecordToModel(ChapterRecordEntity record) {
     novelId: record.novelId,
     readingMode: readingModeToModel(record.readingMode),
     position: jsonToPosition(record.positionJson),
+    userId: record.userId,
   );
 }
 
@@ -45,6 +46,7 @@ ChapterRecordEntity chapterRecordToEntity(ChapterRecord record) {
     progress: 0,
     readingMode: readingModeToEntity(record.readingMode),
     positionJson: positionToJson(record.position),
+    userId: record.userId,
   );
 }
 

@@ -16,13 +16,33 @@ extension GetNovelRecordEntityCollection on Isar {
 const NovelRecordEntitySchema = CollectionSchema(
   name: r'NovelRecordEntity',
   id: 4220778173759774880,
-  properties: {},
+  properties: {
+    r'userId': PropertySchema(
+      id: 0,
+      name: r'userId',
+      type: IsarType.long,
+    )
+  },
   estimateSize: _novelRecordEntityEstimateSize,
   serialize: _novelRecordEntitySerialize,
   deserialize: _novelRecordEntityDeserialize,
   deserializeProp: _novelRecordEntityDeserializeProp,
   idName: r'novelId',
-  indexes: {},
+  indexes: {
+    r'userId': IndexSchema(
+      id: -2005826577402374815,
+      name: r'userId',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'userId',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    )
+  },
   links: {
     r'chapterRecords': LinkSchema(
       id: 2521284922654922623,
@@ -52,7 +72,10 @@ void _novelRecordEntitySerialize(
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
-) {}
+) {
+  writer.writeLong(offsets[0], object.userId);
+}
+
 NovelRecordEntity _novelRecordEntityDeserialize(
   Id id,
   IsarReader reader,
@@ -61,6 +84,7 @@ NovelRecordEntity _novelRecordEntityDeserialize(
 ) {
   final object = NovelRecordEntity(
     novelId: id,
+    userId: reader.readLong(offsets[0]),
   );
   return object;
 }
@@ -72,6 +96,8 @@ P _novelRecordEntityDeserializeProp<P>(
   Map<Type, List<int>> allOffsets,
 ) {
   switch (propertyId) {
+    case 0:
+      return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -98,6 +124,14 @@ extension NovelRecordEntityQueryWhereSort
   QueryBuilder<NovelRecordEntity, NovelRecordEntity, QAfterWhere> anyNovelId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
+    });
+  }
+
+  QueryBuilder<NovelRecordEntity, NovelRecordEntity, QAfterWhere> anyUserId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'userId'),
+      );
     });
   }
 }
@@ -171,6 +205,99 @@ extension NovelRecordEntityQueryWhere
       ));
     });
   }
+
+  QueryBuilder<NovelRecordEntity, NovelRecordEntity, QAfterWhereClause>
+      userIdEqualTo(int userId) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'userId',
+        value: [userId],
+      ));
+    });
+  }
+
+  QueryBuilder<NovelRecordEntity, NovelRecordEntity, QAfterWhereClause>
+      userIdNotEqualTo(int userId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId',
+              lower: [],
+              upper: [userId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId',
+              lower: [userId],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId',
+              lower: [userId],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId',
+              lower: [],
+              upper: [userId],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<NovelRecordEntity, NovelRecordEntity, QAfterWhereClause>
+      userIdGreaterThan(
+    int userId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'userId',
+        lower: [userId],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<NovelRecordEntity, NovelRecordEntity, QAfterWhereClause>
+      userIdLessThan(
+    int userId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'userId',
+        lower: [],
+        upper: [userId],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<NovelRecordEntity, NovelRecordEntity, QAfterWhereClause>
+      userIdBetween(
+    int lowerUserId,
+    int upperUserId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'userId',
+        lower: [lowerUserId],
+        includeLower: includeLower,
+        upper: [upperUserId],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
 }
 
 extension NovelRecordEntityQueryFilter
@@ -223,6 +350,62 @@ extension NovelRecordEntityQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'novelId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<NovelRecordEntity, NovelRecordEntity, QAfterFilterCondition>
+      userIdEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'userId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<NovelRecordEntity, NovelRecordEntity, QAfterFilterCondition>
+      userIdGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'userId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<NovelRecordEntity, NovelRecordEntity, QAfterFilterCondition>
+      userIdLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'userId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<NovelRecordEntity, NovelRecordEntity, QAfterFilterCondition>
+      userIdBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'userId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -300,7 +483,21 @@ extension NovelRecordEntityQueryLinks
 }
 
 extension NovelRecordEntityQuerySortBy
-    on QueryBuilder<NovelRecordEntity, NovelRecordEntity, QSortBy> {}
+    on QueryBuilder<NovelRecordEntity, NovelRecordEntity, QSortBy> {
+  QueryBuilder<NovelRecordEntity, NovelRecordEntity, QAfterSortBy>
+      sortByUserId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'userId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<NovelRecordEntity, NovelRecordEntity, QAfterSortBy>
+      sortByUserIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'userId', Sort.desc);
+    });
+  }
+}
 
 extension NovelRecordEntityQuerySortThenBy
     on QueryBuilder<NovelRecordEntity, NovelRecordEntity, QSortThenBy> {
@@ -317,16 +514,43 @@ extension NovelRecordEntityQuerySortThenBy
       return query.addSortBy(r'novelId', Sort.desc);
     });
   }
+
+  QueryBuilder<NovelRecordEntity, NovelRecordEntity, QAfterSortBy>
+      thenByUserId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'userId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<NovelRecordEntity, NovelRecordEntity, QAfterSortBy>
+      thenByUserIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'userId', Sort.desc);
+    });
+  }
 }
 
 extension NovelRecordEntityQueryWhereDistinct
-    on QueryBuilder<NovelRecordEntity, NovelRecordEntity, QDistinct> {}
+    on QueryBuilder<NovelRecordEntity, NovelRecordEntity, QDistinct> {
+  QueryBuilder<NovelRecordEntity, NovelRecordEntity, QDistinct>
+      distinctByUserId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'userId');
+    });
+  }
+}
 
 extension NovelRecordEntityQueryProperty
     on QueryBuilder<NovelRecordEntity, NovelRecordEntity, QQueryProperty> {
   QueryBuilder<NovelRecordEntity, int, QQueryOperations> novelIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'novelId');
+    });
+  }
+
+  QueryBuilder<NovelRecordEntity, int, QQueryOperations> userIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'userId');
     });
   }
 }

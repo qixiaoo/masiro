@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:masiro/bloc/global/user/user_bloc.dart';
 import 'package:masiro/bloc/screen/settings/settings_screen_bloc.dart';
+import 'package:masiro/bloc/screen/settings/settings_screen_event.dart';
 import 'package:masiro/misc/context.dart';
 import 'package:masiro/misc/router.dart';
 
@@ -25,14 +27,18 @@ class LogoutCard extends StatelessWidget {
   }
 
   void _logout(BuildContext context) {
-    final bloc = context.read<SettingsScreenBloc>();
+    final userBloc = context.read<UserBloc>();
+    final settingsScreenBloc = context.read<SettingsScreenBloc>();
     showDialog(
       context: context,
       builder: (context) {
         return _LogoutDialog(
           onLogout: () async {
-            await bloc.logout();
-            if (!context.mounted) {
+            final needsRedirect = await userBloc.logout();
+            if (!needsRedirect) {
+              settingsScreenBloc.add(SettingsScreenProfileRefreshed());
+            }
+            if (!context.mounted || !needsRedirect) {
               return;
             }
             context.go(RoutePath.login);

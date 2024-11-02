@@ -1,8 +1,12 @@
 import 'dart:io';
 
 import 'package:cookie_jar/cookie_jar.dart';
+import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:masiro/data/database/dao/user_dao.dart';
+import 'package:masiro/di/get_it.dart';
+import 'package:masiro/misc/cookie_storage.dart';
 import 'package:masiro/misc/url.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 
 /// Creates a `Cookie` from the [cookieObject]
@@ -41,13 +45,32 @@ Cookie fromCookieObject(Map<String, dynamic> cookieObject) {
   return cookie;
 }
 
-Future<PersistCookieJar> _cookieJar = getApplicationSupportDirectory().then(
-  (supportDir) => PersistCookieJar(storage: FileStorage(supportDir.path)),
-);
+PersistCookieJar? _cookieJar;
 
-/// Returns the default cooke jar
-Future<PersistCookieJar> getCookieJar() async {
-  return _cookieJar;
+/// Returns the default cooke jar.
+/// This function should be called after `get_it` has been initialized.
+Future<PersistCookieJar> getCookieJar({bool forceNewInstance = false}) async {
+  if (forceNewInstance) {
+    _cookieJar = PersistCookieJar(
+      storage: CookieStorage(
+        cookieWriter: getIt<UserDao>().putCurrentUserCookie,
+        cookieReader: getIt<UserDao>().getCurrentUserCookie,
+      ),
+    );
+    return _cookieJar!;
+  }
+
+  if (_cookieJar != null) {
+    return _cookieJar!;
+  }
+
+  _cookieJar = PersistCookieJar(
+    storage: CookieStorage(
+      cookieWriter: getIt<UserDao>().putCurrentUserCookie,
+      cookieReader: getIt<UserDao>().getCurrentUserCookie,
+    ),
+  );
+  return _cookieJar!;
 }
 
 /// Returns local persisted cookies
@@ -56,10 +79,15 @@ Future<List<Cookie>> getCookies() async {
   return cookieJar.loadForRequest(Uri.parse(MasiroUrl.baseUrl));
 }
 
-/// Deletes all local persisted cookies
-Future<void> deleteAllCookies() async {
-  final cookieJar = await getCookieJar();
-  return cookieJar.deleteAll();
+/// Deletes all instances of `CookieManager` from `dio.interceptors`,
+/// and then adds a new `CookieManager` to `dio.interceptors`.
+/// This function should be called after `get_it` has been initialized.
+Future<void> resetCookieManager() async {
+  final dio = getIt<Dio>();
+  final cookieJar = await getCookieJar(forceNewInstance: true);
+  final cookieManager = CookieManager(cookieJar);
+  dio.interceptors.removeWhere((interceptor) => interceptor is CookieManager);
+  dio.interceptors.add(cookieManager);
 }
 
 /// Deletes all webview cookies

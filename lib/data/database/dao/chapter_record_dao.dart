@@ -19,14 +19,28 @@ class ChapterRecordDao {
   }
 
   Future<ChapterRecordEntity?> findChapterRecord(
+    int userId,
     int chapterId,
     ChapterReadingMode readingMode,
   ) async {
     return _isar.chapterRecordEntitys
         .filter()
+        .userIdEqualTo(userId)
         .chapterIdEqualTo(chapterId)
         .readingModeEqualTo(readingMode)
         .findFirst();
+  }
+
+  Future<List<ChapterRecordEntity>> getAllChapterRecords() async {
+    return _isar.chapterRecordEntitys.where().findAll();
+  }
+
+  Future<List<Id>> putAllChapterRecords(
+    List<ChapterRecordEntity> chapterRecords,
+  ) async {
+    return _isar.writeTxn(() async {
+      return _isar.chapterRecordEntitys.putAll(chapterRecords);
+    });
   }
 
   Future<void> clearChapterRecords() async {

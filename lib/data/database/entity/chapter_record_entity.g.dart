@@ -43,6 +43,11 @@ const ChapterRecordEntitySchema = CollectionSchema(
       name: r'readingMode',
       type: IsarType.string,
       enumMap: _ChapterRecordEntityreadingModeEnumValueMap,
+    ),
+    r'userId': PropertySchema(
+      id: 5,
+      name: r'userId',
+      type: IsarType.long,
     )
   },
   estimateSize: _chapterRecordEntityEstimateSize,
@@ -72,6 +77,19 @@ const ChapterRecordEntitySchema = CollectionSchema(
       properties: [
         IndexPropertySchema(
           name: r'novelId',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    ),
+    r'userId': IndexSchema(
+      id: -2005826577402374815,
+      name: r'userId',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'userId',
           type: IndexType.value,
           caseSensitive: false,
         )
@@ -113,6 +131,7 @@ void _chapterRecordEntitySerialize(
   writer.writeString(offsets[2], object.positionJson);
   writer.writeLong(offsets[3], object.progress);
   writer.writeString(offsets[4], object.readingMode.name);
+  writer.writeLong(offsets[5], object.userId);
 }
 
 ChapterRecordEntity _chapterRecordEntityDeserialize(
@@ -130,6 +149,7 @@ ChapterRecordEntity _chapterRecordEntityDeserialize(
     readingMode: _ChapterRecordEntityreadingModeValueEnumMap[
             reader.readStringOrNull(offsets[4])] ??
         ChapterReadingMode.page,
+    userId: reader.readLongOrNull(offsets[5]) ?? defaultUserId,
   );
   return object;
 }
@@ -153,6 +173,8 @@ P _chapterRecordEntityDeserializeProp<P>(
       return (_ChapterRecordEntityreadingModeValueEnumMap[
               reader.readStringOrNull(offset)] ??
           ChapterReadingMode.page) as P;
+    case 5:
+      return (reader.readLongOrNull(offset) ?? defaultUserId) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -203,6 +225,15 @@ extension ChapterRecordEntityQueryWhereSort
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         const IndexWhereClause.any(indexName: r'novelId'),
+      );
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterWhere>
+      anyUserId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'userId'),
       );
     });
   }
@@ -459,6 +490,99 @@ extension ChapterRecordEntityQueryWhere
         lower: [lowerNovelId],
         includeLower: includeLower,
         upper: [upperNovelId],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterWhereClause>
+      userIdEqualTo(int userId) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'userId',
+        value: [userId],
+      ));
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterWhereClause>
+      userIdNotEqualTo(int userId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId',
+              lower: [],
+              upper: [userId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId',
+              lower: [userId],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId',
+              lower: [userId],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId',
+              lower: [],
+              upper: [userId],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterWhereClause>
+      userIdGreaterThan(
+    int userId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'userId',
+        lower: [userId],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterWhereClause>
+      userIdLessThan(
+    int userId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'userId',
+        lower: [],
+        upper: [userId],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterWhereClause>
+      userIdBetween(
+    int lowerUserId,
+    int upperUserId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'userId',
+        lower: [lowerUserId],
+        includeLower: includeLower,
+        upper: [upperUserId],
         includeUpper: includeUpper,
       ));
     });
@@ -980,6 +1104,62 @@ extension ChapterRecordEntityQueryFilter on QueryBuilder<ChapterRecordEntity,
       ));
     });
   }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterFilterCondition>
+      userIdEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'userId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterFilterCondition>
+      userIdGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'userId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterFilterCondition>
+      userIdLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'userId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterFilterCondition>
+      userIdBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'userId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
 }
 
 extension ChapterRecordEntityQueryObject on QueryBuilder<ChapterRecordEntity,
@@ -1057,6 +1237,20 @@ extension ChapterRecordEntityQuerySortBy
       sortByReadingModeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'readingMode', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterSortBy>
+      sortByUserId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'userId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterSortBy>
+      sortByUserIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'userId', Sort.desc);
     });
   }
 }
@@ -1146,6 +1340,20 @@ extension ChapterRecordEntityQuerySortThenBy
       return query.addSortBy(r'readingMode', Sort.desc);
     });
   }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterSortBy>
+      thenByUserId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'userId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QAfterSortBy>
+      thenByUserIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'userId', Sort.desc);
+    });
+  }
 }
 
 extension ChapterRecordEntityQueryWhereDistinct
@@ -1182,6 +1390,13 @@ extension ChapterRecordEntityQueryWhereDistinct
       distinctByReadingMode({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'readingMode', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, ChapterRecordEntity, QDistinct>
+      distinctByUserId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'userId');
     });
   }
 }
@@ -1223,6 +1438,12 @@ extension ChapterRecordEntityQueryProperty
       readingModeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'readingMode');
+    });
+  }
+
+  QueryBuilder<ChapterRecordEntity, int, QQueryOperations> userIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'userId');
     });
   }
 }

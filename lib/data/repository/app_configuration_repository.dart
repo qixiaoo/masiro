@@ -37,10 +37,4 @@ class AppConfigurationRepository {
     final nextConfig = config.copyWith(themeMode: themeMode);
     return putAppConfiguration(nextConfig);
   }
-
-  Future<Id> clearUserData() async {
-    final config = await getAppConfiguration();
-    final nextConfig = config.copyWith(lastSignInTime: 0);
-    return putAppConfiguration(nextConfig);
-  }
 }

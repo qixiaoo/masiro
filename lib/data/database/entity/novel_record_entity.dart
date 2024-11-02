@@ -9,5 +9,8 @@ class NovelRecordEntity {
 
   final chapterRecords = IsarLinks<ChapterRecordEntity>();
 
-  NovelRecordEntity({required this.novelId});
+  @Index()
+  int userId;
+
+  NovelRecordEntity({required this.novelId, required this.userId});
 }

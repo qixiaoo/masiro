@@ -12,11 +12,14 @@ class ChapterRecord {
 
   ReadPosition position;
 
+  Id userId;
+
   ChapterRecord({
     required this.id,
     required this.chapterId,
     required this.novelId,
     required this.readingMode,
     required this.position,
+    required this.userId,
   });
 }

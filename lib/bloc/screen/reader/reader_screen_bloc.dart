@@ -11,12 +11,14 @@ import 'package:masiro/data/repository/model/loading_status.dart';
 import 'package:masiro/data/repository/model/read_position.dart';
 import 'package:masiro/data/repository/model/reading_mode.dart';
 import 'package:masiro/data/repository/novel_record_repository.dart';
+import 'package:masiro/data/repository/user_repository.dart';
 import 'package:masiro/di/get_it.dart';
 
 class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
   final masiroRepository = getIt<MasiroRepository>();
   final novelRecordRepository = getIt<NovelRecordRepository>();
   final appConfigurationRepository = getIt<AppConfigurationRepository>();
+  final userRepository = getIt<UserRepository>();
 
   final int novelId;
 
@@ -43,7 +45,9 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
         novelId,
         chapterId,
       );
+      final currentUser = await userRepository.getCurrentUser();
       final chapterRecord = await novelRecordRepository.findChapterRecord(
+        currentUser!.userId,
         chapterId,
         ReadingMode.scroll,
       );
@@ -82,7 +86,9 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
     final loadedState = state as ReaderScreenLoadedState;
     final chapterId = loadedState.chapterDetail.chapterId;
     final readingMode = loadedState.readingMode;
+    final currentUser = await userRepository.getCurrentUser();
     final chapterRecord = await novelRecordRepository.findChapterRecord(
+      currentUser!.userId,
       chapterId,
       readingMode,
     );
@@ -93,6 +99,7 @@ class ReaderScreenBloc extends Bloc<ReaderScreenEvent, ReaderScreenState> {
         novelId: novelId,
         position: event.position,
         readingMode: readingMode,
+        userId: currentUser.userId,
       ),
     );
   }

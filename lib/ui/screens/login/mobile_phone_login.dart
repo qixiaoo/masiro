@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:go_router/go_router.dart';
+import 'package:masiro/bloc/global/user/user_bloc.dart';
 import 'package:masiro/misc/context.dart';
-import 'package:masiro/misc/cookie.dart';
 import 'package:masiro/misc/router.dart';
 import 'package:masiro/misc/url.dart';
 import 'package:webview_cookie_manager/webview_cookie_manager.dart';
@@ -95,10 +96,12 @@ class _MobilePhoneLoginState extends State<MobilePhoneLogin> {
 
   void _saveCookies(BuildContext context) async {
     final cookieManager = WebviewCookieManager();
-    final cookies =
-        await cookieManager.getCookies(MasiroUrl.baseUrlWithoutSlash);
-    final cookieJar = await getCookieJar();
-    await cookieJar.saveFromResponse(Uri.parse(MasiroUrl.baseUrl), cookies);
+    const baseUrlWithoutSlash = MasiroUrl.baseUrlWithoutSlash;
+    final cookies = await cookieManager.getCookies(baseUrlWithoutSlash);
+    if (context.mounted) {
+      final bloc = context.read<UserBloc>();
+      await bloc.saveCurrentCookieAndUser(cookies);
+    }
     if (context.mounted) {
       GoRouter.of(context).go(RoutePath.favorites);
     }

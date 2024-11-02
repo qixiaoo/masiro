@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import 'package:masiro/misc/constant.dart';
 
 part 'chapter_record_entity.g.dart';
 
@@ -20,6 +21,9 @@ class ChapterRecordEntity {
 
   String? positionJson;
 
+  @Index()
+  int userId;
+
   ChapterRecordEntity({
     this.id = Isar.autoIncrement,
     required this.chapterId,
@@ -27,6 +31,7 @@ class ChapterRecordEntity {
     required this.progress,
     required this.readingMode,
     this.positionJson,
+    this.userId = defaultUserId,
   });
 }
 

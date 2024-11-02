@@ -21,17 +21,15 @@ class NovelRecordRepository {
   }
 
   Future<ChapterRecord?> findChapterRecord(
+    int userId,
     int chapterId,
     ReadingMode readingMode,
   ) async {
     final recordEntity = await _chapterRecordDao.findChapterRecord(
+      userId,
       chapterId,
       readingModeToEntity(readingMode),
     );
     return recordEntity != null ? chapterRecordToModel(recordEntity) : null;
-  }
-
-  Future<void> clearChapterRecords() async {
-    return _chapterRecordDao.clearChapterRecords();
   }
 }

@@ -6,6 +6,7 @@ import 'package:masiro/bloc/screen/settings/settings_screen_event.dart';
 import 'package:masiro/bloc/screen/settings/settings_screen_state.dart';
 import 'package:masiro/misc/easy_refresh.dart';
 import 'package:masiro/ui/screens/settings/about_card.dart';
+import 'package:masiro/ui/screens/settings/accounts_card.dart';
 import 'package:masiro/ui/screens/settings/logout_card.dart';
 import 'package:masiro/ui/screens/settings/profile_card.dart';
 import 'package:masiro/ui/screens/settings/sign_in_card.dart';
@@ -40,8 +41,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget buildScreen(BuildContext context, SettingsScreenState state) {
     final bloc = context.read<SettingsScreenBloc>();
-    final config = state.config;
-    final lastSignInTime = config?.lastSignInTime ?? 0;
     const spacing = 20.0;
 
     return EasyRefresh(
@@ -54,7 +53,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: [
           ProfileCard(profile: state.profile),
           const SizedBox(height: spacing),
-          SignInCard(lastSignInTime: lastSignInTime),
+          const SignInCard(),
+          const AccountsCard(),
           const ThemeModeCard(),
           const ThemeColorCard(),
           const AboutCard(),

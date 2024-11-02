@@ -3,6 +3,7 @@ import 'package:logger/logger.dart';
 import 'package:masiro/data/database/core.dart';
 import 'package:masiro/data/database/dao/app_configuration_dao.dart';
 import 'package:masiro/data/database/entity/app_configuration_entity.dart';
+import 'package:masiro/data/database/migration/migration_1_to_2.dart';
 import 'package:masiro/di/get_it.dart';
 
 /// Perform manual data migration.
@@ -29,11 +30,19 @@ Future<void> performMigrationIfNeeded() async {
     return;
   }
 
+  logger.d('sourceVersion: $sourceVersion, targetVersion: $targetVersion');
+
   final migrationList = migrations.where(
     (m) => m.startVersion >= sourceVersion && m.endVersion <= targetVersion,
   );
   for (final migration in migrationList) {
+    logger.i(
+      'Performing migration from version ${migration.startVersion} to version ${migration.endVersion}...',
+    );
     await migration.migrate(isar);
+    logger.i(
+      'Completed migration from version ${migration.startVersion} to version ${migration.endVersion}.',
+    );
   }
 
   // Update the `dbVersion` after migration is done
@@ -58,7 +67,9 @@ Future<void> _initializeAppConfiguration(
 /// Note:
 /// It is essential to maintain the order of the migration operation items
 /// to ensure that the data in the database is transformed correctly.
-List<Migration> migrations = [];
+List<Migration> migrations = [
+  migration1To2,
+];
 
 class Migration {
   int startVersion;

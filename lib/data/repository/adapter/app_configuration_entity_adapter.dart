@@ -5,7 +5,6 @@ AppConfiguration appConfigurationEntityToModel(AppConfigurationEntity entity) {
   return AppConfiguration(
     id: entity.id,
     dbVersion: entity.dbVersion,
-    lastSignInTime: entity.lastSignInTime,
     themeMode: entity.themeMode,
     themeColor: entity.themeColor,
     fontSize: entity.fontSize,
@@ -16,7 +15,6 @@ AppConfigurationEntity appConfigurationToEntity(AppConfiguration config) {
   return AppConfigurationEntity(
     id: config.id,
     dbVersion: config.dbVersion,
-    lastSignInTime: config.lastSignInTime,
     themeMode: config.themeMode,
     themeColor: config.themeColor,
     fontSize: config.fontSize,

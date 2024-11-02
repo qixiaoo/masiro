@@ -10,6 +10,7 @@ class AppConfigurationEntity {
 
   int dbVersion;
 
+  @Deprecated('Use `UserEntity.lastSignInTime` instead.')
   int lastSignInTime;
 
   @Enumerated(EnumType.name)
