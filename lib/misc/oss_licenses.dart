@@ -183,6 +183,7 @@ const dependencies = <Package>[
   _isar,
   _isar_flutter_libs,
   _logger,
+  _path,
   _path_provider,
   _puppeteer,
   _rxdart,
