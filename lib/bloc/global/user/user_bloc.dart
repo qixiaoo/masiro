@@ -5,6 +5,7 @@ import 'package:masiro/bloc/global/user/user_event.dart';
 import 'package:masiro/bloc/global/user/user_state.dart';
 import 'package:masiro/data/repository/favorites_repository.dart';
 import 'package:masiro/data/repository/masiro_repository.dart';
+import 'package:masiro/data/repository/model/user.dart';
 import 'package:masiro/data/repository/profile_repository.dart';
 import 'package:masiro/data/repository/user_repository.dart';
 import 'package:masiro/di/get_it.dart';
@@ -47,12 +48,19 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     if (currentUser == null) {
       return;
     }
-    final lastSignInTime = DateTime.now().millisecondsSinceEpoch;
-    final nextCurrentUser = currentUser.copyWith(
-      lastSignInTime: lastSignInTime,
+    final userId = currentUser.userId;
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
+    final nextCurrentUser = currentUser.copyWith(lastSignInTime: timestamp);
+    final List<User> nextUserList = List.from(state.userList);
+    final index = nextUserList.indexWhere((user) => user.userId == userId);
+    if (index != -1) {
+      nextUserList[index] = nextCurrentUser;
+    }
+    final nextState = state.copyWith(
+      userList: nextUserList,
+      currentUser: nextCurrentUser,
     );
-    final nextState = state.copyWith(currentUser: nextCurrentUser);
-    await _userRepository.setCurrentUserLastSignInTime(lastSignInTime);
+    await _userRepository.setCurrentUserLastSignInTime(timestamp);
     emit(nextState);
   }
 
