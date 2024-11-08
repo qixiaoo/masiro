@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:masiro/misc/platform.dart';
 import 'package:masiro/misc/tray_icon.dart';
+import 'package:masiro/ui/widgets/adaptive_status_bar_style.dart';
 import 'package:masiro/ui/widgets/nav_bar.dart';
 
 bool _systemTrayInitialized = false;
@@ -37,7 +38,12 @@ class _RouterOutletWithNavBarState extends State<RouterOutletWithNavBar> {
                 Expanded(child: Center(child: widget.child)),
               ],
             )
-          : Center(child: widget.child),
+          : Column(
+              children: [
+                const AdaptiveStatusBarStyle(),
+                Expanded(child: widget.child),
+              ],
+            ),
     );
   }
 

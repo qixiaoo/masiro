@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:masiro/data/database/migration/migration.dart';
 import 'package:masiro/di/get_it.dart';
 import 'package:masiro/misc/platform.dart';
@@ -18,12 +15,6 @@ Future<void> main() async {
       await windowManager.show();
       await windowManager.focus();
     });
-  }
-
-  if (Platform.isAndroid) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
-    );
   }
 
   await setupGetIt();
