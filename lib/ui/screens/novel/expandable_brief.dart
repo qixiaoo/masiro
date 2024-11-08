@@ -44,6 +44,8 @@ class _ExpandableBriefState extends State<ExpandableBrief> {
           height: isExpanded ? intrinsicHeight + _maskHeight : null,
           duration: const Duration(milliseconds: 300),
           curve: Curves.fastOutSlowIn,
+          clipBehavior: Clip.hardEdge,
+          decoration: const BoxDecoration(),
           child: AfterLayout(
             callback: (value) {
               final maxHeight = value.getMaxIntrinsicHeight(value.size.width);
