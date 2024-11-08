@@ -22,7 +22,7 @@
 
 ## 致谢
 
-特别感谢 [Qing-Novel](https://github.com/Qing-Novel) 大佬提供的图标。
+特别感谢 [Qing-Novel](https://github.com/Qing-Novel) 大佬制作的图标。
 
 ## License
 
