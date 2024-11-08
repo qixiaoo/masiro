@@ -34,6 +34,14 @@
   "easyRefreshNoMoreText": "没有更多了",
   "easyRefreshFailedText": "刷新失败",
   "easyRefreshMessageText": "上次刷新时间: %T",
+  "easyRefreshFooterDragText": "上拉加载更多",
+  "easyRefreshFooterArmedText": "松开加载更多",
+  "easyRefreshFooterReadyText": "加载中...",
+  "easyRefreshFooterProcessingText": "加载中...",
+  "easyRefreshFooterProcessedText": "加载成功",
+  "easyRefreshFooterNoMoreText": "没有更多了",
+  "easyRefreshFooterFailedText": "加载失败",
+  "easyRefreshFooterMessageText": "上次加载时间: %T",
   "startReading": "开始阅读",
   "costMessage": "购买当前章节将消耗 {cost}G",
   "pay": "支付",
@@ -66,5 +74,10 @@
   "copied": "已复制",
   "fontSize": "字体大小",
   "switchAccounts": "切换账号",
-  "addAnAccount": "添加账号"
+  "addAnAccount": "添加账号",
+  "novelComments": "小说评论",
+  "chapterComments": "章节评论",
+  "reply": "回复",
+  "viewMoreReplies": "查看更多回复 ({count})",
+  "jumpTo": "跳转到"
 }
