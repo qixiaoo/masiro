@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:masiro/data/network/response/chapter_detail_response.dart';
 import 'package:masiro/data/network/response/common_response.dart';
 import 'package:masiro/data/network/response/novel_detail_response.dart';
+import 'package:masiro/data/network/response/paged_comment_response.dart';
 import 'package:masiro/data/network/response/paged_novel_response.dart';
 import 'package:masiro/data/network/response/profile_response.dart';
 import 'package:masiro/di/get_it.dart';
@@ -149,5 +150,47 @@ class MasiroApi {
     );
     final isFound = response.statusCode == 302;
     return isFound && response.headers.value('location') == MasiroUrl.adminUrl;
+  }
+
+  static Future<PagedCommentResponse> getChapterComments({
+    required int chapterId,
+    required int page,
+    required int pageSize,
+  }) async {
+    final response = await _dio.get(
+      MasiroUrl.getChapterComments,
+      queryParameters: {
+        'page': '$page',
+        'perPage': '$pageSize',
+        'chapter_id': '$chapterId',
+      },
+      options: Options(
+        headers: {
+          'Referer': 'https://masiro.me/admin/novelReading?cid=$chapterId',
+        },
+      ),
+    );
+    return PagedCommentResponse.fromJson(response.data);
+  }
+
+  static Future<PagedCommentResponse> getNovelComments({
+    required int novelId,
+    required int page,
+    required int pageSize,
+  }) async {
+    final response = await _dio.get(
+      MasiroUrl.getNovelComments,
+      queryParameters: {
+        'page': '$page',
+        'perPage': '$pageSize',
+        'novel_id': '$novelId',
+      },
+      options: Options(
+        headers: {
+          'Referer': 'https://masiro.me/admin/novelView?novel_id=$novelId',
+        },
+      ),
+    );
+    return PagedCommentResponse.fromJson(response.data);
   }
 }

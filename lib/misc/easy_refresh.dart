@@ -25,3 +25,27 @@ ClassicHeader classicHeader(BuildContext context) {
     messageText: messageText,
   );
 }
+
+ClassicFooter classicFooter(BuildContext context) {
+  final localizations = context.localizations();
+
+  final dragText = localizations.easyRefreshFooterDragText;
+  final armedText = localizations.easyRefreshFooterArmedText;
+  final readyText = localizations.easyRefreshFooterReadyText;
+  final processingText = localizations.easyRefreshFooterProcessingText;
+  final processedText = localizations.easyRefreshFooterProcessedText;
+  final noMoreText = localizations.easyRefreshFooterNoMoreText;
+  final failedText = localizations.easyRefreshFooterFailedText;
+  final messageText = localizations.easyRefreshFooterMessageText;
+
+  return ClassicFooter(
+    dragText: dragText,
+    armedText: armedText,
+    readyText: readyText,
+    processingText: processingText,
+    processedText: processedText,
+    noMoreText: noMoreText,
+    failedText: failedText,
+    messageText: messageText,
+  );
+}

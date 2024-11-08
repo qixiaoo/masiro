@@ -1,10 +1,12 @@
 import 'package:injectable/injectable.dart';
 import 'package:masiro/data/network/masiro_api.dart';
 import 'package:masiro/data/repository/adapter/chapter_detail_response_adapter.dart';
+import 'package:masiro/data/repository/adapter/comment_response_adapter.dart';
 import 'package:masiro/data/repository/adapter/novel_detail_response_adapter.dart';
 import 'package:masiro/data/repository/adapter/novel_response_adapter.dart';
 import 'package:masiro/data/repository/adapter/profile_response_adapter.dart';
 import 'package:masiro/data/repository/model/chapter_detail.dart';
+import 'package:masiro/data/repository/model/comment.dart';
 import 'package:masiro/data/repository/model/novel.dart';
 import 'package:masiro/data/repository/model/novel_detail.dart';
 import 'package:masiro/data/repository/model/paged_data.dart';
@@ -91,5 +93,31 @@ class MasiroRepository {
   Future<String> signIn() async {
     final response = await MasiroApi.dailySignIn();
     return response.msg;
+  }
+
+  Future<PagedData<Comment>> getChapterComments({
+    required int chapterId,
+    required int page,
+    required int pageSize,
+  }) async {
+    final response = await MasiroApi.getChapterComments(
+      chapterId: chapterId,
+      page: page,
+      pageSize: pageSize,
+    );
+    return pagedCommentResponseToModel(response, page, pageSize);
+  }
+
+  Future<PagedData<Comment>> getNovelComments({
+    required int novelId,
+    required int page,
+    required int pageSize,
+  }) async {
+    final response = await MasiroApi.getNovelComments(
+      novelId: novelId,
+      page: page,
+      pageSize: pageSize,
+    );
+    return pagedCommentResponseToModel(response, page, pageSize);
   }
 }

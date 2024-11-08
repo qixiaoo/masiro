@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:masiro/misc/cookie.dart';
 import 'package:masiro/misc/platform.dart';
 import 'package:masiro/ui/screens/about/about_screen.dart';
+import 'package:masiro/ui/screens/comments/comments_screen.dart';
 import 'package:masiro/ui/screens/error/error_screen.dart';
 import 'package:masiro/ui/screens/favorites/favorites_screen.dart';
 import 'package:masiro/ui/screens/license/license_screen.dart';
@@ -27,6 +28,7 @@ class RoutePath {
   static const String licenses = '/licenses';
   static const String license = '/license';
   static const String about = '/about';
+  static const String comments = '/comments';
 }
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
@@ -83,6 +85,15 @@ final routerConfig = GoRouter(
       path: RoutePath.about,
       builder: (context, state) {
         return const AboutScreen();
+      },
+    ),
+    GoRoute(
+      path: RoutePath.comments,
+      builder: (context, state) {
+        final params = state.extra as Map;
+        final chapterId = params['chapterId'];
+        final novelId = params['novelId'];
+        return CommentsScreen(novelId: novelId, chapterId: chapterId);
       },
     ),
     if (isMobilePhone) ...[

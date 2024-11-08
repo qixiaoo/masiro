@@ -6,6 +6,7 @@ import 'package:masiro/bloc/screen/reader/reader_screen_event.dart';
 import 'package:masiro/bloc/screen/reader/reader_screen_state.dart';
 import 'package:masiro/misc/chapter.dart';
 import 'package:masiro/misc/platform.dart';
+import 'package:masiro/misc/router.dart';
 import 'package:masiro/ui/screens/reader/bottom_bar.dart';
 import 'package:masiro/ui/screens/reader/chapter_content_scroll.dart';
 import 'package:masiro/ui/screens/reader/payment_detail.dart';
@@ -107,6 +108,12 @@ class _ReaderScreenState extends State<ReaderScreen> {
                   },
                 );
               },
+            );
+          },
+          onCommentClicked: () {
+            context.push(
+              RoutePath.comments,
+              extra: {'chapterId': chapterId},
             );
           },
         ),

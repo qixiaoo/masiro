@@ -137,28 +137,46 @@ class _NovelScreenState extends State<NovelScreen> {
     );
   }
 
-  FloatingActionButton buildFloatingActionButton(
+  Widget buildFloatingActionButton(
     List<Volume> volumes,
     int lastReadChapterId,
     BuildContext context,
   ) {
     final localizations = context.localizations();
 
-    return FloatingActionButton(
-      tooltip: localizations.startReading,
-      child: const Icon(Icons.play_arrow_rounded),
-      onPressed: () async {
-        final firstChapter = volumes.firstOrNull?.chapters.firstOrNull;
-        final lastReadChapter = getChapterFromVolumes(
-          volumes,
-          lastReadChapterId,
-        );
-        final chapter = lastReadChapter ?? firstChapter;
-        if (chapter == null) {
-          return;
-        }
-        await _readChapter(context, chapter.novelId, chapter.id);
-      },
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        FloatingActionButton(
+          heroTag: null,
+          tooltip: localizations.startReading,
+          child: const Icon(Icons.chrome_reader_mode_rounded),
+          onPressed: () async {
+            final firstChapter = volumes.firstOrNull?.chapters.firstOrNull;
+            final lastReadChapter = getChapterFromVolumes(
+              volumes,
+              lastReadChapterId,
+            );
+            final chapter = lastReadChapter ?? firstChapter;
+            if (chapter == null) {
+              return;
+            }
+            await _readChapter(context, chapter.novelId, chapter.id);
+          },
+        ),
+        const SizedBox(height: 10),
+        FloatingActionButton(
+          heroTag: null,
+          tooltip: localizations.novelComments,
+          onPressed: () {
+            context.push(
+              RoutePath.comments,
+              extra: {'novelId': widget.novelId},
+            );
+          },
+          child: const Icon(Icons.comment),
+        ),
+      ],
     );
   }
 
