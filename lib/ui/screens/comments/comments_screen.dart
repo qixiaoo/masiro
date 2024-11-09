@@ -79,7 +79,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
               actions: [
                 IconButton(
                   onPressed: () => _selectPage(state),
-                  icon: const Icon(Icons.coronavirus_rounded),
+                  icon: const Icon(Icons.receipt long_rounded),
                 ),
               ],
             ),
