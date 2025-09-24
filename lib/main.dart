@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:masiro/data/database/migration/migration.dart';
 import 'package:masiro/di/get_it.dart';
 import 'package:masiro/misc/platform.dart';
@@ -16,6 +17,8 @@ Future<void> main() async {
       await windowManager.focus();
     });
   }
+
+  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
   await setupGetIt();
 

@@ -2,7 +2,7 @@ name: masiro
 description: "A masiro client."
 publish_to: 'none'
 
-version: 0.1.0+13
+version: 0.1.0+14
 
 environment:
   sdk: '>=3.4.4 <4.0.0'
@@ -43,7 +43,10 @@ dependencies:
   isar: *isar_version
   isar_flutter_libs: *isar_version
   webview_flutter: ^4.9.0
-  webview_cookie_manager: ^2.0.6
+  webview_cookie_manager:
+    git:
+      url: https://github.com/fryette/webview_cookie_manager
+      ref: master
   flex_color_picker: ^3.6.0
   scrollable_positioned_list: ^0.3.8
   flutter_widget_from_html_core: ^0.15.2
